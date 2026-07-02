@@ -4,50 +4,59 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "#/lib/utils";
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-2xl border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding font-sans whitespace-nowrap transition-colors outline-none select-none disabled:pointer-events-none disabled:bg-(--color-grey-50) disabled:text-(--color-grey-400) aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/80",
+        filled:
+          "bg-(--btn-color) text-(--btn-fg) hover:bg-(--btn-color-hover) focus-visible:border-2 focus-visible:border-(--btn-color-focus) active:bg-(--btn-color-active) data-[force-state=active]:bg-(--btn-color-active) data-[force-state=focus]:border-2 data-[force-state=focus]:border-(--btn-color-focus) data-[force-state=hover]:bg-(--btn-color-hover)",
         outline:
-          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-transparent dark:hover:bg-input/30",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "border-(--btn-color) bg-background text-(--btn-color) hover:bg-(--btn-color-soft) focus-visible:border-2 focus-visible:border-(--btn-color) active:bg-(--btn-color-soft-active) disabled:border-transparent data-[force-state=active]:bg-(--btn-color-soft-active) data-[force-state=focus]:border-2 data-[force-state=hover]:bg-(--btn-color-soft) dark:bg-transparent",
         ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
-        destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
-        link: "text-primary underline-offset-4 hover:underline",
+          "text-(--btn-color) hover:bg-(--btn-color-soft) focus-visible:border-2 focus-visible:border-(--btn-color-focus) active:bg-(--btn-color-soft-active) data-[force-state=active]:bg-(--btn-color-soft-active) data-[force-state=focus]:border-2 data-[force-state=focus]:border-(--btn-color-focus) data-[force-state=hover]:bg-(--btn-color-soft)",
+        link: "text-(--btn-color) underline-offset-4 hover:underline focus-visible:border-0 focus-visible:underline disabled:bg-transparent data-[force-state=focus]:underline data-[force-state=hover]:underline",
+      },
+      color: {
+        green:
+          "[--btn-color-active:var(--color-green-600)] [--btn-color-focus:var(--color-green-800)] [--btn-color-hover:var(--color-green-400)] [--btn-color-soft-active:var(--color-green-100)] [--btn-color-soft:var(--color-green-50)] [--btn-color:var(--color-green-500)] [--btn-fg:white]",
+        red: "[--btn-color-active:var(--color-red-600)] [--btn-color-focus:var(--color-red-800)] [--btn-color-hover:var(--color-red-400)] [--btn-color-soft-active:var(--color-red-100)] [--btn-color-soft:var(--color-red-50)] [--btn-color:var(--color-red-500)] [--btn-fg:white]",
+        yellow:
+          "[--btn-color-active:var(--color-yellow-600)] [--btn-color-focus:var(--color-yellow-800)] [--btn-color-hover:var(--color-yellow-400)] [--btn-color-soft-active:var(--color-yellow-100)] [--btn-color-soft:var(--color-yellow-50)] [--btn-color:var(--color-yellow-500)] [--btn-fg:white]",
+        orange:
+          "[--btn-color-active:var(--color-orange-600)] [--btn-color-focus:var(--color-orange-800)] [--btn-color-hover:var(--color-orange-400)] [--btn-color-soft-active:var(--color-orange-100)] [--btn-color-soft:var(--color-orange-50)] [--btn-color:var(--color-orange-500)] [--btn-fg:white]",
+        blue: "[--btn-color-active:var(--color-blue-600)] [--btn-color-focus:var(--color-blue-800)] [--btn-color-hover:var(--color-blue-400)] [--btn-color-soft-active:var(--color-blue-100)] [--btn-color-soft:var(--color-blue-50)] [--btn-color:var(--color-blue-500)] [--btn-fg:white]",
+        grey: "[--btn-color-active:var(--color-grey-800)] [--btn-color-focus:var(--color-grey-900)] [--btn-color-hover:var(--color-grey-600)] [--btn-color-soft-active:var(--color-grey-100)] [--btn-color-soft:var(--color-grey-50)] [--btn-color:var(--color-grey-700)] [--btn-fg:white]",
       },
       size: {
-        default:
-          "h-8 gap-1.5 px-3 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5",
-        xs: "h-6 gap-1 px-2.5 text-xs has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-7 gap-1 px-3 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        lg: "h-9 gap-1.5 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
-        icon: "size-8",
-        "icon-xs": "size-6 [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm": "size-7",
-        "icon-lg": "size-9",
+        sm: "h-8 gap-2 px-6 py-2 text-sm leading-4 font-medium [&_svg:not([class*='size-'])]:size-4",
+        md: "h-10 gap-2 px-6 py-2.5 text-sm leading-4 font-medium [&_svg:not([class*='size-'])]:size-5",
+        lg: "h-12 gap-2 px-6 py-3 text-base leading-5 font-bold [&_svg:not([class*='size-'])]:size-6",
+        xl: "h-14 gap-2 px-6 py-3 text-base leading-5 font-bold [&_svg:not([class*='size-'])]:size-8",
+        "icon-sm": "size-8",
+        icon: "size-10",
+        "icon-lg": "size-12 [&_svg:not([class*='size-'])]:size-6",
+        "icon-xl": "size-14 [&_svg:not([class*='size-'])]:size-8",
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: "filled",
+      color: "green",
+      size: "md",
     },
   },
 );
 
-function Button({
-  className,
-  variant = "default",
-  size = "default",
-  ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+type ButtonProps = ButtonPrimitive.Props &
+  VariantProps<typeof buttonVariants> & {
+    forceState?: "hover" | "active" | "focus";
+  };
+
+function Button({ className, variant, color, size, forceState, ...props }: ButtonProps) {
   return (
     <ButtonPrimitive
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      data-force-state={forceState}
+      className={cn(buttonVariants({ variant, color, size, className }))}
       {...props}
     />
   );

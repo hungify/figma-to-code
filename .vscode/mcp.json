@@ -1,11 +1,18 @@
 {
   "servers": {
     "better-auth": {
-      "url": "https://mcp.inkeep.com/better-auth/mcp"
+      "url": "https://mcp.inkeep.com/better-auth/mcp",
+      "type": "http"
     },
     "shadcn": {
       "command": "npx",
-      "args": ["-y", "shadcn@latest", "mcp"]
+      "args": ["-y", "shadcn@latest", "mcp"],
+      "type": "stdio"
+    },
+    "figma": {
+      "url": "https://mcp.figma.com/mcp",
+      "type": "http"
     }
-  }
+  },
+  "inputs": []
 }

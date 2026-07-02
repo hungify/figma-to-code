@@ -2,13 +2,18 @@
 
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/inter";
+@import "@fontsource/lato/latin.css";
+@import "@fontsource/zen-maru-gothic/japanese.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* ─── Fonts ─── */
   --font-heading: var(--font-sans);
-  --font-sans: "Inter Variable", sans-serif;
+  --font-sans: var(--font-jp);
+  --font-jp: "Zen Maru Gothic", sans-serif;
+  --font-en: "Lato", sans-serif;
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -40,15 +45,130 @@
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* ─────────────────────────────────────────────────────
+    Typography tokens
+  ───────────────────────────────────────────────────── */
+
+  /* Headline */
+  --text-h1-size: 2.875rem; /* 46px */
+  --text-h1-leading: 4rem; /* 64px */
+
+  --text-h2-size: 2rem; /* 32px */
+  --text-h2-leading: 2.75rem; /* 44px */
+
+  --text-h3-size: 1.5rem; /* 24px */
+  --text-h3-leading: 2rem; /* 32px */
+
+  --text-h4-size: 1.25rem; /* 20px */
+  --text-h4-leading: 1.75rem; /* 28px */
+
+  --text-h5-size: 1.125rem; /* 18px */
+  --text-h5-leading: 1.5rem; /* 24px */
+
+  /* Label */
+  --text-label-lg-size: 1rem; /* 16px */
+  --text-label-lg-leading: 1.25rem; /* 20px */
+
+  --text-label-md-size: 0.875rem; /* 14px */
+  --text-label-md-leading: 1rem; /* 16px */
+
+  --text-label-sm-size: 0.75rem; /* 12px */
+  --text-label-sm-leading: 0.875rem; /* 14px */
+
+  --text-label-xs-size: 0.625rem; /* 10px */
+  --text-label-xs-leading: 0.75rem; /* 12px */
+
+  /* Body */
+  --text-body-lg-size: 1rem; /* 16px */
+  --text-body-lg-leading: 1.5rem; /* 24px */
+
+  --text-body-md-size: 0.875rem; /* 14px */
+  --text-body-md-leading: 1.25rem; /* 20px */
+
+  --text-body-sm-size: 0.75rem; /* 12px */
+  --text-body-sm-leading: 1rem; /* 16px */
+
+  --text-body-xs-size: 0.625rem; /* 10px */
+  --text-body-xs-leading: 0.75rem; /* 12px */
+
+  /* ─── Brand color scale ─── */
+  /* Green */
+  --color-green-50: #ecf6f3;
+  --color-green-100: #c3e2d9;
+  --color-green-200: #a6d4c7;
+  --color-green-300: #7ec1ad;
+  --color-green-400: #65b59d;
+  --color-green-500: #3ea285;
+  --color-green-600: #389379;
+  --color-green-700: #2c735e;
+  --color-green-800: #225949;
+  --color-green-900: #1a4438;
+
+  /* Red */
+  --color-red-50: #fdeeee;
+  --color-red-100: #facac9;
+  --color-red-200: #f8b0af;
+  --color-red-300: #f48c8a;
+  --color-red-400: #f27573;
+  --color-red-500: #ef5350;
+  --color-red-600: #d94c49;
+  --color-red-700: #aa3b39;
+  --color-red-800: #832e2c;
+  --color-red-900: #642322;
+
+  /* Yellow */
+  --color-yellow-50: #fdf8e6;
+  --color-yellow-100: #f9e9b0;
+  --color-yellow-200: #f6de8a;
+  --color-yellow-300: #f2cf54;
+  --color-yellow-400: #efc533;
+  --color-yellow-500: #ebb700;
+  --color-yellow-600: #d6a700;
+  --color-yellow-700: #a78200;
+  --color-yellow-800: #816500;
+  --color-yellow-900: #634d00;
+
+  /* Orange */
+  --color-orange-50: #fff1ea;
+  --color-orange-100: #ffd5bc;
+  --color-orange-200: #ffc09c;
+  --color-orange-300: #ffa36f;
+  --color-orange-400: #ff9153;
+  --color-orange-500: #ff7628;
+  --color-orange-600: #e86b24;
+  --color-orange-700: #b5541c;
+  --color-orange-800: #8c4116;
+  --color-orange-900: #6b3211;
+
+  /* Blue */
+  --color-blue-50: #e8f5ff;
+  --color-blue-100: #b8defe;
+  --color-blue-200: #96cfff;
+  --color-blue-300: #66b9ff;
+  --color-blue-400: #49abff;
+  --color-blue-500: #1b96ff;
+  --color-blue-600: #1989e8;
+  --color-blue-700: #136bb5;
+  --color-blue-800: #0f538c;
+  --color-blue-900: #0b3f6b;
+
+  /* Grey */
+  --color-grey-50: #f5f5f5;
+  --color-grey-100: #e0e0e0;
+  --color-grey-200: #c2c2c2;
+  --color-grey-300: #a3a3a3;
+  --color-grey-400: #858585;
+  --color-grey-500: #666666;
+  --color-grey-600: #525252;
+  --color-grey-700: #424242;
+  --color-grey-800: #3b3b3b;
+  --color-grey-900: #333333;
 }
 
+/* ─────────────────────────────────────────────────────────
+  CSS custom properties (design tokens)
+───────────────────────────────────────────────────────── */
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -113,11 +233,14 @@
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* ─────────────────────────────────────────────────────────
+  Base styles
+───────────────────────────────────────────────────────── */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -132,4 +255,174 @@
   html {
     @apply font-sans;
   }
+}
+
+/* ─────────────────────────────────────────────────────────
+  Typography utilities (Tailwind v4 `@utility`)
+
+  Dùng @utility thay vì @layer components để các class này
+  đi qua engine của Tailwind — nhờ vậy VSCode Tailwind
+  IntelliSense (hover preview + autocomplete) nhận diện
+  được, giống hệt utility built-in (flex, text-red-500...).
+
+  Quy ước đặt tên: text-{lang}-{group}-{size}[-{weight}]
+
+  JP usage:  className="text-jp-h1"
+  EN usage:  className="text-en-h1"   (đã tự set font-family,
+  KHÔNG cần thêm class font-en đi kèm)
+───────────────────────────────────────────────────── */
+
+/* JP — Headline: Bold (700) */
+@utility text-jp-h1 {
+  font-size: var(--text-h1-size);
+  line-height: var(--text-h1-leading);
+  font-weight: 700;
+}
+@utility text-jp-h2 {
+  font-size: var(--text-h2-size);
+  line-height: var(--text-h2-leading);
+  font-weight: 700;
+}
+@utility text-jp-h3 {
+  font-size: var(--text-h3-size);
+  line-height: var(--text-h3-leading);
+  font-weight: 700;
+}
+@utility text-jp-h4 {
+  font-size: var(--text-h4-size);
+  line-height: var(--text-h4-leading);
+  font-weight: 700;
+}
+@utility text-jp-h5 {
+  font-size: var(--text-h5-size);
+  line-height: var(--text-h5-leading);
+  font-weight: 700;
+}
+
+/* JP — Label: Medium (500) */
+@utility text-jp-label-lg {
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-leading);
+  font-weight: 500;
+}
+@utility text-jp-label-md {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-leading);
+  font-weight: 500;
+}
+@utility text-jp-label-sm {
+  font-size: var(--text-label-sm-size);
+  line-height: var(--text-label-sm-leading);
+  font-weight: 500;
+}
+@utility text-jp-label-xs {
+  font-size: var(--text-label-xs-size);
+  line-height: var(--text-label-xs-leading);
+  font-weight: 500;
+}
+
+/* JP — Body: Regular (400) — Zen Maru Gothic default, declared for explicitness */
+@utility text-jp-body-lg {
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-leading);
+  font-weight: 400;
+}
+@utility text-jp-body-md {
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-leading);
+  font-weight: 400;
+}
+@utility text-jp-body-sm {
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-leading);
+  font-weight: 400;
+}
+@utility text-jp-body-xs {
+  font-size: var(--text-body-xs-size);
+  line-height: var(--text-body-xs-leading);
+  font-weight: 400;
+}
+
+/* EN — Headline: Bold (700) */
+@utility text-en-h1 {
+  font-family: var(--font-en);
+  font-size: var(--text-h1-size);
+  line-height: var(--text-h1-leading);
+  font-weight: 700;
+}
+@utility text-en-h2 {
+  font-family: var(--font-en);
+  font-size: var(--text-h2-size);
+  line-height: var(--text-h2-leading);
+  font-weight: 700;
+}
+@utility text-en-h3 {
+  font-family: var(--font-en);
+  font-size: var(--text-h3-size);
+  line-height: var(--text-h3-leading);
+  font-weight: 700;
+}
+@utility text-en-h4 {
+  font-family: var(--font-en);
+  font-size: var(--text-h4-size);
+  line-height: var(--text-h4-leading);
+  font-weight: 700;
+}
+@utility text-en-h5 {
+  font-family: var(--font-en);
+  font-size: var(--text-h5-size);
+  line-height: var(--text-h5-leading);
+  font-weight: 700;
+}
+
+/* EN — Label: Medium (500) */
+@utility text-en-label-lg {
+  font-family: var(--font-en);
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-leading);
+  font-weight: 500;
+}
+@utility text-en-label-md {
+  font-family: var(--font-en);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-leading);
+  font-weight: 500;
+}
+@utility text-en-label-sm {
+  font-family: var(--font-en);
+  font-size: var(--text-label-sm-size);
+  line-height: var(--text-label-sm-leading);
+  font-weight: 500;
+}
+@utility text-en-label-xs {
+  font-family: var(--font-en);
+  font-size: var(--text-label-xs-size);
+  line-height: var(--text-label-xs-leading);
+  font-weight: 500;
+}
+
+/* EN — Body: Regular (400) */
+@utility text-en-body-lg {
+  font-family: var(--font-en);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-leading);
+  font-weight: 400;
+}
+@utility text-en-body-md {
+  font-family: var(--font-en);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-leading);
+  font-weight: 400;
+}
+@utility text-en-body-sm {
+  font-family: var(--font-en);
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-leading);
+  font-weight: 400;
+}
+@utility text-en-body-xs {
+  font-family: var(--font-en);
+  font-size: var(--text-body-xs-size);
+  line-height: var(--text-body-xs-leading);
+  font-weight: 400;
 }
