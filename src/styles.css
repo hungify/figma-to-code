@@ -265,110 +265,115 @@
   IntelliSense (hover preview + autocomplete) nhận diện
   được, giống hệt utility built-in (flex, text-red-500...).
 
-  Quy ước đặt tên: text-{lang}-{group}-{size}[-{weight}]
+  Quy ước đặt tên: {lang}-{group}-{size}
+  KHÔNG dùng prefix "text-" vì tailwind-merge / cnfast sẽ
+  xếp nhầm các utility này vào nhóm "text-color" hoặc
+  "font-size" có sẵn của Tailwind — dẫn đến bị merge/loại
+  bỏ khi đứng chung với text-red-500, text-sm, v.v.
+  (xem: cnfast/tailwind-merge classGroup collision)
 
-  JP usage:  className="text-jp-h1"
-  EN usage:  className="text-en-h1"   (đã tự set font-family,
+  JP usage:  className="jp-h1"
+  EN usage:  className="en-h1"   (đã tự set font-family,
   KHÔNG cần thêm class font-en đi kèm)
 ───────────────────────────────────────────────────── */
 
 /* JP — Headline: Bold (700) */
-@utility text-jp-h1 {
+@utility jp-h1 {
   font-size: var(--text-h1-size);
   line-height: var(--text-h1-leading);
   font-weight: 700;
 }
-@utility text-jp-h2 {
+@utility jp-h2 {
   font-size: var(--text-h2-size);
   line-height: var(--text-h2-leading);
   font-weight: 700;
 }
-@utility text-jp-h3 {
+@utility jp-h3 {
   font-size: var(--text-h3-size);
   line-height: var(--text-h3-leading);
   font-weight: 700;
 }
-@utility text-jp-h4 {
+@utility jp-h4 {
   font-size: var(--text-h4-size);
   line-height: var(--text-h4-leading);
   font-weight: 700;
 }
-@utility text-jp-h5 {
+@utility jp-h5 {
   font-size: var(--text-h5-size);
   line-height: var(--text-h5-leading);
   font-weight: 700;
 }
 
 /* JP — Label: Medium (500) */
-@utility text-jp-label-lg {
+@utility jp-label-lg {
   font-size: var(--text-label-lg-size);
   line-height: var(--text-label-lg-leading);
   font-weight: 500;
 }
-@utility text-jp-label-md {
+@utility jp-label-md {
   font-size: var(--text-label-md-size);
   line-height: var(--text-label-md-leading);
   font-weight: 500;
 }
-@utility text-jp-label-sm {
+@utility jp-label-sm {
   font-size: var(--text-label-sm-size);
   line-height: var(--text-label-sm-leading);
   font-weight: 500;
 }
-@utility text-jp-label-xs {
+@utility jp-label-xs {
   font-size: var(--text-label-xs-size);
   line-height: var(--text-label-xs-leading);
   font-weight: 500;
 }
 
 /* JP — Body: Regular (400) — Zen Maru Gothic default, declared for explicitness */
-@utility text-jp-body-lg {
+@utility jp-body-lg {
   font-size: var(--text-body-lg-size);
   line-height: var(--text-body-lg-leading);
   font-weight: 400;
 }
-@utility text-jp-body-md {
+@utility jp-body-md {
   font-size: var(--text-body-md-size);
   line-height: var(--text-body-md-leading);
   font-weight: 400;
 }
-@utility text-jp-body-sm {
+@utility jp-body-sm {
   font-size: var(--text-body-sm-size);
   line-height: var(--text-body-sm-leading);
   font-weight: 400;
 }
-@utility text-jp-body-xs {
+@utility jp-body-xs {
   font-size: var(--text-body-xs-size);
   line-height: var(--text-body-xs-leading);
   font-weight: 400;
 }
 
 /* EN — Headline: Bold (700) */
-@utility text-en-h1 {
+@utility en-h1 {
   font-family: var(--font-en);
   font-size: var(--text-h1-size);
   line-height: var(--text-h1-leading);
   font-weight: 700;
 }
-@utility text-en-h2 {
+@utility en-h2 {
   font-family: var(--font-en);
   font-size: var(--text-h2-size);
   line-height: var(--text-h2-leading);
   font-weight: 700;
 }
-@utility text-en-h3 {
+@utility en-h3 {
   font-family: var(--font-en);
   font-size: var(--text-h3-size);
   line-height: var(--text-h3-leading);
   font-weight: 700;
 }
-@utility text-en-h4 {
+@utility en-h4 {
   font-family: var(--font-en);
   font-size: var(--text-h4-size);
   line-height: var(--text-h4-leading);
   font-weight: 700;
 }
-@utility text-en-h5 {
+@utility en-h5 {
   font-family: var(--font-en);
   font-size: var(--text-h5-size);
   line-height: var(--text-h5-leading);
@@ -376,25 +381,25 @@
 }
 
 /* EN — Label: Medium (500) */
-@utility text-en-label-lg {
+@utility en-label-lg {
   font-family: var(--font-en);
   font-size: var(--text-label-lg-size);
   line-height: var(--text-label-lg-leading);
   font-weight: 500;
 }
-@utility text-en-label-md {
+@utility en-label-md {
   font-family: var(--font-en);
   font-size: var(--text-label-md-size);
   line-height: var(--text-label-md-leading);
   font-weight: 500;
 }
-@utility text-en-label-sm {
+@utility en-label-sm {
   font-family: var(--font-en);
   font-size: var(--text-label-sm-size);
   line-height: var(--text-label-sm-leading);
   font-weight: 500;
 }
-@utility text-en-label-xs {
+@utility en-label-xs {
   font-family: var(--font-en);
   font-size: var(--text-label-xs-size);
   line-height: var(--text-label-xs-leading);
@@ -402,25 +407,25 @@
 }
 
 /* EN — Body: Regular (400) */
-@utility text-en-body-lg {
+@utility en-body-lg {
   font-family: var(--font-en);
   font-size: var(--text-body-lg-size);
   line-height: var(--text-body-lg-leading);
   font-weight: 400;
 }
-@utility text-en-body-md {
+@utility en-body-md {
   font-family: var(--font-en);
   font-size: var(--text-body-md-size);
   line-height: var(--text-body-md-leading);
   font-weight: 400;
 }
-@utility text-en-body-sm {
+@utility en-body-sm {
   font-family: var(--font-en);
   font-size: var(--text-body-sm-size);
   line-height: var(--text-body-sm-leading);
   font-weight: 400;
 }
-@utility text-en-body-xs {
+@utility en-body-xs {
   font-family: var(--font-en);
   font-size: var(--text-body-xs-size);
   line-height: var(--text-body-xs-leading);

@@ -1,22 +1,20 @@
-import { Input as InputPrimitive } from "@base-ui/react/input";
 import * as React from "react";
 
 import { cn } from "#/lib/utils";
 
 import { Field, FieldDescription, FieldError, FieldLabel, FieldRequired } from "./field";
 
-type InputProps = React.ComponentProps<"input"> & {
+type TextareaProps = React.ComponentProps<"textarea"> & {
   forceState?: "hover" | "focus";
 };
 
-function Input({ className, type, forceState, ...props }: InputProps) {
+function Textarea({ className, forceState, ...props }: TextareaProps) {
   return (
-    <InputPrimitive
-      type={type}
-      data-slot="input"
+    <textarea
+      data-slot="textarea"
       data-force-state={forceState}
       className={cn(
-        "h-12 w-full min-w-0 rounded-lg border border-grey-100 bg-white px-3 jp-body-lg [color:var(--color-grey-900)] transition-colors outline-none placeholder:text-grey-300",
+        "min-h-44 w-full min-w-0 resize-none rounded-lg border border-grey-100 bg-white px-3 py-2 jp-body-lg [color:var(--color-grey-900)] transition-colors outline-none placeholder:text-grey-300",
         "hover:border-grey-100 focus-visible:border-2 focus-visible:border-green-300 data-[force-state=focus]:border-2 data-[force-state=focus]:border-green-300 data-[force-state=hover]:border-grey-100",
         "disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-grey-50 disabled:text-grey-300 aria-invalid:border-red-500 aria-invalid:focus-visible:border-red-500 aria-invalid:data-[force-state=focus]:border-red-500",
         className,
@@ -26,7 +24,7 @@ function Input({ className, type, forceState, ...props }: InputProps) {
   );
 }
 
-type TextFieldProps = Omit<InputProps, "className"> & {
+type TextareaFieldProps = Omit<TextareaProps, "className"> & {
   className?: string;
   controlClassName?: string;
   hint?: React.ReactNode;
@@ -35,7 +33,7 @@ type TextFieldProps = Omit<InputProps, "className"> & {
   required?: boolean;
 };
 
-function TextField({
+function TextareaField({
   className,
   controlClassName,
   disabled,
@@ -46,20 +44,20 @@ function TextField({
   required,
   "aria-invalid": ariaInvalid,
   ...props
-}: TextFieldProps) {
+}: TextareaFieldProps) {
   const generatedId = React.useId();
-  const inputId = id ?? generatedId;
+  const textareaId = id ?? generatedId;
   const invalid = ariaInvalid === true || ariaInvalid === "true";
 
   return (
     <Field data-invalid={invalid} data-disabled={disabled || undefined} className={className}>
-      <FieldLabel htmlFor={inputId}>
+      <FieldLabel htmlFor={textareaId}>
         {label}
         {required && <FieldRequired>必須</FieldRequired>}
       </FieldLabel>
       {hint && !invalid && hintPosition === "top" && <FieldDescription>{hint}</FieldDescription>}
-      <Input
-        id={inputId}
+      <Textarea
+        id={textareaId}
         disabled={disabled}
         aria-invalid={ariaInvalid}
         className={controlClassName}
@@ -75,4 +73,4 @@ function TextField({
   );
 }
 
-export { Input, TextField };
+export { Textarea, TextareaField };
