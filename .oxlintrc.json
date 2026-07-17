@@ -20,8 +20,17 @@
     {
       "name": "eslint-tanstack-query",
       "specifier": "@tanstack/eslint-plugin-query"
+    },
+    {
+      "name": "tailwindcss",
+      "specifier": "oxlint-tailwindcss"
     }
   ],
+  "settings": {
+    "tailwindcss": {
+      "entryPoint": "src/styles.css"
+    }
+  },
   "rules": {
     "no-deprecated": "warn",
     "typescript/no-floating-promises": "off",

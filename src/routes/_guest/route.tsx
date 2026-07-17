@@ -1,12 +1,12 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
+import { Footer } from "#/components/layout/footer";
+import { Header } from "#/components/layout/header";
 import { authQueryOptions } from "#/lib/auth/queries";
 
 export const Route = createFileRoute("/_guest")({
   component: RouteComponent,
   beforeLoad: async ({ context }) => {
-    // Redirect path when user is already present,
-    // or after successful login/signup
     const REDIRECT_URL = "/app";
 
     const user = await context.queryClient.ensureQueryData({
@@ -25,12 +25,15 @@ export const Route = createFileRoute("/_guest")({
   },
 });
 
+/** Shared chrome for guest (unauthenticated) screens — login, signup, etc. */
 function RouteComponent() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
-      <div className="w-full max-w-sm">
+    <div className="flex min-h-svh flex-col">
+      <Header />
+      <main className="container-page flex flex-1 flex-col items-center justify-center px-5 py-9 md:px-0">
         <Outlet />
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }

@@ -102,6 +102,8 @@ Quick pointers:
   Note: utility names must stay `jp-*` / `en-*` (not `text-jp-*`) — see comment in `src/styles.css` (tailwind-merge collision).
 
 - Use Tailwind spacing and sizing utilities for layout. Preserve exact Figma dimensions only when they are core to component parity or fixed-format controls.
+- **Mobile↔desktop breakpoint is `md:` (768px) — Tailwind default, matches `src/hooks/use-mobile.ts`.** Do not invent a split at `sm:`/`lg:`/`xl:` for mobile vs desktop layout.
+- **PC content caps at 1440px** via `container-page` utility (`src/styles.css`, `--container-page: 90rem`). Apply on a screen's `<main>`/content wrapper only — `Header`/`Footer` stay full-bleed, don't cap their inner content.
 - Keep parity work light-only unless Figma explicitly includes dark variants. Do not add theme machinery for a light-only Figma frame.
 - Avoid global token rewrites for local component mismatches. Patch the local primitive or feature component unless mismatch is clearly systemic.
 

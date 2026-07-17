@@ -42,10 +42,33 @@ async function main() {
 
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: w, height: h } });
-  await page.goto(url, { waitUntil: "networkidle" });
+  await page.goto(url, { waitUntil: "load", timeout: 60_000 });
   await page.evaluate(async () => {
     if ("fonts" in document) {
       await (document as Document & { fonts: FontFaceSet }).fonts.ready;
+    }
+  });
+  // Product UI only — hide floating TanStack Devtools trigger
+  await page.evaluate(() => {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT);
+    const hide: HTMLElement[] = [];
+    while (walker.nextNode()) {
+      const el = walker.currentNode as HTMLElement;
+      const text = (el.textContent ?? "").trim();
+      if (text === "TANSTACK" || text.startsWith("TANSTACK")) {
+        hide.push(el);
+      }
+    }
+    for (const el of hide) {
+      let node: HTMLElement | null = el;
+      while (node && node !== document.body) {
+        const style = getComputedStyle(node);
+        if (style.position === "fixed" || style.position === "sticky") {
+          node.style.setProperty("display", "none", "important");
+          break;
+        }
+        node = node.parentElement;
+      }
     }
   });
   await page.screenshot({

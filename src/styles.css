@@ -92,6 +92,13 @@
   --text-body-xs-size: 0.625rem; /* 10px */
   --text-body-xs-leading: 0.75rem; /* 12px */
 
+  /* ─────────────────────────────────────────────────────
+    Layout tokens
+  ───────────────────────────────────────────────────── */
+
+  /* PC content container — cap desktop layouts at 1440px, center with auto margins */
+  --container-page: 90rem; /* 1440px */
+
   /* ─── Brand color scale ─── */
   /* Green */
   --color-green-50: #ecf6f3;
@@ -442,4 +449,20 @@
   font-size: var(--text-body-xs-size);
   line-height: var(--text-body-xs-leading);
   font-weight: 400;
+}
+
+/* ─────────────────────────────────────────────────────────
+  Layout utilities
+
+  Mobile↔desktop split is Tailwind's default `md` breakpoint
+  (768px) — matches `src/hooks/use-mobile.ts` MOBILE_BREAKPOINT.
+  Do not use `sm:`/`lg:` for that split; only `md:`.
+───────────────────────────────────────────────────────── */
+
+/* PC page container — caps desktop content at 1440px, centered.
+   Use on the outer wrapper of a screen/layout, not on every inner block. */
+@utility container-page {
+  max-width: var(--container-page);
+  margin-inline: auto;
+  width: 100%;
 }

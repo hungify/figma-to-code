@@ -71,6 +71,7 @@ src/
 
 ## Rules
 
+- Shared chrome (Header/Footer) for a route group lives **once** in that group's pathless layout route (e.g. `src/routes/_guest/route.tsx` renders `<Header/><main><Outlet/></main><Footer/>`). Individual screens (`login-screen.tsx`, etc.) render only their own content — never re-import `Header`/`Footer` per screen.
 - **Never** put data-fetching (queries/mutations/server functions) inside `features/<feature>/screens/`. UI layer calls into `src/lib/<domain>/` — keep screens presentational + form-handling only.
 - Promote screen-scoped file → feature-scoped the moment a **second** screen needs it (don't pre-shared speculatively).
 - Promote feature-scoped file → `src/components|hooks|lib` only when a **second feature** needs it.

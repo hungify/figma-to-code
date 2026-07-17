@@ -12,7 +12,7 @@ import { useState } from "react";
 import { SidebarDrawer } from "#/components/layout/sidebar";
 import { cn } from "#/lib/utils";
 
-const LOGO_ASSET_BASE = "/figma/header";
+const LOGO_ASSET_BASE = "/logo";
 
 type HeaderAction = "menu" | "account";
 
@@ -41,19 +41,19 @@ function HeaderLogo() {
     <>
       <span className="flex h-6 w-[49.5px] items-center md:hidden">
         <img
-          src={`${LOGO_ASSET_BASE}/logo-wordmark-sp.svg`}
+          src={`${LOGO_ASSET_BASE}/logo-wordmark.svg`}
           alt="らきた"
           className="block h-[17.45px] w-[48.24px]"
         />
       </span>
       <span className="hidden h-[39.7px] w-[74.25px] overflow-visible md:grid">
         <img
-          src={`${LOGO_ASSET_BASE}/logo-wordmark-pc.svg`}
+          src={`${LOGO_ASSET_BASE}/logo-wordmark.svg`}
           alt="らきた"
           className="col-start-1 row-start-1 h-[26.17px] w-[72.36px]"
         />
         <img
-          src={`${LOGO_ASSET_BASE}/logo-tagline-pc.svg`}
+          src={`${LOGO_ASSET_BASE}/logo-tagline.svg`}
           alt=""
           className="col-start-1 row-start-1 mt-[33.31px] ml-[0.73px] h-[6.39px] w-[71.1px]"
         />
@@ -116,7 +116,7 @@ function HeaderAccountControl({
       aria-haspopup="menu"
       onClick={onClick}
       className={cn(
-        "flex h-12 w-[250px] items-center gap-2 rounded-lg border border-grey-100 bg-white p-3 text-grey-900",
+        "flex h-12 w-62.5 items-center gap-2 rounded-lg border border-grey-100 bg-white p-3 text-grey-900",
         "focus-visible:ring-3 focus-visible:ring-green-100 focus-visible:outline-none",
         className,
       )}
@@ -164,7 +164,7 @@ function DesktopAccountPopover({
   onLogoutClick,
 }: Pick<HeaderProps, "onChangeEmailClick" | "onChangePasswordClick" | "onLogoutClick">) {
   return (
-    <div className="absolute top-[60px] right-0 z-50 w-[430px] overflow-hidden rounded-lg bg-white shadow-xl ring-1 ring-grey-100">
+    <div className="absolute top-15 right-0 z-50 w-107.5 overflow-hidden rounded-lg bg-white shadow-xl ring-1 ring-grey-100">
       <AccountMenuItem onClick={onChangeEmailClick} className="h-14 px-10">
         メールアドレス変更
       </AccountMenuItem>
@@ -264,7 +264,7 @@ function Header({
       <header
         {...props}
         className={cn(
-          "flex h-16 w-full border-b border-grey-50 bg-white px-5 py-2 md:h-[72px] md:items-start md:py-3",
+          "flex h-16 w-full border-b border-grey-50 bg-white px-5 py-2 md:h-18 md:items-start md:py-3",
           isLoggedIn ? "items-center" : "items-start",
           className,
         )}
@@ -317,4 +317,3 @@ function Header({
 }
 
 export { Header };
-export type { HeaderProps };
