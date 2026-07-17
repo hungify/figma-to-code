@@ -84,6 +84,8 @@ Skip for `custom`.
 
 Match Step 1 screenshot (layout, type, color, states, assets). Prefer tokens when values conflict.
 
+After the screen ships: add Playwright visual under `e2e/visual/<feature>/` (page object in `e2e/pages/screens/`). Showcase is out of scope — see `e2e/README.md`. Run `pnpm test:visual` / `pnpm test:visual:update`.
+
 ### 7. Gate (before lint)
 
 ```bash

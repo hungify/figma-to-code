@@ -9,30 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ShowcaseRouteRouteImport } from './routes/showcase/route'
 import { Route as GuestRouteRouteImport } from './routes/_guest/route'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShowcaseIndexRouteImport } from './routes/showcase/index'
-import { Route as ShowcaseTextareaRouteImport } from './routes/showcase/textarea'
-import { Route as ShowcaseTabRouteImport } from './routes/showcase/tab'
-import { Route as ShowcaseSwitchRouteImport } from './routes/showcase/switch'
-import { Route as ShowcaseRadioRouteImport } from './routes/showcase/radio'
-import { Route as ShowcaseLabelRouteImport } from './routes/showcase/label'
-import { Route as ShowcaseInputRouteImport } from './routes/showcase/input'
-import { Route as ShowcaseCheckboxRouteImport } from './routes/showcase/checkbox'
-import { Route as ShowcaseButtonRouteImport } from './routes/showcase/button'
 import { Route as GuestSignupRouteImport } from './routes/_guest/signup'
 import { Route as GuestLoginRouteImport } from './routes/_guest/login'
 import { Route as AuthAppRouteRouteImport } from './routes/_auth/app/route'
 import { Route as AuthAppIndexRouteImport } from './routes/_auth/app/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
-const ShowcaseRouteRoute = ShowcaseRouteRouteImport.update({
-  id: '/showcase',
-  path: '/showcase',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GuestRouteRoute = GuestRouteRouteImport.update({
   id: '/_guest',
   getParentRoute: () => rootRouteImport,
@@ -47,49 +33,9 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShowcaseIndexRoute = ShowcaseIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ShowcaseRouteRoute,
-} as any)
-const ShowcaseTextareaRoute = ShowcaseTextareaRouteImport.update({
-  id: '/textarea',
-  path: '/textarea',
-  getParentRoute: () => ShowcaseRouteRoute,
-} as any)
-const ShowcaseTabRoute = ShowcaseTabRouteImport.update({
-  id: '/tab',
-  path: '/tab',
-  getParentRoute: () => ShowcaseRouteRoute,
-} as any)
-const ShowcaseSwitchRoute = ShowcaseSwitchRouteImport.update({
-  id: '/switch',
-  path: '/switch',
-  getParentRoute: () => ShowcaseRouteRoute,
-} as any)
-const ShowcaseRadioRoute = ShowcaseRadioRouteImport.update({
-  id: '/radio',
-  path: '/radio',
-  getParentRoute: () => ShowcaseRouteRoute,
-} as any)
-const ShowcaseLabelRoute = ShowcaseLabelRouteImport.update({
-  id: '/label',
-  path: '/label',
-  getParentRoute: () => ShowcaseRouteRoute,
-} as any)
-const ShowcaseInputRoute = ShowcaseInputRouteImport.update({
-  id: '/input',
-  path: '/input',
-  getParentRoute: () => ShowcaseRouteRoute,
-} as any)
-const ShowcaseCheckboxRoute = ShowcaseCheckboxRouteImport.update({
-  id: '/checkbox',
-  path: '/checkbox',
-  getParentRoute: () => ShowcaseRouteRoute,
-} as any)
-const ShowcaseButtonRoute = ShowcaseButtonRouteImport.update({
-  id: '/button',
-  path: '/button',
-  getParentRoute: () => ShowcaseRouteRoute,
+  id: '/showcase/',
+  path: '/showcase/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const GuestSignupRoute = GuestSignupRouteImport.update({
   id: '/signup',
@@ -119,18 +65,9 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/showcase': typeof ShowcaseRouteRouteWithChildren
   '/app': typeof AuthAppRouteRouteWithChildren
   '/login': typeof GuestLoginRoute
   '/signup': typeof GuestSignupRoute
-  '/showcase/button': typeof ShowcaseButtonRoute
-  '/showcase/checkbox': typeof ShowcaseCheckboxRoute
-  '/showcase/input': typeof ShowcaseInputRoute
-  '/showcase/label': typeof ShowcaseLabelRoute
-  '/showcase/radio': typeof ShowcaseRadioRoute
-  '/showcase/switch': typeof ShowcaseSwitchRoute
-  '/showcase/tab': typeof ShowcaseTabRoute
-  '/showcase/textarea': typeof ShowcaseTextareaRoute
   '/showcase/': typeof ShowcaseIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/app/': typeof AuthAppIndexRoute
@@ -139,14 +76,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof GuestLoginRoute
   '/signup': typeof GuestSignupRoute
-  '/showcase/button': typeof ShowcaseButtonRoute
-  '/showcase/checkbox': typeof ShowcaseCheckboxRoute
-  '/showcase/input': typeof ShowcaseInputRoute
-  '/showcase/label': typeof ShowcaseLabelRoute
-  '/showcase/radio': typeof ShowcaseRadioRoute
-  '/showcase/switch': typeof ShowcaseSwitchRoute
-  '/showcase/tab': typeof ShowcaseTabRoute
-  '/showcase/textarea': typeof ShowcaseTextareaRoute
   '/showcase': typeof ShowcaseIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/app': typeof AuthAppIndexRoute
@@ -156,18 +85,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_guest': typeof GuestRouteRouteWithChildren
-  '/showcase': typeof ShowcaseRouteRouteWithChildren
   '/_auth/app': typeof AuthAppRouteRouteWithChildren
   '/_guest/login': typeof GuestLoginRoute
   '/_guest/signup': typeof GuestSignupRoute
-  '/showcase/button': typeof ShowcaseButtonRoute
-  '/showcase/checkbox': typeof ShowcaseCheckboxRoute
-  '/showcase/input': typeof ShowcaseInputRoute
-  '/showcase/label': typeof ShowcaseLabelRoute
-  '/showcase/radio': typeof ShowcaseRadioRoute
-  '/showcase/switch': typeof ShowcaseSwitchRoute
-  '/showcase/tab': typeof ShowcaseTabRoute
-  '/showcase/textarea': typeof ShowcaseTextareaRoute
   '/showcase/': typeof ShowcaseIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_auth/app/': typeof AuthAppIndexRoute
@@ -175,55 +95,17 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/showcase'
-    | '/app'
-    | '/login'
-    | '/signup'
-    | '/showcase/button'
-    | '/showcase/checkbox'
-    | '/showcase/input'
-    | '/showcase/label'
-    | '/showcase/radio'
-    | '/showcase/switch'
-    | '/showcase/tab'
-    | '/showcase/textarea'
-    | '/showcase/'
-    | '/api/auth/$'
-    | '/app/'
+    '/' | '/app' | '/login' | '/signup' | '/showcase/' | '/api/auth/$' | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/login'
-    | '/signup'
-    | '/showcase/button'
-    | '/showcase/checkbox'
-    | '/showcase/input'
-    | '/showcase/label'
-    | '/showcase/radio'
-    | '/showcase/switch'
-    | '/showcase/tab'
-    | '/showcase/textarea'
-    | '/showcase'
-    | '/api/auth/$'
-    | '/app'
+  to: '/' | '/login' | '/signup' | '/showcase' | '/api/auth/$' | '/app'
   id:
     | '__root__'
     | '/'
     | '/_auth'
     | '/_guest'
-    | '/showcase'
     | '/_auth/app'
     | '/_guest/login'
     | '/_guest/signup'
-    | '/showcase/button'
-    | '/showcase/checkbox'
-    | '/showcase/input'
-    | '/showcase/label'
-    | '/showcase/radio'
-    | '/showcase/switch'
-    | '/showcase/tab'
-    | '/showcase/textarea'
     | '/showcase/'
     | '/api/auth/$'
     | '/_auth/app/'
@@ -233,19 +115,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   GuestRouteRoute: typeof GuestRouteRouteWithChildren
-  ShowcaseRouteRoute: typeof ShowcaseRouteRouteWithChildren
+  ShowcaseIndexRoute: typeof ShowcaseIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/showcase': {
-      id: '/showcase'
-      path: '/showcase'
-      fullPath: '/showcase'
-      preLoaderRoute: typeof ShowcaseRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_guest': {
       id: '/_guest'
       path: ''
@@ -269,66 +144,10 @@ declare module '@tanstack/react-router' {
     }
     '/showcase/': {
       id: '/showcase/'
-      path: '/'
+      path: '/showcase'
       fullPath: '/showcase/'
       preLoaderRoute: typeof ShowcaseIndexRouteImport
-      parentRoute: typeof ShowcaseRouteRoute
-    }
-    '/showcase/textarea': {
-      id: '/showcase/textarea'
-      path: '/textarea'
-      fullPath: '/showcase/textarea'
-      preLoaderRoute: typeof ShowcaseTextareaRouteImport
-      parentRoute: typeof ShowcaseRouteRoute
-    }
-    '/showcase/tab': {
-      id: '/showcase/tab'
-      path: '/tab'
-      fullPath: '/showcase/tab'
-      preLoaderRoute: typeof ShowcaseTabRouteImport
-      parentRoute: typeof ShowcaseRouteRoute
-    }
-    '/showcase/switch': {
-      id: '/showcase/switch'
-      path: '/switch'
-      fullPath: '/showcase/switch'
-      preLoaderRoute: typeof ShowcaseSwitchRouteImport
-      parentRoute: typeof ShowcaseRouteRoute
-    }
-    '/showcase/radio': {
-      id: '/showcase/radio'
-      path: '/radio'
-      fullPath: '/showcase/radio'
-      preLoaderRoute: typeof ShowcaseRadioRouteImport
-      parentRoute: typeof ShowcaseRouteRoute
-    }
-    '/showcase/label': {
-      id: '/showcase/label'
-      path: '/label'
-      fullPath: '/showcase/label'
-      preLoaderRoute: typeof ShowcaseLabelRouteImport
-      parentRoute: typeof ShowcaseRouteRoute
-    }
-    '/showcase/input': {
-      id: '/showcase/input'
-      path: '/input'
-      fullPath: '/showcase/input'
-      preLoaderRoute: typeof ShowcaseInputRouteImport
-      parentRoute: typeof ShowcaseRouteRoute
-    }
-    '/showcase/checkbox': {
-      id: '/showcase/checkbox'
-      path: '/checkbox'
-      fullPath: '/showcase/checkbox'
-      preLoaderRoute: typeof ShowcaseCheckboxRouteImport
-      parentRoute: typeof ShowcaseRouteRoute
-    }
-    '/showcase/button': {
-      id: '/showcase/button'
-      path: '/button'
-      fullPath: '/showcase/button'
-      preLoaderRoute: typeof ShowcaseButtonRouteImport
-      parentRoute: typeof ShowcaseRouteRoute
+      parentRoute: typeof rootRouteImport
     }
     '/_guest/signup': {
       id: '/_guest/signup'
@@ -406,39 +225,11 @@ const GuestRouteRouteWithChildren = GuestRouteRoute._addFileChildren(
   GuestRouteRouteChildren,
 )
 
-interface ShowcaseRouteRouteChildren {
-  ShowcaseButtonRoute: typeof ShowcaseButtonRoute
-  ShowcaseCheckboxRoute: typeof ShowcaseCheckboxRoute
-  ShowcaseInputRoute: typeof ShowcaseInputRoute
-  ShowcaseLabelRoute: typeof ShowcaseLabelRoute
-  ShowcaseRadioRoute: typeof ShowcaseRadioRoute
-  ShowcaseSwitchRoute: typeof ShowcaseSwitchRoute
-  ShowcaseTabRoute: typeof ShowcaseTabRoute
-  ShowcaseTextareaRoute: typeof ShowcaseTextareaRoute
-  ShowcaseIndexRoute: typeof ShowcaseIndexRoute
-}
-
-const ShowcaseRouteRouteChildren: ShowcaseRouteRouteChildren = {
-  ShowcaseButtonRoute: ShowcaseButtonRoute,
-  ShowcaseCheckboxRoute: ShowcaseCheckboxRoute,
-  ShowcaseInputRoute: ShowcaseInputRoute,
-  ShowcaseLabelRoute: ShowcaseLabelRoute,
-  ShowcaseRadioRoute: ShowcaseRadioRoute,
-  ShowcaseSwitchRoute: ShowcaseSwitchRoute,
-  ShowcaseTabRoute: ShowcaseTabRoute,
-  ShowcaseTextareaRoute: ShowcaseTextareaRoute,
-  ShowcaseIndexRoute: ShowcaseIndexRoute,
-}
-
-const ShowcaseRouteRouteWithChildren = ShowcaseRouteRoute._addFileChildren(
-  ShowcaseRouteRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
   GuestRouteRoute: GuestRouteRouteWithChildren,
-  ShowcaseRouteRoute: ShowcaseRouteRouteWithChildren,
+  ShowcaseIndexRoute: ShowcaseIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

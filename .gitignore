@@ -23,3 +23,9 @@ dist
 /public/build
 
 .tanstack
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

@@ -28,6 +28,9 @@
     "figma-props:extract": "node .agents/skills/figma-props-sync/scripts/figma-props-sync.cjs extract-code",
     "figma-props:finalize": "node .agents/skills/figma-props-sync/scripts/figma-props-sync.cjs finalize",
     "figma-props:test": "tsx .agents/skills/figma-props-sync/scripts/figma-props-pressure.ts",
+    "test:visual": "playwright test",
+    "test:visual:ui": "playwright test --ui",
+    "test:visual:update": "playwright test --update-snapshots",
     "skills": "pnpm dlx skills@latest",
     "intent": "pnpm dlx @tanstack/intent@latest"
   },
@@ -56,6 +59,7 @@
   },
   "devDependencies": {
     "@babel/core": "8.0.1",
+    "@playwright/test": "^1.61.1",
     "@rolldown/plugin-babel": "0.2.3",
     "@tailwindcss/vite": "4.3.1",
     "@tanstack/devtools-a11y": "0.1.6",
