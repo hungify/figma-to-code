@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-07-17T14:55:13Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "Input",
+  "codeFile": "src/components/ui/input.tsx",
+  "figmaGroups": [
+    {
+      "name": "text-field",
+      "figmaNodeId": "43:1940"
+    }
+  ],
+  "props": {
+    "Type": {
+      "mappingKind": "unmapped",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "low",
+      "note": "Figma Type only Default; no Input type enum."
+    },
+    "Status": {
+      "mappingKind": "override",
+      "type": "VARIANT",
+      "valueOverrides": {
+        "Default": {},
+        "Hover": {
+          "forceState": "hover"
+        },
+        "Filled": {},
+        "Focused": {
+          "forceState": "focus"
+        },
+        "Error": {
+          "aria-invalid": true
+        },
+        "Disable": {
+          "disabled": true
+        }
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match",
+      "note": "Filled = value present (composition). Error uses aria-invalid."
+    }
+  }
+}

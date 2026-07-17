@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "BreadcrumbLink",
+  "codeFile": "src/components/ui/breadcrumb.tsx",
+  "figmaGroups": [
+    {
+      "name": "Breadcrumb-item",
+      "figmaNodeId": "46:5274"
+    }
+  ],
+  "props": {
+    "⮑ Label#1354:0": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "TEXT",
+      "confidence": "high",
+      "note": "Link/page text children."
+    },
+    "Dropdown menu#1354:4": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "BOOLEAN",
+      "confidence": "high",
+      "note": "Optional dropdown slot."
+    },
+    "Icon#1512:6": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "BOOLEAN",
+      "confidence": "high",
+      "note": "Optional icon child."
+    },
+    "State": {
+      "mappingKind": "unmapped",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "medium",
+      "note": "Use BreadcrumbPage for current; Link for others."
+    },
+    "Content": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "high",
+      "note": "Content layout variants."
+    }
+  }
+}

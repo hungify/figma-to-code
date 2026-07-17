@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-07-05T14:21:45Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "BreadcrumbPage",
+  "codeFile": "src/components/ui/breadcrumb.tsx",
+  "figmaGroups": [
+    {
+      "name": ".Breadcrumb page",
+      "figmaNodeId": "46:5274"
+    }
+  ],
+  "props": {
+    "\u2b91 Label#1354:0": {
+      "reactProp": "children",
+      "type": "TEXT",
+      "confidence": "high",
+      "verifiedVia": "source-read",
+      "note": "Text content maps to BreadcrumbPage children. Verified by reading BreadcrumbPage implementation in src/components/ui/breadcrumb.tsx."
+    },
+    "Dropdown menu#1354:4": {
+      "reactProp": "dropdown",
+      "type": "BOOLEAN",
+      "confidence": "high",
+      "verifiedVia": "source-read",
+      "note": "BreadcrumbPageProps defines dropdown?: boolean in src/components/ui/breadcrumb.tsx."
+    },
+    "Icon#1512:6": {
+      "reactProp": null,
+      "type": "INSTANCE_SWAP",
+      "confidence": "medium",
+      "note": "Composition-only metadata. BreadcrumbPage has no direct icon prop; icon-only current item would need custom children."
+    },
+    "State": {
+      "reactProp": null,
+      "type": "VARIANT",
+      "figmaValues": ["Default", "Hover", "Active"],
+      "valueMap": {
+        "Default": null,
+        "Hover": null,
+        "Active": null
+      },
+      "confidence": "medium",
+      "note": "Active should select BreadcrumbPage as the code component. Default/Hover should select BreadcrumbLink; no direct BreadcrumbPage state prop exists."
+    },
+    "Content": {
+      "reactProp": null,
+      "type": "VARIANT",
+      "figmaValues": ["Label", "Icon"],
+      "valueMap": {
+        "Label": null,
+        "Icon": null
+      },
+      "confidence": "high",
+      "note": "Composition-only metadata. Label uses text children; Icon uses selected icon instance as children."
+    }
+  }
+}

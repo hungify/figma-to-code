@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-07-17T14:55:13Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "SelectItem",
+  "codeFile": "src/components/ui/select.tsx",
+  "figmaGroups": [
+    {
+      "name": "Menu Item",
+      "figmaNodeId": "120:1531"
+    }
+  ],
+  "props": {
+    "Checkbox": {
+      "mappingKind": "direct",
+      "reactProp": "checkbox",
+      "type": "VARIANT",
+      "figmaValues": ["False", "True"],
+      "codeValues": [false, true],
+      "valueMap": {
+        "False": false,
+        "True": true
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match",
+      "note": "SelectItemProps.checkbox in select.tsx (extractor misses nested types)."
+    },
+    "State": {
+      "mappingKind": "override",
+      "type": "VARIANT",
+      "figmaValues": ["default", "hover", "active", "disable", "focus"],
+      "valueOverrides": {
+        "default": {},
+        "hover": {
+          "forceState": "hover"
+        },
+        "active": {
+          "forceState": "active"
+        },
+        "focus": {
+          "forceState": "focus"
+        },
+        "disable": {
+          "disabled": true
+        }
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match",
+      "note": "forceState + disabled on SelectItem."
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-07-17T14:55:13Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "TextField",
+  "codeFile": "src/components/ui/input.tsx",
+  "figmaGroups": [
+    {
+      "name": "type-basic-field",
+      "figmaNodeId": "43:1833"
+    }
+  ],
+  "props": {
+    "Show *#37:0": {
+      "mappingKind": "direct",
+      "reactProp": "required",
+      "type": "BOOLEAN",
+      "confidence": "high",
+      "verifiedVia": "raw-code-match",
+      "note": "True → required + FieldRequired (必須). Same pattern on SelectField / TextareaField."
+    },
+    "Instance prepend#103:0": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "INSTANCE_SWAP",
+      "confidence": "high",
+      "note": "Leading icon/control slot — children or Input adornment, not a TextField prop name."
+    },
+    "Instance append#103:4": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "INSTANCE_SWAP",
+      "confidence": "high",
+      "note": "Trailing icon/control slot."
+    },
+    "Show prepend#103:8": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "BOOLEAN",
+      "confidence": "high",
+      "note": "Toggle prepend slot visibility."
+    },
+    "Show append#103:12": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "BOOLEAN",
+      "confidence": "high",
+      "note": "Toggle append slot visibility."
+    },
+    "Show message#103:20": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "BOOLEAN",
+      "confidence": "high",
+      "note": "True → pass hint (FieldDescription) or error (FieldError when invalid)."
+    },
+    "Type": {
+      "mappingKind": "direct",
+      "reactProp": "hintPosition",
+      "type": "VARIANT",
+      "figmaValues": ["hint bottom", "hint top"],
+      "codeValues": ["bottom", "top"],
+      "valueMap": {
+        "hint bottom": "bottom",
+        "hint top": "top"
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match",
+      "note": "Also used by SelectField / TextareaField hintPosition."
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "PaginationPage",
+  "codeFile": "src/components/ui/pagination.tsx",
+  "figmaGroups": [
+    {
+      "name": "Pagination-page",
+      "figmaNodeId": "184:9664"
+    }
+  ],
+  "props": {
+    "Active": {
+      "mappingKind": "direct",
+      "reactProp": "active",
+      "type": "VARIANT",
+      "valueMap": {
+        "On": true,
+        "Off": false
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match"
+    }
+  }
+}

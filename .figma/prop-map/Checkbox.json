@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "Checkbox",
+  "codeFile": "src/components/ui/checkbox.tsx",
+  "figmaGroups": [
+    {
+      "name": "Checkbox",
+      "figmaNodeId": "46:4600"
+    }
+  ],
+  "props": {
+    "Checked?": {
+      "mappingKind": "override",
+      "type": "VARIANT",
+      "valueOverrides": {
+        "False": {
+          "checked": false
+        },
+        "True": {
+          "checked": true
+        },
+        "Indeterminate": {
+          "indeterminate": true
+        }
+      },
+      "confidence": "high",
+      "note": "Indeterminate uses indeterminate prop."
+    },
+    "State": {
+      "mappingKind": "override",
+      "type": "VARIANT",
+      "valueOverrides": {
+        "Default": {},
+        "Focus": {
+          "forceState": "focus"
+        },
+        "Error": {
+          "aria-invalid": true
+        },
+        "Error Focus": {
+          "forceState": "focus",
+          "aria-invalid": true
+        },
+        "Disabled": {
+          "disabled": true
+        }
+      },
+      "confidence": "high"
+    }
+  }
+}

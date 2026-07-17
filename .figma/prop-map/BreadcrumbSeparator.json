@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "BreadcrumbSeparator",
+  "codeFile": "src/components/ui/breadcrumb.tsx",
+  "figmaGroups": [
+    {
+      "name": "Breadcrumb-separator",
+      "figmaNodeId": "46:5379"
+    }
+  ],
+  "props": {
+    "Breadcrumb label#1354:0": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "TEXT",
+      "confidence": "low",
+      "note": "Separator usually has no label."
+    },
+    "Dropdown menu#1354:4": {
+      "mappingKind": "unmapped",
+      "reactProp": null,
+      "type": "BOOLEAN",
+      "confidence": "low",
+      "note": "N/A for separator."
+    },
+    "Content": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "medium",
+      "note": "Chevron/ellipsis content."
+    }
+  }
+}

@@ -24,9 +24,9 @@ function RadioGroupItem({ className, forceState, ...props }: RadioGroupItemProps
       data-force-state={forceState}
       className={cn(
         "group/radio-group-item peer relative flex size-4 shrink-0 items-center justify-center rounded-full border border-grey-200 bg-white text-green-500 shadow-[0_1px_2px_rgba(16,24,40,0.05)] transition-colors outline-none",
-        "focus-visible:border-green-500 focus-visible:shadow-[0_0_0_3px_var(--color-green-100)] data-[force-state=focus]:border-green-500 data-[force-state=focus]:shadow-[0_0_0_3px_var(--color-green-100)]",
+        "focus-visible:border-green-500 focus-visible:ring-3 focus-visible:ring-green-100 data-[force-state=focus]:border-green-500 data-[force-state=focus]:ring-3 data-[force-state=focus]:ring-green-100",
         "aria-invalid:border-red-500 aria-invalid:text-red-500",
-        "aria-invalid:focus-visible:border-red-500 aria-invalid:focus-visible:shadow-[0_0_0_3px_var(--color-red-100)] aria-invalid:data-[force-state=focus]:border-red-500 aria-invalid:data-[force-state=focus]:shadow-[0_0_0_3px_var(--color-red-100)]",
+        "aria-invalid:focus-visible:border-red-500 aria-invalid:focus-visible:ring-3 aria-invalid:focus-visible:ring-red-100 aria-invalid:data-[force-state=focus]:border-red-500 aria-invalid:data-[force-state=focus]:ring-3 aria-invalid:data-[force-state=focus]:ring-red-100",
         "data-checked:border-green-500 data-checked:bg-white",
         "data-disabled:cursor-not-allowed data-disabled:border-grey-100 data-disabled:bg-white data-disabled:text-grey-300",
         "data-checked:data-disabled:border-green-100 data-checked:data-disabled:bg-white data-checked:data-disabled:text-green-100",

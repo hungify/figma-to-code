@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-07-17T14:55:13Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "SelectContent",
+  "codeFile": "src/components/ui/select.tsx",
+  "figmaGroups": [
+    {
+      "name": "p-menu-list",
+      "figmaNodeId": "120:1455"
+    }
+  ],
+  "props": {
+    "Type": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "high",
+      "note": "Type 3/5/7/9 = number of Menu Item children in the list. Map to N SelectItem children inside SelectContent."
+    }
+  }
+}

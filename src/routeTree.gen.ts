@@ -13,7 +13,9 @@ import { Route as ShowcaseRouteRouteImport } from './routes/showcase/route'
 import { Route as GuestRouteRouteImport } from './routes/_guest/route'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShowcaseIndexRouteImport } from './routes/showcase/index'
 import { Route as ShowcaseTextareaRouteImport } from './routes/showcase/textarea'
+import { Route as ShowcaseTabRouteImport } from './routes/showcase/tab'
 import { Route as ShowcaseSwitchRouteImport } from './routes/showcase/switch'
 import { Route as ShowcaseRadioRouteImport } from './routes/showcase/radio'
 import { Route as ShowcaseLabelRouteImport } from './routes/showcase/label'
@@ -44,9 +46,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShowcaseIndexRoute = ShowcaseIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ShowcaseRouteRoute,
+} as any)
 const ShowcaseTextareaRoute = ShowcaseTextareaRouteImport.update({
   id: '/textarea',
   path: '/textarea',
+  getParentRoute: () => ShowcaseRouteRoute,
+} as any)
+const ShowcaseTabRoute = ShowcaseTabRouteImport.update({
+  id: '/tab',
+  path: '/tab',
   getParentRoute: () => ShowcaseRouteRoute,
 } as any)
 const ShowcaseSwitchRoute = ShowcaseSwitchRouteImport.update({
@@ -117,13 +129,14 @@ export interface FileRoutesByFullPath {
   '/showcase/label': typeof ShowcaseLabelRoute
   '/showcase/radio': typeof ShowcaseRadioRoute
   '/showcase/switch': typeof ShowcaseSwitchRoute
+  '/showcase/tab': typeof ShowcaseTabRoute
   '/showcase/textarea': typeof ShowcaseTextareaRoute
+  '/showcase/': typeof ShowcaseIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/app/': typeof AuthAppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/showcase': typeof ShowcaseRouteRouteWithChildren
   '/login': typeof GuestLoginRoute
   '/signup': typeof GuestSignupRoute
   '/showcase/button': typeof ShowcaseButtonRoute
@@ -132,7 +145,9 @@ export interface FileRoutesByTo {
   '/showcase/label': typeof ShowcaseLabelRoute
   '/showcase/radio': typeof ShowcaseRadioRoute
   '/showcase/switch': typeof ShowcaseSwitchRoute
+  '/showcase/tab': typeof ShowcaseTabRoute
   '/showcase/textarea': typeof ShowcaseTextareaRoute
+  '/showcase': typeof ShowcaseIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/app': typeof AuthAppIndexRoute
 }
@@ -151,7 +166,9 @@ export interface FileRoutesById {
   '/showcase/label': typeof ShowcaseLabelRoute
   '/showcase/radio': typeof ShowcaseRadioRoute
   '/showcase/switch': typeof ShowcaseSwitchRoute
+  '/showcase/tab': typeof ShowcaseTabRoute
   '/showcase/textarea': typeof ShowcaseTextareaRoute
+  '/showcase/': typeof ShowcaseIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_auth/app/': typeof AuthAppIndexRoute
 }
@@ -169,13 +186,14 @@ export interface FileRouteTypes {
     | '/showcase/label'
     | '/showcase/radio'
     | '/showcase/switch'
+    | '/showcase/tab'
     | '/showcase/textarea'
+    | '/showcase/'
     | '/api/auth/$'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/showcase'
     | '/login'
     | '/signup'
     | '/showcase/button'
@@ -184,7 +202,9 @@ export interface FileRouteTypes {
     | '/showcase/label'
     | '/showcase/radio'
     | '/showcase/switch'
+    | '/showcase/tab'
     | '/showcase/textarea'
+    | '/showcase'
     | '/api/auth/$'
     | '/app'
   id:
@@ -202,7 +222,9 @@ export interface FileRouteTypes {
     | '/showcase/label'
     | '/showcase/radio'
     | '/showcase/switch'
+    | '/showcase/tab'
     | '/showcase/textarea'
+    | '/showcase/'
     | '/api/auth/$'
     | '/_auth/app/'
   fileRoutesById: FileRoutesById
@@ -245,11 +267,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/showcase/': {
+      id: '/showcase/'
+      path: '/'
+      fullPath: '/showcase/'
+      preLoaderRoute: typeof ShowcaseIndexRouteImport
+      parentRoute: typeof ShowcaseRouteRoute
+    }
     '/showcase/textarea': {
       id: '/showcase/textarea'
       path: '/textarea'
       fullPath: '/showcase/textarea'
       preLoaderRoute: typeof ShowcaseTextareaRouteImport
+      parentRoute: typeof ShowcaseRouteRoute
+    }
+    '/showcase/tab': {
+      id: '/showcase/tab'
+      path: '/tab'
+      fullPath: '/showcase/tab'
+      preLoaderRoute: typeof ShowcaseTabRouteImport
       parentRoute: typeof ShowcaseRouteRoute
     }
     '/showcase/switch': {
@@ -377,7 +413,9 @@ interface ShowcaseRouteRouteChildren {
   ShowcaseLabelRoute: typeof ShowcaseLabelRoute
   ShowcaseRadioRoute: typeof ShowcaseRadioRoute
   ShowcaseSwitchRoute: typeof ShowcaseSwitchRoute
+  ShowcaseTabRoute: typeof ShowcaseTabRoute
   ShowcaseTextareaRoute: typeof ShowcaseTextareaRoute
+  ShowcaseIndexRoute: typeof ShowcaseIndexRoute
 }
 
 const ShowcaseRouteRouteChildren: ShowcaseRouteRouteChildren = {
@@ -387,7 +425,9 @@ const ShowcaseRouteRouteChildren: ShowcaseRouteRouteChildren = {
   ShowcaseLabelRoute: ShowcaseLabelRoute,
   ShowcaseRadioRoute: ShowcaseRadioRoute,
   ShowcaseSwitchRoute: ShowcaseSwitchRoute,
+  ShowcaseTabRoute: ShowcaseTabRoute,
   ShowcaseTextareaRoute: ShowcaseTextareaRoute,
+  ShowcaseIndexRoute: ShowcaseIndexRoute,
 }
 
 const ShowcaseRouteRouteWithChildren = ShowcaseRouteRoute._addFileChildren(

@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "Breadcrumb",
+  "codeFile": "src/components/ui/breadcrumb.tsx",
+  "figmaGroups": [
+    {
+      "name": "Breadcrumb",
+      "figmaNodeId": "46:5217"
+    }
+  ],
+  "props": {
+    "Items": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "high",
+      "note": "Compose BreadcrumbList children; Items count is layout only."
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "TooltipContent",
+  "codeFile": "src/components/ui/tooltip.tsx",
+  "figmaGroups": [
+    {
+      "name": "Tooltip",
+      "figmaNodeId": "388:52475"
+    }
+  ],
+  "props": {
+    "Tooltip text#1586:419": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "TEXT",
+      "confidence": "high",
+      "note": "TooltipContent children text."
+    },
+    "Side": {
+      "mappingKind": "direct",
+      "reactProp": "side",
+      "type": "VARIANT",
+      "valueMap": {
+        "Top": "top",
+        "Bottom": "bottom",
+        "Left": "left",
+        "Right": "right"
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match"
+    }
+  }
+}

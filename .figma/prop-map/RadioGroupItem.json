@@ -1,0 +1,46 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "RadioGroupItem",
+  "codeFile": "src/components/ui/radio-group.tsx",
+  "figmaGroups": [
+    {
+      "name": "Radio",
+      "figmaNodeId": "46:4532"
+    }
+  ],
+  "props": {
+    "Checked?": {
+      "mappingKind": "direct",
+      "reactProp": "checked",
+      "type": "VARIANT",
+      "valueMap": {
+        "False": false,
+        "True": true
+      },
+      "confidence": "medium",
+      "note": "Prefer RadioGroup value; checked for static showcase."
+    },
+    "State": {
+      "mappingKind": "override",
+      "type": "VARIANT",
+      "valueOverrides": {
+        "Default": {},
+        "Focus": {
+          "forceState": "focus"
+        },
+        "Error": {
+          "aria-invalid": true
+        },
+        "Error Focus": {
+          "forceState": "focus",
+          "aria-invalid": true
+        },
+        "Disabled": {
+          "disabled": true
+        }
+      },
+      "confidence": "high"
+    }
+  }
+}

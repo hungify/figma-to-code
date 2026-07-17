@@ -1,0 +1,28 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "FileUpload",
+  "codeFile": "src/components/ui/file-upload.tsx",
+  "figmaGroups": [
+    {
+      "name": "upload-state",
+      "figmaNodeId": "348:17337"
+    }
+  ],
+  "props": {
+    "type": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "medium",
+      "note": "Compose FileUpload dropzone vs list; map via showcase patterns."
+    },
+    "state": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "medium",
+      "note": "Idle/dragging/error driven by FileUpload state hooks."
+    }
+  }
+}

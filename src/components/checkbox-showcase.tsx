@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 import { Checkbox } from "./ui/checkbox";
 
@@ -49,9 +49,13 @@ function CheckboxStateCell({
 }
 
 export function CheckboxShowcase() {
+  const [checked, setChecked] = useState(false);
+  const [indeterminate, setIndeterminate] = useState(true);
+  const [invalid, setInvalid] = useState(false);
+
   return (
     <main className="min-h-screen bg-white px-8 py-10 text-grey-900">
-      <section className="grid gap-5">
+      <section className="grid gap-8">
         <h2 className="text-xl font-bold">Checkbox</h2>
         <div
           className="relative h-[217px] w-[691px] text-sm"
@@ -111,6 +115,47 @@ export function CheckboxShowcase() {
                 ))}
               </Fragment>
             ))}
+          </div>
+        </div>
+
+        <div className="grid w-fit gap-4">
+          <h3 className="jp-label-lg font-bold">Interactive</h3>
+          <div className="flex items-center gap-3">
+            <Checkbox
+              checked={checked}
+              indeterminate={indeterminate}
+              aria-invalid={invalid || undefined}
+              onCheckedChange={(nextChecked) => {
+                setChecked(nextChecked);
+                setIndeterminate(false);
+              }}
+            />
+            <button
+              type="button"
+              className="jp-body-lg text-grey-900"
+              onClick={() => {
+                setChecked((current) => !current);
+                setIndeterminate(false);
+              }}
+            >
+              Receive updates
+            </button>
+          </div>
+          <div className="flex gap-3">
+            <button
+              type="button"
+              className="rounded-md border border-grey-100 px-3 py-2 jp-label-lg font-bold text-grey-900"
+              onClick={() => setIndeterminate((current) => !current)}
+            >
+              Toggle indeterminate
+            </button>
+            <button
+              type="button"
+              className="rounded-md border border-grey-100 px-3 py-2 jp-label-lg font-bold text-grey-900"
+              onClick={() => setInvalid((current) => !current)}
+            >
+              Toggle error
+            </button>
           </div>
         </div>
       </section>

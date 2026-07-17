@@ -105,6 +105,18 @@
   --color-green-800: #225949;
   --color-green-900: #1a4438;
 
+  /* Lime */
+  --color-lime-50: #f2f8ea;
+  --color-lime-100: #d7eabc;
+  --color-lime-200: #c4df9c;
+  --color-lime-300: #a9d16f;
+  --color-lime-400: #99c853;
+  --color-lime-500: #7fba28;
+  --color-lime-600: #74a924;
+  --color-lime-700: #5a841c;
+  --color-lime-800: #466616;
+  --color-lime-900: #354e11;
+
   /* Red */
   --color-red-50: #fdeeee;
   --color-red-100: #facac9;
@@ -143,7 +155,7 @@
 
   /* Blue */
   --color-blue-50: #e8f5ff;
-  --color-blue-100: #b8defe;
+  --color-blue-100: #b8deff;
   --color-blue-200: #96cfff;
   --color-blue-300: #66b9ff;
   --color-blue-400: #49abff;

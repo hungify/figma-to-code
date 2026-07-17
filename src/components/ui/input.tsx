@@ -16,7 +16,7 @@ function Input({ className, type, forceState, ...props }: InputProps) {
       data-slot="input"
       data-force-state={forceState}
       className={cn(
-        "h-12 w-full min-w-0 rounded-lg border border-grey-100 bg-white px-3 jp-body-lg [color:var(--color-grey-900)] transition-colors outline-none placeholder:text-grey-300",
+        "h-12 w-full min-w-0 rounded-lg border border-grey-100 bg-white px-3 jp-body-lg text-grey-900 transition-colors outline-none placeholder:text-grey-300",
         "hover:border-grey-100 focus-visible:border-2 focus-visible:border-green-300 data-[force-state=focus]:border-2 data-[force-state=focus]:border-green-300 data-[force-state=hover]:border-grey-100",
         "disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-grey-50 disabled:text-grey-300 aria-invalid:border-red-500 aria-invalid:focus-visible:border-red-500 aria-invalid:data-[force-state=focus]:border-red-500",
         className,

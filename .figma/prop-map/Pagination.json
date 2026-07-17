@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "Pagination",
+  "codeFile": "src/components/ui/pagination.tsx",
+  "figmaGroups": [
+    {
+      "name": "Pagination",
+      "figmaNodeId": "184:9876"
+    }
+  ],
+  "props": {
+    "Type": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "high",
+      "note": "Compose PaginationContent with pages/ellipsis/prev/next; Type is layout pattern only."
+    }
+  }
+}

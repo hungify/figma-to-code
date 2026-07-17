@@ -1,47 +1,57 @@
-import { ArrowRightIcon, ChevronRightIcon, PlusIcon, Trash2Icon, UserIcon } from "lucide-react";
-import { Fragment } from "react";
+import { ChevronRightIcon, UserIcon } from "lucide-react";
+import { Fragment, type ReactNode } from "react";
 
 import { Button } from "./ui/button";
 
 const sizeExamples = [
-  { label: "Small", size: "sm", width: "w-[138px]" },
-  { label: "Regular", size: "md", width: "w-[146px]" },
-  { label: "Large", size: "lg", width: "w-[160px]" },
-  { label: "XLarge", size: "xl", width: "w-[176px]" },
+  { label: "Small", size: "sm" },
+  { label: "Regular", size: "md" },
+  { label: "Large", size: "lg" },
+  { label: "XLarge", size: "xl" },
 ] as const;
 
-const iconSizeExamples = [
-  { label: "Small", size: "icon-sm", icon: PlusIcon, variant: "ghost", color: "grey" },
-  { label: "Regular", size: "icon", icon: Trash2Icon, variant: "filled", color: "red" },
-  { label: "Large", size: "icon-lg", icon: ArrowRightIcon, variant: "outline", color: "green" },
-  { label: "XLarge", size: "icon-xl", icon: ChevronRightIcon, variant: "filled", color: "yellow" },
-] as const;
-
-const filledColors = [
+/** Figma btn Color columns: Green → Lime → Blue → Red → Danger → Yellow → Grey */
+const buttonColors = [
   { label: "Green", color: "green" },
+  { label: "Lime", color: "lime" },
+  { label: "Blue", color: "blue" },
   { label: "Red", color: "red" },
+  { label: "Danger", color: "danger" },
   { label: "Yellow", color: "yellow" },
+  { label: "Grey", color: "grey" },
 ] as const;
 
-// Shared across filled + outline sections. Button already knows how to render
-// each state via `forceState` / `disabled`, showcase just declares intent.
 const states = [
   { label: "Default" },
-  { label: "Hover", forceState: "hover" },
-  { label: "Active", forceState: "active" },
-  { label: "Focused", forceState: "focus" },
-  { label: "Disable", disabled: true },
+  { label: "Hover", forceState: "hover" as const },
+  { label: "Active", forceState: "active" as const },
+  { label: "Focused", forceState: "focus" as const },
+  { label: "Disable", disabled: true as const },
 ] as const;
 
-function SizeButton({
+const styleExamples = [
+  { label: "Default", variant: "filled" as const },
+  { label: "Outlined", variant: "outline" as const },
+] as const;
+
+function LabeledButton({ children, label }: { children: ReactNode; label: string }) {
+  return (
+    <div className="grid justify-items-start gap-2">
+      <span className="text-sm font-medium text-grey-600">{label}</span>
+      {children}
+    </div>
+  );
+}
+
+function IconLabelButton({
   size,
-  width,
+  variant,
 }: {
   size: (typeof sizeExamples)[number]["size"];
-  width: string;
+  variant: "filled" | "outline";
 }) {
   return (
-    <Button size={size} color="green" className={width}>
+    <Button size={size} variant={variant} color="green">
       <UserIcon />
       Button
       <ChevronRightIcon />
@@ -49,99 +59,80 @@ function SizeButton({
   );
 }
 
+function ColorStateMatrix({ variant }: { variant: "filled" | "outline" }) {
+  return (
+    <div className="grid w-fit grid-cols-[72px_repeat(7,minmax(80px,1fr))] items-center gap-x-4 gap-y-6">
+      <div />
+      {buttonColors.map((item) => (
+        <span key={item.color} className="text-center text-sm font-bold text-grey-600">
+          {item.label}
+        </span>
+      ))}
+
+      {states.map((state) => (
+        <Fragment key={`${variant}-${state.label}`}>
+          <span className="flex h-12 items-center text-sm font-bold text-grey-600">
+            {state.label}
+          </span>
+          {buttonColors.map((item) => (
+            <div key={`${variant}-${state.label}-${item.color}`} className="flex justify-center">
+              <Button
+                size="lg"
+                variant={variant}
+                color={item.color}
+                forceState={"forceState" in state ? state.forceState : undefined}
+                disabled={"disabled" in state ? state.disabled : undefined}
+                className="w-20"
+              >
+                Button
+              </Button>
+            </div>
+          ))}
+        </Fragment>
+      ))}
+    </div>
+  );
+}
+
 export function ButtonShowcase() {
   return (
     <main className="min-h-screen bg-white px-8 py-10 text-grey-900">
-      <div className="grid max-w-5xl gap-12">
-        <section className="grid gap-5">
-          <h2 className="text-xl font-bold">Button size</h2>
-          <div className="flex flex-wrap items-end gap-6">
-            {sizeExamples.map((item) => (
-              <div key={item.size} className="grid gap-2">
-                <span className="text-sm font-medium text-grey-600">{item.label}</span>
-                <SizeButton size={item.size} width={item.width} />
-              </div>
-            ))}
-          </div>
-        </section>
+      <div className="flex flex-wrap items-start gap-12">
+        <div className="grid gap-10">
+          <section className="grid gap-5 rounded-lg border border-dashed border-grey-300 p-5">
+            <h2 className="text-xl font-bold">Size</h2>
+            <div className="grid gap-6">
+              {sizeExamples.map((item) => (
+                <LabeledButton key={item.size} label={item.label}>
+                  <IconLabelButton size={item.size} variant="filled" />
+                </LabeledButton>
+              ))}
+            </div>
+          </section>
 
-        <section className="grid gap-5">
-          <h2 className="text-xl font-bold">Icon only</h2>
-          <div className="flex flex-wrap items-end gap-6">
-            {iconSizeExamples.map((item) => {
-              const Icon = item.icon;
+          <section className="grid gap-5 rounded-lg border border-dashed border-grey-300 p-5">
+            <h2 className="text-xl font-bold">Style</h2>
+            <div className="grid gap-6">
+              {styleExamples.map((item) => (
+                <LabeledButton key={item.variant} label={item.label}>
+                  <IconLabelButton size="lg" variant={item.variant} />
+                </LabeledButton>
+              ))}
+            </div>
+          </section>
+        </div>
 
-              return (
-                <div key={item.size} className="grid justify-items-center gap-2">
-                  <span className="text-sm font-medium text-grey-600">{item.label}</span>
-                  <Button size={item.size} variant={item.variant} color={item.color}>
-                    <Icon />
-                  </Button>
-                </div>
-              );
-            })}
-          </div>
-        </section>
+        <div className="grid gap-12">
+          <section className="grid gap-5">
+            <h2 className="text-xl font-bold">Filled</h2>
+            <ColorStateMatrix variant="filled" />
+          </section>
 
-        <section className="grid gap-5">
-          <h2 className="text-xl font-bold">Filled</h2>
-          <div className="grid w-fit grid-cols-[72px_repeat(3,121px)] gap-x-8 gap-y-6">
-            <div />
-            {filledColors.map((item) => (
-              <span key={item.color} className="text-center text-sm font-bold text-grey-600">
-                {item.label}
-              </span>
-            ))}
-
-            {states.map((state) => (
-              <Fragment key={state.label}>
-                <span className="flex h-12 items-center text-sm font-bold text-grey-600">
-                  {state.label}
-                </span>
-                {filledColors.map((item) => (
-                  <Button
-                    key={`${state.label}-${item.color}`}
-                    size="lg"
-                    variant="filled"
-                    color={item.color}
-                    forceState={"forceState" in state ? state.forceState : undefined}
-                    disabled={"disabled" in state ? state.disabled : undefined}
-                    className="w-[121px]"
-                  >
-                    Button
-                  </Button>
-                ))}
-              </Fragment>
-            ))}
-          </div>
-        </section>
-
-        <section className="grid gap-5">
-          <h2 className="text-xl font-bold">Outlined</h2>
-          <div className="grid w-fit grid-cols-[72px_121px] gap-x-8 gap-y-6">
-            <div />
-            <span className="text-center text-sm font-bold text-grey-600">Green</span>
-
-            {states.map((state) => (
-              <Fragment key={state.label}>
-                <span className="flex h-12 items-center text-sm font-bold text-grey-600">
-                  {state.label}
-                </span>
-                <Button
-                  key={`${state.label}-outline-green`}
-                  size="lg"
-                  variant="outline"
-                  color="green"
-                  forceState={"forceState" in state ? state.forceState : undefined}
-                  disabled={"disabled" in state ? state.disabled : undefined}
-                  className="w-[121px]"
-                >
-                  Button
-                </Button>
-              </Fragment>
-            ))}
-          </div>
-        </section>
+          <section className="grid gap-5">
+            <h2 className="text-xl font-bold">Outlined</h2>
+            <ColorStateMatrix variant="outline" />
+          </section>
+        </div>
       </div>
     </main>
   );

@@ -19,13 +19,16 @@ const buttonVariants = cva(
       color: {
         green:
           "[--btn-color-active:var(--color-green-600)] [--btn-color-focus:var(--color-green-800)] [--btn-color-hover:var(--color-green-400)] [--btn-color-soft-active:var(--color-green-100)] [--btn-color-soft:var(--color-green-50)] [--btn-color:var(--color-green-500)] [--btn-fg:white]",
+        lime: "[--btn-color-active:var(--color-lime-600)] [--btn-color-focus:var(--color-lime-800)] [--btn-color-hover:var(--color-lime-400)] [--btn-color-soft-active:var(--color-lime-100)] [--btn-color-soft:var(--color-lime-50)] [--btn-color:var(--color-lime-500)] [--btn-fg:white]",
+        blue: "[--btn-color-active:var(--color-blue-600)] [--btn-color-focus:var(--color-blue-800)] [--btn-color-hover:var(--color-blue-400)] [--btn-color-soft-active:var(--color-blue-100)] [--btn-color-soft:var(--color-blue-50)] [--btn-color:var(--color-blue-500)] [--btn-fg:white]",
         red: "[--btn-color-active:var(--color-red-600)] [--btn-color-focus:var(--color-red-800)] [--btn-color-hover:var(--color-red-400)] [--btn-color-soft-active:var(--color-red-100)] [--btn-color-soft:var(--color-red-50)] [--btn-color:var(--color-red-500)] [--btn-fg:white]",
+        // Figma Color=Danger uses orange scale
+        danger:
+          "[--btn-color-active:var(--color-orange-600)] [--btn-color-focus:var(--color-orange-800)] [--btn-color-hover:var(--color-orange-400)] [--btn-color-soft-active:var(--color-orange-100)] [--btn-color-soft:var(--color-orange-50)] [--btn-color:var(--color-orange-500)] [--btn-fg:white]",
         yellow:
           "[--btn-color-active:var(--color-yellow-600)] [--btn-color-focus:var(--color-yellow-800)] [--btn-color-hover:var(--color-yellow-400)] [--btn-color-soft-active:var(--color-yellow-100)] [--btn-color-soft:var(--color-yellow-50)] [--btn-color:var(--color-yellow-500)] [--btn-fg:white]",
-        orange:
-          "[--btn-color-active:var(--color-orange-600)] [--btn-color-focus:var(--color-orange-800)] [--btn-color-hover:var(--color-orange-400)] [--btn-color-soft-active:var(--color-orange-100)] [--btn-color-soft:var(--color-orange-50)] [--btn-color:var(--color-orange-500)] [--btn-fg:white]",
-        blue: "[--btn-color-active:var(--color-blue-600)] [--btn-color-focus:var(--color-blue-800)] [--btn-color-hover:var(--color-blue-400)] [--btn-color-soft-active:var(--color-blue-100)] [--btn-color-soft:var(--color-blue-50)] [--btn-color:var(--color-blue-500)] [--btn-fg:white]",
-        grey: "[--btn-color-active:var(--color-grey-800)] [--btn-color-focus:var(--color-grey-900)] [--btn-color-hover:var(--color-grey-600)] [--btn-color-soft-active:var(--color-grey-100)] [--btn-color-soft:var(--color-grey-50)] [--btn-color:var(--color-grey-700)] [--btn-fg:white]",
+        // Outline/ghost use grey-500. Filled grey is soft (see compoundVariants) — not saturated 700 + white.
+        grey: "[--btn-color-active:var(--color-grey-600)] [--btn-color-focus:var(--color-grey-500)] [--btn-color-hover:var(--color-grey-400)] [--btn-color-soft-active:var(--color-grey-100)] [--btn-color-soft:var(--color-grey-50)] [--btn-color:var(--color-grey-500)] [--btn-fg:var(--color-grey-500)]",
       },
       size: {
         sm: "h-8 gap-2 px-6 py-2 text-sm leading-4 font-medium [&_svg:not([class*='size-'])]:size-4",
@@ -38,6 +41,14 @@ const buttonVariants = cva(
         "icon-xl": "size-14 [&_svg:not([class*='size-'])]:size-8",
       },
     },
+    compoundVariants: [
+      {
+        variant: "filled",
+        color: "grey",
+        className:
+          "bg-grey-100 text-grey-500 hover:bg-grey-50 focus-visible:border-grey-500 active:bg-grey-100 data-[force-state=active]:bg-grey-100 data-[force-state=focus]:border-grey-500 data-[force-state=hover]:bg-grey-50",
+      },
+    ],
     defaultVariants: {
       variant: "filled",
       color: "green",

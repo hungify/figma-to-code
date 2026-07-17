@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "TabsTrigger",
+  "codeFile": "src/components/ui/tabs.tsx",
+  "figmaGroups": [
+    {
+      "name": "p-tab-text",
+      "figmaNodeId": "415:100513"
+    }
+  ],
+  "props": {
+    "Type": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "high",
+      "note": "Type=Text → TabsTrigger. Type=< /> → TabsScrollButton."
+    },
+    "State": {
+      "mappingKind": "override",
+      "type": "VARIANT",
+      "valueOverrides": {
+        "Inactive": {},
+        "Active": {
+          "forceState": "active"
+        }
+      },
+      "confidence": "high",
+      "note": "Runtime Active = Tabs value match."
+    },
+    "Icon": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "high",
+      "note": "Icon=True → leading lucide child."
+    }
+  }
+}

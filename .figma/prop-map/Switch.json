@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "Switch",
+  "codeFile": "src/components/ui/switch.tsx",
+  "figmaGroups": [
+    {
+      "name": "Switch",
+      "figmaNodeId": "46:4672"
+    }
+  ],
+  "props": {
+    "Checked?": {
+      "mappingKind": "direct",
+      "reactProp": "checked",
+      "type": "VARIANT",
+      "valueMap": {
+        "False": false,
+        "True": true
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match"
+    },
+    "State": {
+      "mappingKind": "override",
+      "type": "VARIANT",
+      "valueOverrides": {
+        "Default": {},
+        "Focus": {
+          "forceState": "focus"
+        },
+        "Disabled": {
+          "disabled": true
+        }
+      },
+      "confidence": "high"
+    }
+  }
+}

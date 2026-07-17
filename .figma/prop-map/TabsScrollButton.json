@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "TabsScrollButton",
+  "codeFile": "src/components/ui/tabs.tsx",
+  "figmaGroups": [
+    {
+      "name": "p-tab-chevron",
+      "figmaNodeId": "415:100513"
+    }
+  ],
+  "props": {
+    "Type": {
+      "mappingKind": "direct",
+      "reactProp": "direction",
+      "type": "VARIANT",
+      "valueMap": {
+        "Text": null,
+        "<": "prev",
+        ">": "next"
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match"
+    },
+    "State": {
+      "mappingKind": "unmapped",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "low",
+      "note": "Scroll buttons not tab-selected."
+    },
+    "Icon": {
+      "mappingKind": "unmapped",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "low",
+      "note": "Always ChevronLeft/Right."
+    }
+  }
+}

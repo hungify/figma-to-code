@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "Chip",
+  "codeFile": "src/components/ui/chip.tsx",
+  "figmaGroups": [
+    {
+      "name": "p-chip",
+      "figmaNodeId": "43:2081"
+    }
+  ],
+  "props": {
+    "Show append#104:0": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "BOOLEAN",
+      "confidence": "high",
+      "note": "append child."
+    },
+    "Show prepend#104:1": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "BOOLEAN",
+      "confidence": "high",
+      "note": "prepend child."
+    },
+    "Instance prepend#104:2": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "INSTANCE_SWAP",
+      "confidence": "high",
+      "note": "prepend icon."
+    },
+    "Instance append#104:3": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "INSTANCE_SWAP",
+      "confidence": "high",
+      "note": "append icon."
+    }
+  }
+}

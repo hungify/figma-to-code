@@ -97,10 +97,7 @@ function FieldLabel({ className, ...props }: React.ComponentProps<typeof Label>)
   return (
     <Label
       data-slot="field-label"
-      className={cn(
-        "group/field-label peer/field-label flex w-fit gap-1 [color:var(--color-grey-900)]",
-        className,
-      )}
+      className={cn("group/field-label peer/field-label flex w-fit gap-1 text-grey-900", className)}
       {...props}
     />
   );
@@ -111,7 +108,7 @@ function FieldRequired({ className, ...props }: React.ComponentProps<"span">) {
     <span
       data-slot="field-required"
       className={cn(
-        "rounded-xs bg-red-50 px-1 py-0.5 jp-label-sm font-bold [color:var(--color-red-500)]",
+        "rounded-xs bg-red-50 px-1 py-0.5 jp-label-sm font-bold text-red-500",
         className,
       )}
       {...props}
@@ -136,10 +133,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       data-slot="field-description"
-      className={cn(
-        "text-left text-[12px] leading-[14px] font-normal [color:var(--color-grey-900)]",
-        className,
-      )}
+      className={cn("text-left text-[12px] leading-[14px] font-normal text-grey-900", className)}
       {...props}
     />
   );

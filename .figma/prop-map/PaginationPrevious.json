@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "PaginationPrevious",
+  "codeFile": "src/components/ui/pagination.tsx",
+  "figmaGroups": [
+    {
+      "name": "Pagination-btn",
+      "figmaNodeId": "184:9643"
+    }
+  ],
+  "props": {
+    "style": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "medium",
+      "note": "text vs icon — children / className."
+    },
+    "type": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "high",
+      "note": "Previous → PaginationPrevious; Next → PaginationNext."
+    },
+    "State": {
+      "mappingKind": "override",
+      "type": "VARIANT",
+      "valueOverrides": {
+        "Regular": {},
+        "Disabled": {
+          "disabled": true
+        }
+      },
+      "confidence": "high"
+    }
+  }
+}

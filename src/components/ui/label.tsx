@@ -26,7 +26,7 @@ function ControlLabel({ className, disabled, ...props }: ControlLabelProps) {
       data-disabled={disabled || undefined}
       aria-disabled={disabled || undefined}
       className={cn(
-        "flex items-start font-sans jp-body-lg whitespace-nowrap [color:var(--color-grey-900)] select-none data-disabled:text-grey-300",
+        "flex items-start font-sans jp-body-lg whitespace-nowrap text-grey-900 select-none data-disabled:text-grey-300",
         className,
       )}
       {...props}

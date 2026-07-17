@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "Tabs",
+  "codeFile": "src/components/ui/tabs.tsx",
+  "figmaGroups": [
+    {
+      "name": "tabs-root",
+      "figmaNodeId": "415:100512"
+    }
+  ],
+  "props": {
+    "orientation": {
+      "mappingKind": "unmapped",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "low",
+      "note": "Figma Tab section has no Root props; use Base UI value/defaultValue."
+    }
+  }
+}

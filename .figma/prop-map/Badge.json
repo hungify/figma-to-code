@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "Badge",
+  "codeFile": "src/components/ui/badge.tsx",
+  "figmaGroups": [
+    {
+      "name": "Badge",
+      "figmaNodeId": "184:6540"
+    }
+  ],
+  "props": {
+    "Show icon#11053:0": {
+      "mappingKind": "direct",
+      "reactProp": "showIcon",
+      "type": "BOOLEAN",
+      "confidence": "high",
+      "verifiedVia": "raw-code-match"
+    },
+    "Type": {
+      "mappingKind": "direct",
+      "reactProp": "type",
+      "type": "VARIANT",
+      "valueMap": {
+        "bold": "bold",
+        "regular": "regular"
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match"
+    },
+    "Status": {
+      "mappingKind": "direct",
+      "reactProp": "status",
+      "type": "VARIANT",
+      "valueMap": {
+        "Inprogress": "inprogress",
+        "success": "success",
+        "disable": "disable",
+        "danger": "danger",
+        "error": "error",
+        "waiting": "waiting"
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match"
+    }
+  }
+}

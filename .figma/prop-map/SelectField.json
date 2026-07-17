@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-07-17T14:55:13Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "SelectField",
+  "codeFile": "src/components/ui/select.tsx",
+  "figmaGroups": [
+    {
+      "name": "memu",
+      "figmaNodeId": "120:1495"
+    }
+  ],
+  "props": {
+    "Property 1": {
+      "mappingKind": "composition",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "medium",
+      "note": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop."
+    }
+  }
+}

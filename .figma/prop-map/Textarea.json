@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-07-17T14:55:13Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "Textarea",
+  "codeFile": "src/components/ui/textarea.tsx",
+  "figmaGroups": [
+    {
+      "name": "text-areas",
+      "figmaNodeId": "43:2026"
+    }
+  ],
+  "props": {
+    "Type": {
+      "mappingKind": "unmapped",
+      "reactProp": null,
+      "type": "VARIANT",
+      "confidence": "low",
+      "note": "Figma Type only Default."
+    },
+    "Status": {
+      "mappingKind": "override",
+      "type": "VARIANT",
+      "valueOverrides": {
+        "Default": {},
+        "Hover": {
+          "forceState": "hover"
+        },
+        "Filled": {},
+        "Focused": {
+          "forceState": "focus"
+        },
+        "Error": {
+          "aria-invalid": true
+        },
+        "Disable": {
+          "disabled": true
+        }
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match",
+      "note": "Textarea supports forceState hover|focus (textarea.tsx)."
+    }
+  }
+}

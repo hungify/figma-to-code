@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-07-17T14:52:37Z",
+  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+  "codeComponent": "TabsList",
+  "codeFile": "src/components/ui/tabs.tsx",
+  "figmaGroups": [
+    {
+      "name": "p-tabs",
+      "figmaNodeId": "415:100532"
+    }
+  ],
+  "props": {
+    "Type": {
+      "mappingKind": "direct",
+      "reactProp": "variant",
+      "type": "VARIANT",
+      "valueMap": {
+        "Default": "default",
+        "Fixed": "fixed"
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match"
+    },
+    "Pagination": {
+      "mappingKind": "direct",
+      "reactProp": "pagination",
+      "type": "VARIANT",
+      "valueMap": {
+        "False": false,
+        "True": true
+      },
+      "confidence": "high",
+      "verifiedVia": "raw-code-match"
+    }
+  }
+}
