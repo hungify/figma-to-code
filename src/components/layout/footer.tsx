@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import type { ComponentPropsWithoutRef } from "react";
 
 import { cn } from "#/lib/utils";
@@ -23,10 +24,14 @@ const defaultFooterLinks = [
 
 function FooterLogo() {
   return (
-    <div className="relative h-12 w-24.75 overflow-visible">
+    <Link
+      to="/"
+      aria-label="らきた ホーム"
+      className="relative block h-12 w-24.75 overflow-visible"
+    >
       <img
         src={`${LOGO_ASSET_BASE}/logo-wordmark.svg`}
-        alt="らきた"
+        alt=""
         className="absolute top-0 left-0 h-[34.89px] w-[96.48px]"
       />
       <img
@@ -34,7 +39,7 @@ function FooterLogo() {
         alt=""
         className="absolute top-[39.48px] left-[1.3px] h-[8.52px] w-[94.8px]"
       />
-    </div>
+    </Link>
   );
 }
 

@@ -71,13 +71,14 @@ src/
 
 ## Rules
 
-- Shared chrome (Header/Footer) for a route group lives **once** in that group's pathless layout route (e.g. `src/routes/_guest/route.tsx` renders `<Header/><main><Outlet/></main><Footer/>`). Individual screens (`login-screen.tsx`, etc.) render only their own content — never re-import `Header`/`Footer` per screen.
-- **Never** put data-fetching (queries/mutations/server functions) inside `features/<feature>/screens/`. UI layer calls into `src/lib/<domain>/` — keep screens presentational + form-handling only.
+- **Follow existing code first.** Before inventing folders or APIs, mirror a sibling under `src/features/*/screens/*/` (`#/` imports, tokens, layout ownership, how UI vs logic is split). Architecture fills gaps only when no precedent exists.
+- Shared chrome (Header/Footer) for a route group lives **once** in that group's pathless layout route (e.g. `src/routes/_guest/route.tsx` renders `<Header/><main><Outlet/></main><Footer/>`). Individual screens render only their own content — never re-import `Header`/`Footer` per screen.
+- **Clean screen composition:** keep `<screen>-screen.tsx` thin; extract UI blocks to `components/` and local state/handlers/mutations to `hooks/` when the screen would otherwise monolith. Form + `use-*` hook (e.g. login) is **one** clean-code pattern — follow siblings for other shapes. Details: `.agents/skills/figma-implement-design/references/structure.md`.
+- Data layer (`src/lib/<domain>/`) owns queries / server functions / API clients. Screen hooks may call those clients (e.g. `authClient`) but must not redefine the data layer.
 - Promote screen-scoped file → feature-scoped the moment a **second** screen needs it (don't pre-shared speculatively).
 - Promote feature-scoped file → `src/components|hooks|lib` only when a **second feature** needs it.
 - `sections/` is optional — use only when a screen file would otherwise get too large to review in one pass. Don't create empty `sections/` folders by convention alone.
 - Route files (`src/routes/**`) stay thin: route params/loaders/guards → hand off to the feature screen component. No screen JSX in route files.
-- Follow existing precedent before inventing new folders — check sibling features first.
 - **Don't** create `index.ts` barrel files per feature/screen to re-export everything. Import from the direct file path (see barrel-import cost in `vercel-react-best-practices`).
 
 ## Related

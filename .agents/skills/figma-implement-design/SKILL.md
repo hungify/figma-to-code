@@ -9,11 +9,12 @@ Figma MCP = design context, not final code. Prefer `src/components/ui` + tokens.
 
 **Read on demand (progressive disclosure):**
 
-| When                           | File                                                 |
-| ------------------------------ | ---------------------------------------------------- |
-| Step 4 / gate flags            | [reference.md](reference.md)                         |
-| Step 5 screens — testids / e2e | [references/automation.md](references/automation.md) |
-| Step 6 visual gold loop        | [references/visual.md](references/visual.md)         |
+| When                             | File                                                 |
+| -------------------------------- | ---------------------------------------------------- |
+| Step 4 / gate flags              | [reference.md](reference.md)                         |
+| Step 5 screens — clean structure | [references/structure.md](references/structure.md)   |
+| Step 5 screens — testids / e2e   | [references/automation.md](references/automation.md) |
+| Step 6 visual gold loop          | [references/visual.md](references/visual.md)         |
 
 ## Prerequisites
 
@@ -46,24 +47,28 @@ For each `reuse`/`create`: load prop-map → apply `mappingKind` ([reference.md]
 
 ### 5. Code
 
+- **Codebase-first + clean code:** mirror existing `src/features/*/screens/*` (and layout/ui) before inventing. Apply clean-code habits from [references/structure.md](references/structure.md) + [`.agents/architecture.md`](../../architecture.md) — e.g. thin screen, extract UI blocks / hooks when logic grows; form+hook split is **one** common pattern (login), not the only shape.
 - Prop-map props first; Tailwind leftovers only; no raw `<button>`/`<input>` for resolved primitives
 - Tokens + typography `jp-*`/`en-*` (`AGENTS.md`); unknown style → **stop**
 - Feature: `src/features/<feature>/screens/<screen>/…`; thin route → screen component
 - Screens: **read** [references/automation.md](references/automation.md) — `testids.ts` + root/primary `data-testid`
 - Forms: required/optional match Figma; note placeholder `href="#"`
+- Gate `--files`: every screen TSX that uses resolved primitives (see structure.md)
 
 ### 6. Visual parity (screens only)
 
 Skip DS/ui/showcase. **Read and follow** [references/visual.md](references/visual.md).
 
-Core rule: **1 user Figma node → 1 gold/actual/diff contract** (folder `mobile/` and/or `desktop/`). Do not invent a second breakpoint; do not skip a requested node. `FIGMA_VISUAL_MIN_MATCH` (default `0.98`), max **3** fix rounds **per node**.
+Core rule: **1 user Figma node → 1 gold/actual/diff contract** (folder `mobile/` and/or `desktop/`). Do not invent a second breakpoint; do not skip a requested node. `FIGMA_VISUAL_MIN_MATCH` (default `0.99`), max **3** fix rounds **per node**.
+
+**Do not trust stale scores.** Re-capture after code changes. Named content frames (card/modal) → **mandatory** content-node gold + `--selector` + `--max-diff-pixels 500`. Full-page uses cluster check (`worstCell`). **Read `diff.png`**, not only `pass=true`.
 
 ### 7. Gate → lint
 
 ```bash
 pnpm figma-gate:components -- \
   --artifact .figma/artifacts/<feature>/<screen>/component-resolution.json \
-  --files src/features/<feature>/screens/<screen>/<file>.tsx \
+  --files src/features/<feature>/screens/<screen>/<screen>-screen.tsx,src/features/<feature>/screens/<screen>/components/<block>.tsx \
   --require-prop-map --check-prop-map-usage
 ```
 
@@ -75,11 +80,16 @@ After visual + gate: **ask confirm** → thin POM + `@smoke` from testids. Detai
 
 ## Failures
 
-| Symptom          | Fix                                                                 |
-| ---------------- | ------------------------------------------------------------------- |
-| Truncated MCP    | `get_metadata` → child fetch                                        |
-| Visual fail      | that node’s `diff.png` + fix ≤3 ([visual.md](references/visual.md)) |
-| Hybrid artifacts | normalize folders per visual.md                                     |
-| Bad props        | `figma-props-sync` → Step 4                                         |
+| Symptom                    | Fix                                                                 |
+| -------------------------- | ------------------------------------------------------------------- |
+| Truncated MCP              | `get_metadata` → child fetch                                        |
+| Visual fail                | that node’s `diff.png` + fix ≤3 ([visual.md](references/visual.md)) |
+| Full-page pass, card wrong | content-node gold + `--selector` + `--max-diff-pixels 500`          |
+| `clusterFail=true`         | red cluster in one region — fix that area or use content crop       |
+| Stale PASS after wipe      | re-capture; never report old `visual-score.json`                    |
+| Hybrid artifacts           | normalize folders per visual.md                                     |
+| Bad props                  | `figma-props-sync` → Step 4                                         |
+| Messy / monolith screen    | clean up per [structure.md](references/structure.md) + siblings     |
+| Invented structure         | rematch sibling under `src/features/*/screens/*`                    |
 
 **Default: single agent** + this skill. Do not spawn parallel implement agents on the same files.

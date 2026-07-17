@@ -50,6 +50,7 @@ Figma → code: follow `.agents/skills/figma-implement-design/SKILL.md`. Prop ma
 
 Quick pointers:
 
+0. **Codebase-first + clean code:** mirror existing `src/features/*/screens/*` before inventing; apply clean-code habits (thin screen, extract when needed — form/hook is one pattern). See skill `references/structure.md`.
 1. Parse `fileKey`/`nodeId` → `get_design_context` + `get_screenshot` before code.
 2. Resolve components → write `component-resolution.json` → stop if `unresolved` non-empty.
 3. Props from `.figma/prop-map/<Component>.json` (via `figma-props-sync` only — do not hand-edit; fix via match+`finalize`). Missing map → stop unless user forces. `Label` has no Figma COMPONENT_SET — use `FieldLabel` / `Label` composition (see `Field` / `TextField` maps).
@@ -64,7 +65,7 @@ Quick pointers:
 - Do not hand-build raw repeated markup for common primitives already resolved in `component-resolution.json` (`Button`, `Input`, `Textarea`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Field`, `SignInSocialButton`).
 - Put project UI primitives in `src/components/ui/` and export named React components.
 - Put route-level examples/showcases in `src/components/*-showcase.tsx` plus `src/routes/showcase/*` only when building showcase surfaces.
-- For feature implementation from Figma, prefer feature-sliced output from the `figma-implement-design` skill: `src/features/<feature>/screens/<screen>/…` (placement tiers: `.agents/architecture.md`).
+- For feature implementation from Figma, follow `figma-implement-design`: match existing `src/features/*/screens/*` first; keep screens clean (structure.md — form/hook split is one option, not the only).
 - Do not edit generated `src/routeTree.gen.ts` by hand; let TanStack Router generation update it.
 
 ### Component APIs

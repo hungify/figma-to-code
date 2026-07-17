@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
   ChevronDownIcon,
   ChevronRightIcon,
@@ -38,18 +39,18 @@ const actionCopy = {
 
 function HeaderLogo() {
   return (
-    <>
+    <Link to="/" aria-label="らきた ホーム" className="inline-flex">
       <span className="flex h-6 w-[49.5px] items-center md:hidden">
         <img
           src={`${LOGO_ASSET_BASE}/logo-wordmark.svg`}
-          alt="らきた"
+          alt=""
           className="block h-[17.45px] w-[48.24px]"
         />
       </span>
       <span className="hidden h-[39.7px] w-[74.25px] overflow-visible md:grid">
         <img
           src={`${LOGO_ASSET_BASE}/logo-wordmark.svg`}
-          alt="らきた"
+          alt=""
           className="col-start-1 row-start-1 h-[26.17px] w-[72.36px]"
         />
         <img
@@ -58,7 +59,7 @@ function HeaderLogo() {
           className="col-start-1 row-start-1 mt-[33.31px] ml-[0.73px] h-[6.39px] w-[71.1px]"
         />
       </span>
-    </>
+    </Link>
   );
 }
 

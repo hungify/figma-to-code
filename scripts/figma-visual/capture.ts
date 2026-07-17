@@ -5,7 +5,10 @@
  *   pnpm figma-visual:capture -- \
  *     --url http://127.0.0.1:3000/feature/screen \
  *     --out .figma/artifacts/feature/screen/actual.png \
- *     [--viewport 1280x720] [--full-page]
+ *     [--viewport 1280x720] [--full-page] [--selector '[data-testid=auth.login]']
+ *
+ * `--selector` crops to that element (use for primary content / card frames).
+ * Prefer this when full-page chrome would dilute matchRatio.
  */
 import * as fs from "node:fs";
 import * as path from "node:path";
@@ -26,7 +29,7 @@ async function main() {
   const out = arg("--out");
   if (!url || !out) {
     console.error(
-      "Usage: figma-visual:capture -- --url <url> --out <actual.png> [--viewport 1280x720] [--full-page]",
+      "Usage: figma-visual:capture -- --url <url> --out <actual.png> [--viewport 1280x720] [--full-page] [--selector <css>]",
     );
     process.exit(2);
   }
@@ -37,6 +40,8 @@ async function main() {
     console.error(`Invalid --viewport ${vp}`);
     process.exit(2);
   }
+
+  const selector = arg("--selector");
 
   fs.mkdirSync(path.dirname(out), { recursive: true });
 
@@ -71,13 +76,20 @@ async function main() {
       }
     }
   });
-  await page.screenshot({
-    path: out,
-    fullPage: has("--full-page"),
-    animations: "disabled",
-  });
+
+  if (selector) {
+    const loc = page.locator(selector).first();
+    await loc.waitFor({ state: "visible", timeout: 15_000 });
+    await loc.screenshot({ path: out, animations: "disabled" });
+  } else {
+    await page.screenshot({
+      path: out,
+      fullPage: has("--full-page"),
+      animations: "disabled",
+    });
+  }
   await browser.close();
-  console.log(`wrote ${path.resolve(out)}`);
+  console.log(`wrote ${path.resolve(out)}${selector ? ` (selector=${selector})` : ""}`);
 }
 
 main().catch((err) => {
