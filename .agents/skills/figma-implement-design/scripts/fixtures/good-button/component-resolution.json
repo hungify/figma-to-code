@@ -1,0 +1,15 @@
+{
+  "screen": "pressure-good",
+  "source": { "fileKey": "x", "nodeId": "1-2" },
+  "resolved": [
+    {
+      "figmaNode": "Button",
+      "repoComponent": "Button",
+      "importPath": "#/components/ui/button",
+      "decision": "reuse",
+      "source": "prop-map"
+    }
+  ],
+  "unresolved": [],
+  "customGenerated": []
+}

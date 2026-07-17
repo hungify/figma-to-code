@@ -23,6 +23,7 @@ Before substantial work:
 - Skill check: run `pnpm intent list`, or use skills already listed in context.
 - Skill guidance: if one local skill clearly matches the task, run `pnpm intent load <package>#<skill>` and follow the returned `SKILL.md`.
 - Multiple matches: prefer the most specific local skill for the package or concern you are changing; load additional skills only when the task spans multiple packages or concerns.
+- **Local project skills** live under `.agents/skills/` (e.g. `figma-implement-design`, `figma-props-sync`). `pnpm intent` lists package skills only — for local Figma skills, read `.agents/skills/<name>/SKILL.md` directly (or load via Cursor skill attachment).
 <!-- intent-skills:end -->
 
 ## TanStack Docs
@@ -44,32 +45,24 @@ pnpm tanstack search-docs "loaders" --library router --framework react --json
 
 ## Figma Design System Rules
 
-These rules apply to every Figma-driven implementation or parity fix in this repo.
+Figma → code: follow `.agents/skills/figma-implement-design/SKILL.md`. Prop maps: `.agents/skills/figma-props-sync/SKILL.md` (owns `.figma/prop-map/*.json` — do not hand-edit).
 
-### Required Figma Flow
+Quick pointers:
 
-1. Parse `fileKey` and `nodeId` from the Figma URL before touching code.
-2. Run `get_design_context` for the exact node first.
-3. Run `get_screenshot` for the same node and keep it as the visual source of truth.
-4. If `get_design_context` is too large or truncated, run `get_metadata` and re-fetch only the needed child node.
-5. Treat MCP React/Tailwind output as design context, not final repo code. Translate into this repo's component, token, route, and file patterns.
-6. Validate final UI against the Figma screenshot before marking complete. For visual-gate work, exact 0% diff is not required when remaining diff is font or antialiasing noise and the artifact is inside the documented human-accept band.
-
-### Figma Pipeline Artifacts
-
-- Use `.agents/skills/figma-to-code/scripts/` for Figma pipeline scripts; run them with `python3`.
-- Store and mirror Figma evidence under `.figma/artifacts/<feature>/<screen>/` when using the project pipeline.
-- Keep generated docs/artifacts explicit about `shadcnChecked`, `shadcnReused`, `shadcnInstalled`, `customLookupUsed`, `customGenerated`, gate status, and any token deviations.
-- If a large Figma file stalls cache/init, prefer node-level MCP calls (`get_design_context`, `get_metadata`, `get_variable_defs`, `get_screenshot`) instead of waiting on full-file cache.
-- If a visual diff lands in `NEEDS_HUMAN_ACCEPT`, report the exact diff and the likely cause; do not chase font/antialiasing noise after layout and state parity are correct.
+1. Parse `fileKey`/`nodeId` → `get_design_context` + `get_screenshot` before code.
+2. Resolve components → write `component-resolution.json` → stop if `unresolved` non-empty.
+3. Props from `.figma/prop-map/<Component>.json` (via `figma-props-sync` only — do not hand-edit; fix via match+`finalize`). Missing map → stop unless user forces. `Label` has no Figma COMPONENT_SET — use `FieldLabel` / `Label` composition (see `Field` / `TextField` maps).
+4. Gate before lint: `pnpm figma-gate:components -- --artifact … --files … --require-prop-map` (add `--check-prop-map-usage` when verifying mapped props). Must `PASS`. Pressure: `pnpm figma-gate:test`.
+5. Validate UI vs Figma screenshot; font/AA noise in human-accept band OK.
 
 ### Component Organization
 
 - Reuse primitives from `src/components/ui/` before creating new UI components.
 - Use `pnpm ui add <component>` for missing shadcn/ui primitives instead of hand-building standard primitives.
+- Do not hand-build raw repeated markup for common primitives already resolved in `component-resolution.json` (`Button`, `Input`, `Textarea`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Field`, `SignInSocialButton`).
 - Put project UI primitives in `src/components/ui/` and export named React components.
 - Put route-level examples/showcases in `src/components/*-showcase.tsx` plus `src/routes/showcase/*` only when building showcase surfaces.
-- For feature implementation from Figma, prefer feature-sliced output from the `figma-to-code` skill: `src/features/<feature>/screens/<screen>/sections/<section>.tsx` and shared feature components in `src/features/<feature>/components/`.
+- For feature implementation from Figma, prefer feature-sliced output from the `figma-implement-design` skill: `src/features/<feature>/screens/<screen>/sections/<section>.tsx` and shared feature components in `src/features/<feature>/components/`.
 - Do not edit generated `src/routeTree.gen.ts` by hand; let TanStack Router generation update it.
 
 ### Component APIs
@@ -79,14 +72,33 @@ These rules apply to every Figma-driven implementation or parity fix in this rep
 - Use `cva` and `VariantProps` when variants are real component API, as in `src/components/ui/button.tsx`.
 - Use Base UI primitives already present in repo for accessible primitives where applicable (`@base-ui/react`), and style their data attributes directly (`data-disabled`, `data-checked`, `data-slot`, `data-force-state`) when needed for Figma state parity.
 - Use `cn` from `#/lib/utils`; do not introduce another class merge helper.
-- Before using non-shadcn custom components from Figma node names, run `pnpm component-lookup info`; if stale or missing, run `pnpm component-lookup:gen`, then use `pnpm component-lookup search`, `figma`, or `docs` before writing JSX.
+- Resolve Figma node names via `.figma/prop-map/*.json` (`figmaGroups[].name` → `codeComponent`) plus `src/components/ui/`. Missing prop-map → run `figma-props-sync` (or stop). Do not invent near-matches.
+- New feature components are allowed only after prop-map + `src/components/ui` + `pnpm ui add` all fail to find a match; each one must be listed in `customGenerated` with `componentName`, `filePath`, and `customGeneratedReason`.
 
 ### Styling And Tokens
 
 - Styling uses Tailwind v4 utilities, shadcn CSS variables, and theme tokens in `src/styles.css`.
 - IMPORTANT: Do not hardcode colors when an existing token matches. Use CSS variables and Tailwind token utilities such as `bg-background`, `text-foreground`, `border-border`, `text-green-500`, or arbitrary variable classes like `bg-(--btn-color)` only when that maps to a repo token.
-- Brand color scales live in `src/styles.css` as `--color-green-*`, `--color-red-*`, `--color-yellow-*`, `--color-orange-*`, `--color-blue-*`, and `--color-grey-*`.
-- Typography tokens and font family mapping live in `src/styles.css`. Default app font is JP-first: `--font-sans: var(--font-jp)`, `--font-jp: "Zen Maru Gothic"`, `--font-en: "Lato"`.
+- Brand color scales live in `src/styles.css` as `--color-green-*`, `--color-lime-*`, `--color-red-*`, `--color-yellow-*`, `--color-orange-*`, `--color-blue-*`, and `--color-grey-*`.
+- Typography source of truth: Figma [Typography](https://www.figma.com/design/k0CrXX6p2CCRPHpzEv3EaW/Knowbe_rakita_CL--Copy-?node-id=590-79435) ↔ utilities in `src/styles.css` (`jp-*` / `en-*`). Default app font is JP-first: `--font-sans: var(--font-jp)`, `--font-jp: "Zen Maru Gothic"`, `--font-en: "Lato"`.
+- **Typography when implementing from Figma (required):**
+  1. Read the Figma **text style name** (e.g. `JP/Body/Medium`, `EN/Headline/H3`) — do not invent size/weight from raw px alone.
+  2. Map to one utility below. Prefer that class over `text-sm` / `text-base` / `font-bold` / arbitrary `text-[14px]`.
+  3. JP → `jp-*`. EN → `en-*` (EN utilities already set Lato; do not also add `font-en`).
+  4. **Raise / stop** if Figma text style (or size+weight+leading) has no row in the map, or conflicts with repo tokens (e.g. 15px Body, wrong weight). Do not silently invent a new type scale or hardcode px. Ask user or flag in the implement report before shipping.
+  5. Do not invent new `@utility jp-*` / `en-*` unless user explicitly asks to extend the type system.
+
+  | Figma text style          | Class                        |
+  | ------------------------- | ---------------------------- |
+  | `JP/Headline/H1` … `H5`   | `jp-h1` … `jp-h5`            |
+  | `JP/Label/L` `M` `S` `XS` | `jp-label-lg` `md` `sm` `xs` |
+  | `JP/Body/L` `M` `S` `XS`  | `jp-body-lg` `md` `sm` `xs`  |
+  | `EN/Headline/H1` … `H5`   | `en-h1` … `en-h5`            |
+  | `EN/Label/L` `M` `S` `XS` | `en-label-lg` `md` `sm` `xs` |
+  | `EN/Body/L` `M` `S` `XS`  | `en-body-lg` `md` `sm` `xs`  |
+
+  Note: utility names must stay `jp-*` / `en-*` (not `text-jp-*`) — see comment in `src/styles.css` (tailwind-merge collision).
+
 - Use Tailwind spacing and sizing utilities for layout. Preserve exact Figma dimensions only when they are core to component parity or fixed-format controls.
 - Keep parity work light-only unless Figma explicitly includes dark variants. Do not add theme machinery for a light-only Figma frame.
 - Avoid global token rewrites for local component mismatches. Patch the local primitive or feature component unless mismatch is clearly systemic.

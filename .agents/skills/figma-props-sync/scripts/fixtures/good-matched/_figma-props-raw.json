@@ -1,0 +1,17 @@
+{
+  "fileKey": "abc123",
+  "fetchedAt": "2026-07-05T10:00:00Z",
+  "components": [
+    {
+      "name": "btn",
+      "figmaNodeId": "28:518",
+      "type": "COMPONENT_SET",
+      "propertyDefinitions": {
+        "Size": {
+          "type": "VARIANT",
+          "variantOptions": ["Small", "Large"]
+        }
+      }
+    }
+  ]
+}

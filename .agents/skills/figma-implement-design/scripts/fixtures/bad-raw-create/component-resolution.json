@@ -1,0 +1,15 @@
+{
+  "screen": "pressure-raw-create",
+  "source": { "fileKey": "x", "nodeId": "1-2" },
+  "resolved": [
+    {
+      "figmaNode": "Button",
+      "repoComponent": "Button",
+      "importPath": "#/components/ui/button",
+      "decision": "create",
+      "source": "pnpm-ui-add"
+    }
+  ],
+  "unresolved": [],
+  "customGenerated": []
+}

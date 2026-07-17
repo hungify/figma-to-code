@@ -1,0 +1,14 @@
+{
+  "btn": {
+    "figmaNodeId": "28:518",
+    "codeComponent": "Button",
+    "codeFile": "src/components/ui/button.tsx",
+    "props": {
+      "Size": {
+        "reactProp": "size",
+        "type": "VARIANT",
+        "confidence": "high"
+      }
+    }
+  }
+}

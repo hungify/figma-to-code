@@ -1,0 +1,15 @@
+{
+  "screen": "pressure-extend",
+  "source": { "fileKey": "x", "nodeId": "1-2" },
+  "resolved": [
+    {
+      "figmaNode": "Button",
+      "repoComponent": "Button",
+      "importPath": "#/components/ui/button",
+      "decision": "extend",
+      "source": "prop-map"
+    }
+  ],
+  "unresolved": [],
+  "customGenerated": []
+}

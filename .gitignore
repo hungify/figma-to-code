@@ -8,6 +8,7 @@ node_modules
 
 .DS_Store
 .cache
+.figma/cache/
 .env
 
 .data

@@ -1,0 +1,35 @@
+{
+  "fileKey": "abc123",
+  "fetchedAt": "2026-07-05T10:00:00Z",
+  "components": [
+    {
+      "name": "Button",
+      "figmaNodeId": "28:463",
+      "type": "COMPONENT_SET",
+      "propertyDefinitions": {
+        "Style#28:600": {
+          "type": "VARIANT",
+          "variantOptions": ["primary", "secondary", "ghost"]
+        },
+        "size#28:601": {
+          "type": "VARIANT",
+          "variantOptions": ["sm", "md", "lg"]
+        },
+        "Disabled#28:602": {
+          "type": "BOOLEAN",
+          "defaultValue": false
+        }
+      }
+    },
+    {
+      "name": "ProductCard",
+      "figmaNodeId": "28:900",
+      "type": "COMPONENT",
+      "propertyDefinitions": {
+        "title#28:901": {
+          "type": "TEXT"
+        }
+      }
+    }
+  ]
+}
