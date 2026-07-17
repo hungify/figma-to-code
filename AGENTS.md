@@ -9,6 +9,7 @@
 
 ## Topic-specific Guidelines
 
+- **Before creating any new file** (component, hook, util, constant, schema, type, context) — read `.agents/architecture.md` first for placement tier (screen-only vs feature-shared vs app-wide). Don't guess the folder.
 - [TanStack patterns](.agents/tanstack-patterns.md) - Routing, data fetching, loaders, server functions, environment shaking
 - [Auth patterns](.agents/auth.md) - Route guards, middleware, auth utilities
 - [TypeScript conventions](.agents/typescript.md) - Casting rules, prefer type inference
@@ -53,7 +54,8 @@ Quick pointers:
 2. Resolve components → write `component-resolution.json` → stop if `unresolved` non-empty.
 3. Props from `.figma/prop-map/<Component>.json` (via `figma-props-sync` only — do not hand-edit; fix via match+`finalize`). Missing map → stop unless user forces. `Label` has no Figma COMPONENT_SET — use `FieldLabel` / `Label` composition (see `Field` / `TextField` maps).
 4. Gate before lint: `pnpm figma-gate:components -- --artifact … --files … --require-prop-map` (add `--check-prop-map-usage` when verifying mapped props). Must `PASS`. Pressure: `pnpm figma-gate:test`.
-5. Validate UI vs Figma screenshot; font/AA noise in human-accept band OK.
+5. Screens: Figma gold vs app — 1 node → 1 contract (`mobile/` / `desktop/` per intent); see skill `references/visual.md`. Eval: `pnpm figma-eval`. Testids: `references/automation.md`.
+6. App UT: `pnpm test` (Vitest, `src/**`).
 
 ### Component Organization
 
@@ -62,7 +64,7 @@ Quick pointers:
 - Do not hand-build raw repeated markup for common primitives already resolved in `component-resolution.json` (`Button`, `Input`, `Textarea`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Field`, `SignInSocialButton`).
 - Put project UI primitives in `src/components/ui/` and export named React components.
 - Put route-level examples/showcases in `src/components/*-showcase.tsx` plus `src/routes/showcase/*` only when building showcase surfaces.
-- For feature implementation from Figma, prefer feature-sliced output from the `figma-implement-design` skill: `src/features/<feature>/screens/<screen>/sections/<section>.tsx` and shared feature components in `src/features/<feature>/components/`.
+- For feature implementation from Figma, prefer feature-sliced output from the `figma-implement-design` skill: `src/features/<feature>/screens/<screen>/…` (placement tiers: `.agents/architecture.md`).
 - Do not edit generated `src/routeTree.gen.ts` by hand; let TanStack Router generation update it.
 
 ### Component APIs

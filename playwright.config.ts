@@ -4,12 +4,11 @@ const PORT = Number(process.env.E2E_PORT ?? 3000);
 const baseURL = process.env.E2E_BASE_URL ?? `http://127.0.0.1:${PORT}`;
 
 /**
- * Visual regression only — Figma-implemented screens under e2e/visual/.
- * No showcase / functional smoke projects.
+ * - chromium: functional @smoke under e2e/specs/
+ * - *-visual: optional app↔app snapshots under e2e/visual/ (not Figma gold)
  */
 export default defineConfig({
-  testDir: "./e2e/visual",
-  passWithNoTests: true,
+  testDir: "./e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -19,7 +18,6 @@ export default defineConfig({
   expect: {
     timeout: 10_000,
     toHaveScreenshot: {
-      // Font/AA noise band — tune per screen if needed
       maxDiffPixelRatio: 0.02,
       animations: "disabled",
     },
@@ -32,11 +30,17 @@ export default defineConfig({
   },
   projects: [
     {
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
+      testMatch: /specs\/.*\.spec\.ts$/,
+    },
+    {
       name: "chromium-visual",
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1280, height: 720 },
       },
+      testMatch: /visual\/.*\.visual\.spec\.ts$/,
     },
     {
       name: "mobile-visual",
@@ -46,6 +50,7 @@ export default defineConfig({
         isMobile: true,
         hasTouch: true,
       },
+      testMatch: /visual\/.*\.visual\.spec\.ts$/,
     },
   ],
   webServer: {

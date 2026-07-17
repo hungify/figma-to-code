@@ -1,6 +1,35 @@
-# Prop-map reference (figma-implement-design)
+# Prop-map + resolution + gate
 
-**Read** `.figma/prop-map/<CodeComponent>.json` in Step 4. Do not hand-edit — use `figma-props-sync`.
+**Read in Step 4 / Step 7.** Do not hand-edit `.figma/prop-map/*.json` — use `figma-props-sync`.
+
+## Resolution artifact
+
+```json
+{
+  "screen": "login",
+  "source": {
+    "fileKey": "...",
+    "nodeId": "...",
+    "desktopNodeId": "..."
+  },
+  "resolved": [
+    {
+      "figmaNode": "btn",
+      "repoComponent": "Button",
+      "importPath": "#/components/ui/button",
+      "decision": "reuse",
+      "source": "prop-map",
+      "mappingSource": "explicit"
+    }
+  ],
+  "unresolved": [],
+  "customGenerated": []
+}
+```
+
+- Dual intent: set `nodeId` (mobile) + `desktopNodeId` (or equivalent). Never omit a user-provided node.
+- `custom` needs `customGenerated[]` (`componentName`, `filePath`, `customGeneratedReason`) only after prop-map + ui + `pnpm ui add` fail.
+- Layout chrome without prop-map → `notes` + reuse layout components.
 
 ## `mappingKind`
 
@@ -24,11 +53,9 @@ Infer at read time; do not rewrite file:
 | `reactProp: null` + children/icons note                  | `composition` |
 | `reactProp: null` + missing-prop note                    | `unmapped`    |
 
-Prefer explicit `mappingKind` when present.
-
 ## Icons (composition)
 
-`INSTANCE_SWAP` / icon name → `lucide-react` `*Icon` child when possible. Brands → `@icons-pack/react-simple-icons`. No new packages.
+`INSTANCE_SWAP` / icon name → `lucide-react` `*Icon` when possible. Brands → `@icons-pack/react-simple-icons`. No new packages.
 
 ## Gate flags
 

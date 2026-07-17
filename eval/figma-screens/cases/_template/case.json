@@ -1,0 +1,16 @@
+{
+  "id": "_template",
+  "description": "Copy to cases/<id>/case.json and fill paths after first gold screen exists.",
+  "fileKey": "REPLACE",
+  "nodeId": "REPLACE",
+  "route": "/features/REPLACE",
+  "artifactDir": ".figma/artifacts/REPLACE/REPLACE",
+  "gate": {
+    "artifact": ".figma/artifacts/REPLACE/REPLACE/component-resolution.json",
+    "files": ["src/features/REPLACE/screens/REPLACE/index.tsx"]
+  },
+  "figmaGold": "figma-gold.png",
+  "actual": "actual.png",
+  "minMatch": 0.98,
+  "enabled": false
+}
