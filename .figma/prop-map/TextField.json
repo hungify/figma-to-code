@@ -1,71 +1,88 @@
 {
-  "generatedAt": "2026-07-17T14:55:13Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "TextField",
-  "codeFile": "src/components/ui/input.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:1dc88c8abb8474b539c73bf54c903b73b74ae4b8471d9c0c1551884d79201151"
+  },
+  "target": {
+    "component": "TextField",
+    "file": "src/components/ui/input.tsx",
+    "apiHash": "sha256:e03bbbc59e00fcf2441e604744340123475c5fdf152cabca6cdb59f000df6632"
+  },
+  "groups": [
     {
+      "figmaNodeId": "43:1833",
       "name": "type-basic-field",
-      "figmaNodeId": "43:1833"
+      "mappings": [
+        {
+          "figmaProp": "Show *#37:0",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "required",
+          "note": "True → required + FieldRequired (必須). Same pattern on SelectField / TextareaField.",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "required"
+            }
+          ]
+        },
+        {
+          "figmaProp": "Instance prepend#103:0",
+          "figmaType": "INSTANCE_SWAP",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Leading icon/control slot — children or Input adornment, not a TextField prop name."
+        },
+        {
+          "figmaProp": "Instance append#103:4",
+          "figmaType": "INSTANCE_SWAP",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Trailing icon/control slot."
+        },
+        {
+          "figmaProp": "Show prepend#103:8",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Toggle prepend slot visibility."
+        },
+        {
+          "figmaProp": "Show append#103:12",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Toggle append slot visibility."
+        },
+        {
+          "figmaProp": "Show message#103:20",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "True → pass hint (FieldDescription) or error (FieldError when invalid)."
+        },
+        {
+          "figmaProp": "Type",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "hintPosition",
+          "valueMap": {
+            "hint bottom": "bottom",
+            "hint top": "top"
+          },
+          "note": "Also used by SelectField / TextareaField hintPosition.",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "hintPosition"
+            }
+          ]
+        }
+      ]
     }
-  ],
-  "props": {
-    "Show *#37:0": {
-      "mappingKind": "direct",
-      "reactProp": "required",
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "verifiedVia": "raw-code-match",
-      "note": "True → required + FieldRequired (必須). Same pattern on SelectField / TextareaField."
-    },
-    "Instance prepend#103:0": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "INSTANCE_SWAP",
-      "confidence": "high",
-      "note": "Leading icon/control slot — children or Input adornment, not a TextField prop name."
-    },
-    "Instance append#103:4": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "INSTANCE_SWAP",
-      "confidence": "high",
-      "note": "Trailing icon/control slot."
-    },
-    "Show prepend#103:8": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "note": "Toggle prepend slot visibility."
-    },
-    "Show append#103:12": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "note": "Toggle append slot visibility."
-    },
-    "Show message#103:20": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "note": "True → pass hint (FieldDescription) or error (FieldError when invalid)."
-    },
-    "Type": {
-      "mappingKind": "direct",
-      "reactProp": "hintPosition",
-      "type": "VARIANT",
-      "figmaValues": ["hint bottom", "hint top"],
-      "codeValues": ["bottom", "top"],
-      "valueMap": {
-        "hint bottom": "bottom",
-        "hint top": "top"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match",
-      "note": "Also used by SelectField / TextareaField hintPosition."
-    }
-  }
+  ]
 }

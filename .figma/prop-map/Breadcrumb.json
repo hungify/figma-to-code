@@ -1,21 +1,28 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "Breadcrumb",
-  "codeFile": "src/components/ui/breadcrumb.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:bc03686761662776c26ba304b7ee471b78ba9a38f0bf0b168fa0917e5ee9addf"
+  },
+  "target": {
+    "component": "Breadcrumb",
+    "file": "src/components/ui/breadcrumb.tsx",
+    "apiHash": "sha256:bf7fbd2446fbea7a070ba598f869b18018b1b27d18e6fc269958209104cd2ec1"
+  },
+  "groups": [
     {
+      "figmaNodeId": "46:5217",
       "name": "Breadcrumb",
-      "figmaNodeId": "46:5217"
+      "mappings": [
+        {
+          "figmaProp": "Items",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Compose BreadcrumbList children; Items count is layout only."
+        }
+      ]
     }
-  ],
-  "props": {
-    "Items": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "high",
-      "note": "Compose BreadcrumbList children; Items count is layout only."
-    }
-  }
+  ]
 }

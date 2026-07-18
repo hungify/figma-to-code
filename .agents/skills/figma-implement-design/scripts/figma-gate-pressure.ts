@@ -25,49 +25,53 @@ const cases: Case[] = [
   {
     name: "bad-extend",
     expect: "FAIL",
-    args: [
-      "--artifact",
-      path.join(fixtures, "bad-extend/component-resolution.json"),
-      "--require-prop-map",
-    ],
-    mustInclude: ["invalid decision"],
+    args: ["--artifact", path.join(fixtures, "bad-extend/component-resolution.json")],
+    mustInclude: ["component-resolution resolved.0.decision"],
   },
   {
     name: "bad-raw-create",
     expect: "FAIL",
-    args: [
-      "--artifact",
-      path.join(fixtures, "bad-raw-create/component-resolution.json"),
-      "--files",
-      path.join(fixtures, "bad-raw-create/BadRawCreate.tsx"),
-    ],
+    args: ["--artifact", path.join(fixtures, "bad-raw-create/component-resolution.json")],
     mustInclude: ["raw primitive markup"],
   },
   {
     name: "bad-figma-prop-name",
     expect: "FAIL",
-    args: [
-      "--artifact",
-      path.join(fixtures, "bad-figma-prop-name/component-resolution.json"),
-      "--files",
-      path.join(fixtures, "bad-figma-prop-name/BadFigmaPropName.tsx"),
-      "--require-prop-map",
-      "--check-prop-map-usage",
-    ],
+    args: ["--artifact", path.join(fixtures, "bad-figma-prop-name/component-resolution.json")],
     mustInclude: ["figma prop name"],
   },
   {
     name: "good-button",
     expect: "PASS",
+    args: ["--artifact", path.join(fixtures, "good-button/component-resolution.json")],
+  },
+  {
+    name: "bad-v1",
+    expect: "FAIL",
+    args: ["--artifact", path.join(fixtures, "bad-v1/component-resolution.json")],
+    mustInclude: ["component-resolution schemaVersion"],
+  },
+  {
+    name: "bad-page-escape",
+    expect: "FAIL",
+    args: ["--artifact", path.join(fixtures, "bad-page-escape/component-resolution.json")],
+    mustInclude: ["forbidden pageReason escape"],
+  },
+  {
+    name: "good-screen",
+    expect: "PASS",
+    args: ["--artifact", path.join(fixtures, "good-screen/component-resolution.json")],
+  },
+  {
+    name: "old-weakening-flag",
+    expect: "FAIL",
     args: [
       "--artifact",
       path.join(fixtures, "good-button/component-resolution.json"),
       "--files",
       path.join(fixtures, "good-button/GoodButton.tsx"),
-      "--require-prop-map",
-      "--require-usage",
-      "--check-prop-map-usage",
     ],
+    mustInclude: ["unknown argument", "contract owns files"],
   },
 ];
 
@@ -85,7 +89,6 @@ for (const testCase of cases) {
     testCase.expect === "PASS"
       ? passed
       : failedRun && (testCase.mustInclude?.every((needle) => output.includes(needle)) ?? true);
-
   if (!ok) {
     failed += 1;
     console.error(`✗ ${testCase.name} (expected ${testCase.expect})`);

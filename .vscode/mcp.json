@@ -12,6 +12,11 @@
     "figma": {
       "url": "https://mcp.figma.com/mcp",
       "type": "http"
+    },
+    "figma-fidelity": {
+      "type": "stdio",
+      "command": "/Users/hungify/personal/figma-to-code-new/node_modules/figma-fidelity/bin/figma-fidelity.js",
+      "args": ["mcp"]
     }
   },
   "inputs": []

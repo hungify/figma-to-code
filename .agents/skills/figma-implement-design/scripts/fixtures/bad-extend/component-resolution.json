@@ -1,15 +1,22 @@
 {
-  "screen": "pressure-extend",
-  "source": { "fileKey": "x", "nodeId": "1-2" },
+  "schemaVersion": 2,
+  "name": "pressure-extend",
+  "target": { "kind": "design-system" },
+  "source": { "fileKey": "x", "nodes": [{ "intent": "component", "nodeId": "1:2" }] },
+  "implementationFiles": [
+    ".agents/skills/figma-implement-design/scripts/fixtures/good-button/GoodButton.tsx"
+  ],
   "resolved": [
     {
-      "figmaNode": "Button",
-      "repoComponent": "Button",
+      "kind": "design-system",
+      "figmaNodes": ["Button"],
+      "codeComponent": "Button",
       "importPath": "#/components/ui/button",
-      "decision": "extend",
-      "source": "prop-map"
+      "decision": "extend"
     }
   ],
   "unresolved": [],
-  "customGenerated": []
+  "screenCompositions": [],
+  "assets": [],
+  "visualContracts": []
 }

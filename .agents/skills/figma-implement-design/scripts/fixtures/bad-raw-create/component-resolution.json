@@ -1,15 +1,22 @@
 {
-  "screen": "pressure-raw-create",
-  "source": { "fileKey": "x", "nodeId": "1-2" },
+  "schemaVersion": 2,
+  "name": "pressure-raw-create",
+  "target": { "kind": "design-system" },
+  "source": { "fileKey": "x", "nodes": [{ "intent": "component", "nodeId": "1:2" }] },
+  "implementationFiles": [
+    ".agents/skills/figma-implement-design/scripts/fixtures/bad-raw-create/BadRawCreate.tsx"
+  ],
   "resolved": [
     {
-      "figmaNode": "Button",
-      "repoComponent": "Button",
+      "kind": "design-system",
+      "figmaNodes": ["Button"],
+      "codeComponent": "Button",
       "importPath": "#/components/ui/button",
-      "decision": "create",
-      "source": "pnpm-ui-add"
+      "decision": "create"
     }
   ],
   "unresolved": [],
-  "customGenerated": []
+  "screenCompositions": [],
+  "assets": [],
+  "visualContracts": []
 }

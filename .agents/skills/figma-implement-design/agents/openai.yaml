@@ -1,9 +1,9 @@
 interface:
   display_name: "Figma Implement Design"
-  short_description: "Turn Figma designs into production-ready code"
+  short_description: "Implement or review Figma UI with verified fidelity"
   icon_small: "./assets/figma-small.svg"
   icon_large: "./assets/figma.png"
-  default_prompt: "Use $figma-implement-design to implement this Figma design in this codebase, matching layout, states, and responsive behavior."
+  default_prompt: "Use $figma-implement-design to implement or review this Figma-derived UI through component resolution, prop mapping, responsive and interactive behavior, accessibility checks, AST checks, and visual fidelity verification."
 
 dependencies:
   tools:
@@ -12,3 +12,6 @@ dependencies:
       description: "Figma MCP server"
       transport: "streamable_http"
       url: "https://mcp.figma.com/mcp"
+    - type: "mcp"
+      value: "figma-fidelity"
+      description: "Local Figma gold-to-app fidelity gate"

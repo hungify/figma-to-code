@@ -1,25 +1,38 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "PaginationPage",
-  "codeFile": "src/components/ui/pagination.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:3034f081cd3a0b77d8782b9b60f0eb9a90fc8376ead5427780c11d02a56471cb"
+  },
+  "target": {
+    "component": "PaginationPage",
+    "file": "src/components/ui/pagination.tsx",
+    "apiHash": "sha256:1fe64c3499bbd832af8f113ac372e1e70db3ed2068908bd9fec80da0420e6796"
+  },
+  "groups": [
     {
+      "figmaNodeId": "184:9664",
       "name": "Pagination-page",
-      "figmaNodeId": "184:9664"
+      "mappings": [
+        {
+          "figmaProp": "Active",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "active",
+          "valueMap": {
+            "On": true,
+            "Off": false
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "active"
+            }
+          ]
+        }
+      ]
     }
-  ],
-  "props": {
-    "Active": {
-      "mappingKind": "direct",
-      "reactProp": "active",
-      "type": "VARIANT",
-      "valueMap": {
-        "On": true,
-        "Off": false
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    }
-  }
+  ]
 }

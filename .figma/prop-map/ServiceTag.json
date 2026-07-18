@@ -1,48 +1,73 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "ServiceTag",
-  "codeFile": "src/components/ui/service-tag.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:3e4a0b6096e1d8385e29289f7be6e85c226b94bd0712c3aa3380a6ca95f83282"
+  },
+  "target": {
+    "component": "ServiceTag",
+    "file": "src/components/ui/service-tag.tsx",
+    "apiHash": "sha256:ccb61ca387ffa2834340084ec300cdd4ee8f6534bc6258757b8ae49c4ceaf6d2"
+  },
+  "groups": [
     {
+      "figmaNodeId": "120:7475",
       "name": "service_tag",
-      "figmaNodeId": "120:7475"
+      "mappings": [
+        {
+          "figmaProp": "Type",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "serviceType",
+          "valueMap": {
+            "type I": "i",
+            "type A": "a",
+            "type B": "b"
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "serviceType"
+            }
+          ]
+        },
+        {
+          "figmaProp": "length",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "length",
+          "valueMap": {
+            "short": "short",
+            "long": "long"
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "length"
+            }
+          ]
+        },
+        {
+          "figmaProp": "style",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "appearance",
+          "valueMap": {
+            "fill": "fill",
+            "outline": "outline"
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "appearance"
+            }
+          ]
+        }
+      ]
     }
-  ],
-  "props": {
-    "Type": {
-      "mappingKind": "direct",
-      "reactProp": "serviceType",
-      "type": "VARIANT",
-      "valueMap": {
-        "type I": "i",
-        "type A": "a",
-        "type B": "b"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    },
-    "length": {
-      "mappingKind": "direct",
-      "reactProp": "length",
-      "type": "VARIANT",
-      "valueMap": {
-        "short": "short",
-        "long": "long"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    },
-    "style": {
-      "mappingKind": "direct",
-      "reactProp": "appearance",
-      "type": "VARIANT",
-      "valueMap": {
-        "fill": "fill",
-        "outline": "outline"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    }
-  }
+  ]
 }

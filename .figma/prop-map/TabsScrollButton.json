@@ -1,40 +1,53 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "TabsScrollButton",
-  "codeFile": "src/components/ui/tabs.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:37:43Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:694b6abda0f88603066b03b750d3526a49af6750e74ad0a973f5fc91ca27f8ab"
+  },
+  "target": {
+    "component": "TabsScrollButton",
+    "file": "src/components/ui/tabs.tsx",
+    "apiHash": "sha256:80c66654b001b5f895891587045e41425671025d2397c27ed5f93a1e29a5cc6e"
+  },
+  "groups": [
     {
-      "name": "p-tab-chevron",
-      "figmaNodeId": "415:100513"
+      "figmaNodeId": "415:100513",
+      "name": "p-tab",
+      "mappings": [
+        {
+          "figmaProp": "Type",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "direction",
+          "valueMap": {
+            "Text": null,
+            "<": "prev",
+            ">": "next"
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "direction"
+            }
+          ]
+        },
+        {
+          "figmaProp": "State",
+          "figmaType": "VARIANT",
+          "mappingKind": "unmapped",
+          "confidence": "high",
+          "note": "TabsScrollButton has no selected state; State belongs to text tabs."
+        },
+        {
+          "figmaProp": "Icon",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Chevron icon is selected internally from direction and always rendered."
+        }
+      ]
     }
-  ],
-  "props": {
-    "Type": {
-      "mappingKind": "direct",
-      "reactProp": "direction",
-      "type": "VARIANT",
-      "valueMap": {
-        "Text": null,
-        "<": "prev",
-        ">": "next"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    },
-    "State": {
-      "mappingKind": "unmapped",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "low",
-      "note": "Scroll buttons not tab-selected."
-    },
-    "Icon": {
-      "mappingKind": "unmapped",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "low",
-      "note": "Always ChevronLeft/Right."
-    }
-  }
+  ]
 }

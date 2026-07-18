@@ -1,21 +1,28 @@
 {
-  "generatedAt": "2026-07-17T14:55:13Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "SelectField",
-  "codeFile": "src/components/ui/select.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:37047483f32255e248b427fb235a33ed763b8c919b771a14376ce4def6ba7b3e"
+  },
+  "target": {
+    "component": "SelectField",
+    "file": "src/components/ui/select.tsx",
+    "apiHash": "sha256:49bd80dd02b94108c67583ca32b0742fa51883efecc472aeaecc3de9b2d7079e"
+  },
+  "groups": [
     {
+      "figmaNodeId": "120:1495",
       "name": "memu",
-      "figmaNodeId": "120:1495"
+      "mappings": [
+        {
+          "figmaProp": "Property 1",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "medium",
+          "note": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop."
+        }
+      ]
     }
-  ],
-  "props": {
-    "Property 1": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "medium",
-      "note": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop."
-    }
-  }
+  ]
 }

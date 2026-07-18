@@ -10,6 +10,10 @@
         "Size": {
           "type": "VARIANT",
           "variantOptions": ["Small", "Large"]
+        },
+        "Show prepend#101:10": {
+          "type": "BOOLEAN",
+          "defaultValue": false
         }
       }
     }

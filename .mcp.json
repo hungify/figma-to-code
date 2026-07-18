@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "figma-fidelity": {
+      "command": "/Users/hungify/personal/figma-fidelity/bin/figma-fidelity.js",
+      "args": ["mcp"]
+    }
+  }
+}

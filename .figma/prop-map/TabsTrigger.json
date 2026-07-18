@@ -1,40 +1,54 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "TabsTrigger",
-  "codeFile": "src/components/ui/tabs.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:37:43Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:694b6abda0f88603066b03b750d3526a49af6750e74ad0a973f5fc91ca27f8ab"
+  },
+  "target": {
+    "component": "TabsTrigger",
+    "file": "src/components/ui/tabs.tsx",
+    "apiHash": "sha256:addaa369d1b868a6e993e78ad81bef604bbb9a2af340e47a712272d15e78b476"
+  },
+  "groups": [
     {
-      "name": "p-tab-text",
-      "figmaNodeId": "415:100513"
-    }
-  ],
-  "props": {
-    "Type": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "high",
-      "note": "Type=Text → TabsTrigger. Type=< /> → TabsScrollButton."
-    },
-    "State": {
-      "mappingKind": "override",
-      "type": "VARIANT",
-      "valueOverrides": {
-        "Inactive": {},
-        "Active": {
-          "forceState": "active"
+      "figmaNodeId": "415:100513",
+      "name": "p-tab",
+      "mappings": [
+        {
+          "figmaProp": "Type",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Type=Text renders TabsTrigger; Type=< or > renders TabsScrollButton."
+        },
+        {
+          "figmaProp": "State",
+          "figmaType": "VARIANT",
+          "mappingKind": "override",
+          "confidence": "high",
+          "valueOverrides": {
+            "Inactive": {},
+            "Active": {
+              "forceState": "active"
+            }
+          },
+          "note": "Runtime active state comes from Tabs value matching; forceState supports visual parity.",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "forceState"
+            }
+          ]
+        },
+        {
+          "figmaProp": "Icon",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Icon=True renders a leading lucide icon child; Icon=False omits it."
         }
-      },
-      "confidence": "high",
-      "note": "Runtime Active = Tabs value match."
-    },
-    "Icon": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "high",
-      "note": "Icon=True → leading lucide child."
+      ]
     }
-  }
+  ]
 }

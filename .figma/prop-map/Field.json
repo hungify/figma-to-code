@@ -1,63 +1,70 @@
 {
-  "generatedAt": "2026-07-17T14:55:28Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "Field",
-  "codeFile": "src/components/ui/field.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:280ced1fcb1830ff4343f93028e74cea932280a57f3d01f5a035ab9e713fd4b8"
+  },
+  "target": {
+    "component": "Field",
+    "file": "src/components/ui/field.tsx",
+    "apiHash": "sha256:e41d59a0597febb6269f0af0f88b27986944a253756e27fe310ff5c7f2071754"
+  },
+  "groups": [
     {
+      "figmaNodeId": "43:1833",
       "name": "field-chrome",
-      "figmaNodeId": "43:1833"
+      "mappings": [
+        {
+          "figmaProp": "Show *#37:0",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Render FieldRequired inside FieldLabel when true."
+        },
+        {
+          "figmaProp": "Show message#103:20",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Render FieldDescription or FieldError as sibling."
+        },
+        {
+          "figmaProp": "Type",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "medium",
+          "note": "hint top/bottom = FieldDescription order vs control. Prefer TextField/SelectField/TextareaField hintPosition."
+        },
+        {
+          "figmaProp": "Show prepend#103:8",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Adornment slot; Field itself has no prepend prop."
+        },
+        {
+          "figmaProp": "Show append#103:12",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Adornment slot."
+        },
+        {
+          "figmaProp": "Instance prepend#103:0",
+          "figmaType": "INSTANCE_SWAP",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Prepend instance swap."
+        },
+        {
+          "figmaProp": "Instance append#103:4",
+          "figmaType": "INSTANCE_SWAP",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Append instance swap."
+        }
+      ]
     }
-  ],
-  "props": {
-    "Show *#37:0": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "note": "Render FieldRequired inside FieldLabel when true."
-    },
-    "Show message#103:20": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "note": "Render FieldDescription or FieldError as sibling."
-    },
-    "Type": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "medium",
-      "note": "hint top/bottom = FieldDescription order vs control. Prefer TextField/SelectField/TextareaField hintPosition."
-    },
-    "Show prepend#103:8": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "note": "Adornment slot; Field itself has no prepend prop."
-    },
-    "Show append#103:12": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "note": "Adornment slot."
-    },
-    "Instance prepend#103:0": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "INSTANCE_SWAP",
-      "confidence": "high",
-      "note": "Prepend instance swap."
-    },
-    "Instance append#103:4": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "INSTANCE_SWAP",
-      "confidence": "high",
-      "note": "Append instance swap."
-    }
-  }
+  ]
 }

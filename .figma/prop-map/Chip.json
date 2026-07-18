@@ -1,42 +1,49 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "Chip",
-  "codeFile": "src/components/ui/chip.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:78d7e98bcd1205ee70cf5715dd99b319f3ccfb26d81a148f7472469f185ec10f"
+  },
+  "target": {
+    "component": "Chip",
+    "file": "src/components/ui/chip.tsx",
+    "apiHash": "sha256:d3e2cf820383043f792c0d2afff6f02f10d95c4228e8aa250f37a9054eb6ecdf"
+  },
+  "groups": [
     {
+      "figmaNodeId": "43:2081",
       "name": "p-chip",
-      "figmaNodeId": "43:2081"
+      "mappings": [
+        {
+          "figmaProp": "Show append#104:0",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "append child."
+        },
+        {
+          "figmaProp": "Show prepend#104:1",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "prepend child."
+        },
+        {
+          "figmaProp": "Instance prepend#104:2",
+          "figmaType": "INSTANCE_SWAP",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "prepend icon."
+        },
+        {
+          "figmaProp": "Instance append#104:3",
+          "figmaType": "INSTANCE_SWAP",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "append icon."
+        }
+      ]
     }
-  ],
-  "props": {
-    "Show append#104:0": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "note": "append child."
-    },
-    "Show prepend#104:1": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "note": "prepend child."
-    },
-    "Instance prepend#104:2": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "INSTANCE_SWAP",
-      "confidence": "high",
-      "note": "prepend icon."
-    },
-    "Instance append#104:3": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "INSTANCE_SWAP",
-      "confidence": "high",
-      "note": "append icon."
-    }
-  }
+  ]
 }

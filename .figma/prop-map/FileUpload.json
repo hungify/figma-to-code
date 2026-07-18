@@ -1,28 +1,35 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "FileUpload",
-  "codeFile": "src/components/ui/file-upload.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:ac0f758425212c841f6caab8550b7483015c65d76b97aef092d6aa2fb94a0acf"
+  },
+  "target": {
+    "component": "FileUpload",
+    "file": "src/components/ui/file-upload.tsx",
+    "apiHash": "sha256:2581c6753250f1bd4fa5919d23d4c55022c77410a0cabdbc00ee8a390fc04840"
+  },
+  "groups": [
     {
+      "figmaNodeId": "348:17337",
       "name": "upload-state",
-      "figmaNodeId": "348:17337"
+      "mappings": [
+        {
+          "figmaProp": "type",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "medium",
+          "note": "Compose FileUpload dropzone vs list; map via showcase patterns."
+        },
+        {
+          "figmaProp": "state",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "medium",
+          "note": "Idle/dragging/error driven by FileUpload state hooks."
+        }
+      ]
     }
-  ],
-  "props": {
-    "type": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "medium",
-      "note": "Compose FileUpload dropzone vs list; map via showcase patterns."
-    },
-    "state": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "medium",
-      "note": "Idle/dragging/error driven by FileUpload state hooks."
-    }
-  }
+  ]
 }

@@ -1,52 +1,93 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "Checkbox",
-  "codeFile": "src/components/ui/checkbox.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:9b0f2edd201fde1b1a511101efa5044142522579a496b4dceefdfa113e0a8885"
+  },
+  "target": {
+    "component": "Checkbox",
+    "file": "src/components/ui/checkbox.tsx",
+    "apiHash": "sha256:7e7d761f4e30c7571b8e71bf0a36f6b9bd2efc3f4fd94d3aaf13bb5eed184e9a"
+  },
+  "groups": [
     {
+      "figmaNodeId": "46:4600",
       "name": "Checkbox",
-      "figmaNodeId": "46:4600"
-    }
-  ],
-  "props": {
-    "Checked?": {
-      "mappingKind": "override",
-      "type": "VARIANT",
-      "valueOverrides": {
-        "False": {
-          "checked": false
+      "mappings": [
+        {
+          "figmaProp": "Checked?",
+          "figmaType": "VARIANT",
+          "mappingKind": "override",
+          "confidence": "high",
+          "valueOverrides": {
+            "False": {
+              "checked": false
+            },
+            "True": {
+              "checked": true
+            },
+            "Indeterminate": {
+              "indeterminate": true
+            }
+          },
+          "note": "Indeterminate uses indeterminate prop.",
+          "evidence": [
+            {
+              "kind": "external-type",
+              "reactProp": "checked",
+              "path": "node_modules/.pnpm/@base-ui+react@1.6.0_@types+react@19.2.17_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/@base-ui/react/checkbox/root/CheckboxRoot.d.ts",
+              "hash": "sha256:b9039512a27d6a5a687011f0af8ccb0adcc07218a8ddbb4b5ae02d62fece2742"
+            },
+            {
+              "kind": "external-type",
+              "reactProp": "indeterminate",
+              "path": "node_modules/.pnpm/@base-ui+react@1.6.0_@types+react@19.2.17_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/@base-ui/react/checkbox/root/CheckboxRoot.d.ts",
+              "hash": "sha256:b9039512a27d6a5a687011f0af8ccb0adcc07218a8ddbb4b5ae02d62fece2742"
+            }
+          ]
         },
-        "True": {
-          "checked": true
-        },
-        "Indeterminate": {
-          "indeterminate": true
+        {
+          "figmaProp": "State",
+          "figmaType": "VARIANT",
+          "mappingKind": "override",
+          "confidence": "high",
+          "valueOverrides": {
+            "Default": {},
+            "Focus": {
+              "forceState": "focus"
+            },
+            "Error": {
+              "aria-invalid": true
+            },
+            "Error Focus": {
+              "forceState": "focus",
+              "aria-invalid": true
+            },
+            "Disabled": {
+              "disabled": true
+            }
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "forceState"
+            },
+            {
+              "kind": "external-type",
+              "reactProp": "aria-invalid",
+              "path": "node_modules/.pnpm/@types+react@19.2.17/node_modules/@types/react/index.d.ts",
+              "hash": "sha256:dc782ff85b2cb10075ecffc158af7bfb27ff97bf8491c917efea0c3d622d5ac4"
+            },
+            {
+              "kind": "external-type",
+              "reactProp": "disabled",
+              "path": "node_modules/.pnpm/@base-ui+react@1.6.0_@types+react@19.2.17_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/@base-ui/react/checkbox/root/CheckboxRoot.d.ts",
+              "hash": "sha256:b9039512a27d6a5a687011f0af8ccb0adcc07218a8ddbb4b5ae02d62fece2742"
+            }
+          ]
         }
-      },
-      "confidence": "high",
-      "note": "Indeterminate uses indeterminate prop."
-    },
-    "State": {
-      "mappingKind": "override",
-      "type": "VARIANT",
-      "valueOverrides": {
-        "Default": {},
-        "Focus": {
-          "forceState": "focus"
-        },
-        "Error": {
-          "aria-invalid": true
-        },
-        "Error Focus": {
-          "forceState": "focus",
-          "aria-invalid": true
-        },
-        "Disabled": {
-          "disabled": true
-        }
-      },
-      "confidence": "high"
+      ]
     }
-  }
+  ]
 }

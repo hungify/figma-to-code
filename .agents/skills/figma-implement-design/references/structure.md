@@ -56,13 +56,9 @@ Other screens may use `sections/`, a single small component, or a different sibl
 | Same block needed by 2nd screen | promote to `features/<feature>/components\|hooks/` |
 | Same across features            | `src/components/` / `src/hooks/` / `src/lib/`      |
 
-## 4. Gate `--files`
+## 4. Gate file coverage
 
-Scan every screen TSX that uses resolved primitives (comma-separated), e.g. screen + form component if both use `Button` / `TextField`:
-
-```bash
---files src/features/<f>/screens/<s>/<s>-screen.tsx,src/features/<f>/screens/<s>/components/<form>.tsx
-```
+List every created or changed code file in `component-resolution.json` `implementationFiles[]`. The gate scans TSX from that contract and fails missing paths or resolved components absent from the declared files. Do not pass a separate hand-maintained file list.
 
 ## Anti-patterns
 

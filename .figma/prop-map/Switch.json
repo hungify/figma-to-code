@@ -1,39 +1,67 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "Switch",
-  "codeFile": "src/components/ui/switch.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:1cb22ded61e34550b6433b54f2ab0b75efd8c21fe583430ef0ff31467b73c83b"
+  },
+  "target": {
+    "component": "Switch",
+    "file": "src/components/ui/switch.tsx",
+    "apiHash": "sha256:9247d945168ee1d15930e7083381186a31fde4702ff4316f7f8c13a04c0b8886"
+  },
+  "groups": [
     {
+      "figmaNodeId": "46:4672",
       "name": "Switch",
-      "figmaNodeId": "46:4672"
-    }
-  ],
-  "props": {
-    "Checked?": {
-      "mappingKind": "direct",
-      "reactProp": "checked",
-      "type": "VARIANT",
-      "valueMap": {
-        "False": false,
-        "True": true
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    },
-    "State": {
-      "mappingKind": "override",
-      "type": "VARIANT",
-      "valueOverrides": {
-        "Default": {},
-        "Focus": {
-          "forceState": "focus"
+      "mappings": [
+        {
+          "figmaProp": "Checked?",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "checked",
+          "valueMap": {
+            "False": false,
+            "True": true
+          },
+          "evidence": [
+            {
+              "kind": "external-type",
+              "reactProp": "checked",
+              "path": "node_modules/.pnpm/@base-ui+react@1.6.0_@types+react@19.2.17_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/@base-ui/react/switch/root/SwitchRoot.d.ts",
+              "hash": "sha256:1734d7e0e6f1d6d8f85178a1fa1316ec505e187d7c2a7f01532e9f7175d165b4"
+            }
+          ]
         },
-        "Disabled": {
-          "disabled": true
+        {
+          "figmaProp": "State",
+          "figmaType": "VARIANT",
+          "mappingKind": "override",
+          "confidence": "high",
+          "valueOverrides": {
+            "Default": {},
+            "Focus": {
+              "forceState": "focus"
+            },
+            "Disabled": {
+              "disabled": true
+            }
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "forceState"
+            },
+            {
+              "kind": "external-type",
+              "reactProp": "disabled",
+              "path": "node_modules/.pnpm/@base-ui+react@1.6.0_@types+react@19.2.17_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/@base-ui/react/switch/root/SwitchRoot.d.ts",
+              "hash": "sha256:1734d7e0e6f1d6d8f85178a1fa1316ec505e187d7c2a7f01532e9f7175d165b4"
+            }
+          ]
         }
-      },
-      "confidence": "high"
+      ]
     }
-  }
+  ]
 }

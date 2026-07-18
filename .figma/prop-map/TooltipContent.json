@@ -1,34 +1,49 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "TooltipContent",
-  "codeFile": "src/components/ui/tooltip.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:6155be2f4a281629b99b0141439f769dcb4ae0d79f37cf09853327f358d17002"
+  },
+  "target": {
+    "component": "TooltipContent",
+    "file": "src/components/ui/tooltip.tsx",
+    "apiHash": "sha256:9c9dad932919b657b6a323ed8645368a205f023532fc7ff8fecb20c7aeaa3edf"
+  },
+  "groups": [
     {
+      "figmaNodeId": "388:52475",
       "name": "Tooltip",
-      "figmaNodeId": "388:52475"
+      "mappings": [
+        {
+          "figmaProp": "Tooltip text#1586:419",
+          "figmaType": "TEXT",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "TooltipContent children text."
+        },
+        {
+          "figmaProp": "Side",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "side",
+          "valueMap": {
+            "Top": "top",
+            "Bottom": "bottom",
+            "Left": "left",
+            "Right": "right"
+          },
+          "evidence": [
+            {
+              "kind": "external-type",
+              "reactProp": "side",
+              "path": "node_modules/.pnpm/@base-ui+react@1.6.0_@types+react@19.2.17_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.d.ts",
+              "hash": "sha256:a601e8a3922b3ae8da17e0c8589f5039a673ac85fed5d99bc27317a6e3d6b217"
+            }
+          ]
+        }
+      ]
     }
-  ],
-  "props": {
-    "Tooltip text#1586:419": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "TEXT",
-      "confidence": "high",
-      "note": "TooltipContent children text."
-    },
-    "Side": {
-      "mappingKind": "direct",
-      "reactProp": "side",
-      "type": "VARIANT",
-      "valueMap": {
-        "Top": "top",
-        "Bottom": "bottom",
-        "Left": "left",
-        "Right": "right"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    }
-  }
+  ]
 }

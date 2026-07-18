@@ -1,36 +1,55 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "TabsList",
-  "codeFile": "src/components/ui/tabs.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:37:43Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:9f2d265dc1211c9e6f970c3c35fb55271526935ace60dfdc52e203efc086aaf6"
+  },
+  "target": {
+    "component": "TabsList",
+    "file": "src/components/ui/tabs.tsx",
+    "apiHash": "sha256:121028ab619da29070856b375853508ea915473dbe3e69a19d2f958229122c15"
+  },
+  "groups": [
     {
+      "figmaNodeId": "415:100532",
       "name": "p-tabs",
-      "figmaNodeId": "415:100532"
+      "mappings": [
+        {
+          "figmaProp": "Type",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "variant",
+          "valueMap": {
+            "Default": "default",
+            "Fixed": "fixed"
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "variant"
+            }
+          ]
+        },
+        {
+          "figmaProp": "Pagination",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "pagination",
+          "valueMap": {
+            "False": false,
+            "True": true
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "pagination"
+            }
+          ]
+        }
+      ]
     }
-  ],
-  "props": {
-    "Type": {
-      "mappingKind": "direct",
-      "reactProp": "variant",
-      "type": "VARIANT",
-      "valueMap": {
-        "Default": "default",
-        "Fixed": "fixed"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    },
-    "Pagination": {
-      "mappingKind": "direct",
-      "reactProp": "pagination",
-      "type": "VARIANT",
-      "valueMap": {
-        "False": false,
-        "True": true
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    }
-  }
+  ]
 }

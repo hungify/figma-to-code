@@ -1,44 +1,69 @@
 {
-  "generatedAt": "2026-07-17T14:55:13Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "Textarea",
-  "codeFile": "src/components/ui/textarea.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:adf9787563faa55a0068585c08807f93a6e1b75537f095e6dc7b3bc51d3d81ea"
+  },
+  "target": {
+    "component": "Textarea",
+    "file": "src/components/ui/textarea.tsx",
+    "apiHash": "sha256:a77964a570ba5574f88cf5c5f04e36f816806bc0929747dfb5de65281ed1fd2d"
+  },
+  "groups": [
     {
+      "figmaNodeId": "43:2026",
       "name": "text-areas",
-      "figmaNodeId": "43:2026"
-    }
-  ],
-  "props": {
-    "Type": {
-      "mappingKind": "unmapped",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "low",
-      "note": "Figma Type only Default."
-    },
-    "Status": {
-      "mappingKind": "override",
-      "type": "VARIANT",
-      "valueOverrides": {
-        "Default": {},
-        "Hover": {
-          "forceState": "hover"
+      "mappings": [
+        {
+          "figmaProp": "Type",
+          "figmaType": "VARIANT",
+          "mappingKind": "unmapped",
+          "confidence": "low",
+          "note": "Figma Type only Default."
         },
-        "Filled": {},
-        "Focused": {
-          "forceState": "focus"
-        },
-        "Error": {
-          "aria-invalid": true
-        },
-        "Disable": {
-          "disabled": true
+        {
+          "figmaProp": "Status",
+          "figmaType": "VARIANT",
+          "mappingKind": "override",
+          "confidence": "high",
+          "valueOverrides": {
+            "Default": {},
+            "Hover": {
+              "forceState": "hover"
+            },
+            "Filled": {},
+            "Focused": {
+              "forceState": "focus"
+            },
+            "Error": {
+              "aria-invalid": true
+            },
+            "Disable": {
+              "disabled": true
+            }
+          },
+          "note": "Textarea supports forceState hover|focus (textarea.tsx).",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "forceState"
+            },
+            {
+              "kind": "external-type",
+              "reactProp": "aria-invalid",
+              "path": "node_modules/.pnpm/@types+react@19.2.17/node_modules/@types/react/index.d.ts",
+              "hash": "sha256:dc782ff85b2cb10075ecffc158af7bfb27ff97bf8491c917efea0c3d622d5ac4"
+            },
+            {
+              "kind": "external-type",
+              "reactProp": "disabled",
+              "path": "node_modules/.pnpm/@types+react@19.2.17/node_modules/@types/react/index.d.ts",
+              "hash": "sha256:dc782ff85b2cb10075ecffc158af7bfb27ff97bf8491c917efea0c3d622d5ac4"
+            }
+          ]
         }
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match",
-      "note": "Textarea supports forceState hover|focus (textarea.tsx)."
+      ]
     }
-  }
+  ]
 }

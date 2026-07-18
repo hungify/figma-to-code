@@ -1,21 +1,28 @@
 {
-  "generatedAt": "2026-07-17T14:55:13Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "SelectContent",
-  "codeFile": "src/components/ui/select.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:c0c79164488928f1a9b30cdb9288016b18324914815945df60250f2510554160"
+  },
+  "target": {
+    "component": "SelectContent",
+    "file": "src/components/ui/select.tsx",
+    "apiHash": "sha256:3ddd37e5a462e43fc3d2bf404559998596850b388cefb3069f81eaa248a9c84f"
+  },
+  "groups": [
     {
+      "figmaNodeId": "120:1455",
       "name": "p-menu-list",
-      "figmaNodeId": "120:1455"
+      "mappings": [
+        {
+          "figmaProp": "Type",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Type 3/5/7/9 = number of Menu Item children in the list. Map to N SelectItem children inside SelectContent."
+        }
+      ]
     }
-  ],
-  "props": {
-    "Type": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "high",
-      "note": "Type 3/5/7/9 = number of Menu Item children in the list. Map to N SelectItem children inside SelectContent."
-    }
-  }
+  ]
 }

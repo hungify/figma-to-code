@@ -1,49 +1,18 @@
 #!/usr/bin/env tsx
-import { execSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
 import ts from "typescript";
-
-type Decision = "reuse" | "create" | "custom";
-type MappingSource = "explicit" | "inferred";
-
-interface ResolutionEntry {
-  figmaNode: string;
-  repoComponent: string;
-  importPath: string;
-  decision: Decision;
-  source: string;
-  mappingSource?: MappingSource;
-}
-
-interface CustomGeneratedEntry {
-  componentName: string;
-  filePath: string;
-  customGeneratedReason: string;
-}
-
-interface ComponentResolutionArtifact {
-  screen: string;
-  source: {
-    fileKey: string;
-    nodeId: string;
-  };
-  resolved: ResolutionEntry[];
-  unresolved: string[];
-  customGenerated: CustomGeneratedEntry[];
-}
+import { z } from "zod";
 
 interface Args {
   artifact?: string;
-  files?: string[];
-  requireUsage: boolean;
-  requirePropMap: boolean;
-  checkPropMapUsage: boolean;
 }
 
-const VALID_DECISIONS = new Set<Decision>(["reuse", "create", "custom"]);
 const PROP_MAP_DIR = ".figma/prop-map";
+const FIGMA_NODE_ID = /^\d+:\d+$/;
+const REPO_RELATIVE_PATH = /^(?!\/)(?!.*(?:^|\/)\.\.(?:\/|$)).+/;
+const FORBIDDEN_PAGE_ESCAPE = /alpha|shadow|too hard|reference only|skip|dodge/i;
 const ALWAYS_ALLOWED_ATTRS = new Set([
   "className",
   "children",
@@ -56,6 +25,132 @@ const ALWAYS_ALLOWED_ATTRS = new Set([
   "render",
   "nativeButton",
 ]);
+
+const requestedNodeSchema = z
+  .object({
+    intent: z.string().min(1),
+    nodeId: z.string().regex(FIGMA_NODE_ID, "expected Figma node id like 1:2"),
+  })
+  .strict();
+
+const designSystemResolutionSchema = z
+  .object({
+    kind: z.literal("design-system"),
+    figmaNodes: z.array(z.string().min(1)).min(1),
+    codeComponent: z.string().min(1),
+    importPath: z.string().min(1),
+    decision: z.enum(["reuse", "create"]),
+  })
+  .strict();
+
+const layoutResolutionSchema = z
+  .object({
+    kind: z.literal("layout"),
+    figmaNodes: z.array(z.string().min(1)).min(1),
+    codeComponent: z.string().min(1),
+    importPath: z.string().min(1),
+    decision: z.literal("reuse"),
+  })
+  .strict();
+
+const viewportSchema = z
+  .object({
+    name: z.enum(["mobile", "desktop"]),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+  })
+  .strict();
+
+const visualContractBase = {
+  intent: z.string().min(1),
+  sourceIntent: z.string().min(1),
+  sourceNodeId: z.string().regex(FIGMA_NODE_ID, "expected Figma node id like 1:2"),
+  nodeId: z.string().regex(FIGMA_NODE_ID, "expected Figma node id like 1:2"),
+  purpose: z.enum(["gate", "supplemental"]),
+  viewport: viewportSchema,
+  outDir: z
+    .string()
+    .regex(REPO_RELATIVE_PATH, "expected repo-relative path")
+    .startsWith(".figma/artifacts/"),
+};
+
+const componentVisualContractSchema = z
+  .object({
+    ...visualContractBase,
+    profile: z.literal("component/strict"),
+    selector: z.string().min(1),
+    expectSize: z
+      .object({
+        width: z.number().int().positive(),
+        height: z.number().int().positive(),
+      })
+      .strict(),
+  })
+  .strict();
+
+const pageVisualContractSchema = z
+  .object({
+    ...visualContractBase,
+    profile: z.literal("page"),
+    pageReason: z.string().min(1),
+  })
+  .strict();
+
+const componentResolutionArtifactSchema = z
+  .object({
+    schemaVersion: z.literal(2),
+    name: z.string().min(1),
+    target: z.discriminatedUnion("kind", [
+      z.object({ kind: z.literal("screen"), route: z.string().startsWith("/") }).strict(),
+      z.object({ kind: z.literal("design-system") }).strict(),
+    ]),
+    source: z
+      .object({
+        fileKey: z.string().min(1),
+        nodes: z.array(requestedNodeSchema).min(1),
+      })
+      .strict(),
+    implementationFiles: z
+      .array(z.string().regex(REPO_RELATIVE_PATH, "expected repo-relative path"))
+      .min(1),
+    resolved: z
+      .array(z.discriminatedUnion("kind", [designSystemResolutionSchema, layoutResolutionSchema]))
+      .min(1),
+    unresolved: z.array(
+      z
+        .object({
+          figmaNode: z.string().min(1),
+          reason: z.string().min(1),
+        })
+        .strict(),
+    ),
+    screenCompositions: z.array(
+      z
+        .object({
+          componentName: z.string().min(1),
+          filePath: z.string().regex(REPO_RELATIVE_PATH, "expected repo-relative path"),
+          reason: z.string().min(1),
+        })
+        .strict(),
+    ),
+    assets: z.array(
+      z
+        .object({
+          figmaNode: z.string().min(1),
+          kind: z.enum(["photo", "illustration", "logo", "decorative"]),
+          filePath: z.string().regex(REPO_RELATIVE_PATH, "expected repo-relative path"),
+          source: z.literal("figma-mcp"),
+        })
+        .strict(),
+    ),
+    visualContracts: z.array(
+      z.discriminatedUnion("profile", [componentVisualContractSchema, pageVisualContractSchema]),
+    ),
+  })
+  .strict();
+
+type ComponentResolutionArtifact = z.infer<typeof componentResolutionArtifactSchema>;
+type ResolutionEntry = ComponentResolutionArtifact["resolved"][number];
 
 interface ImportBinding {
   imported: string;
@@ -88,17 +183,24 @@ interface FileAnalysis {
   exportedComponents: string[];
 }
 
-interface PropMapEntry {
-  mappingKind?: string;
-  reactProp?: string | null;
-  alternateReactProp?: string;
+interface PropMapMapping {
+  figmaProp: string;
+  figmaType: string;
+  mappingKind: "direct" | "override" | "composition" | "unmapped";
+  reactProp?: string;
   valueMap?: Record<string, unknown>;
   valueOverrides?: Record<string, Record<string, unknown>>;
   note?: string;
 }
 
 interface PropMapFile {
-  props: Record<string, PropMapEntry>;
+  schemaVersion: 2;
+  target: { component: string; file: string; apiHash: string };
+  groups: Array<{
+    figmaNodeId: string;
+    name: string;
+    mappings: PropMapMapping[];
+  }>;
 }
 
 interface PropMapIndex {
@@ -129,11 +231,8 @@ const semanticRoleComponents: Record<string, string[]> = {
 
 function parseArgs(): Args {
   const args = process.argv.slice(2).filter((arg) => arg !== "--");
-  const parsed: Args = {
-    requireUsage: false,
-    requirePropMap: false,
-    checkPropMapUsage: false,
-  };
+  const parsed: Args = {};
+  const unknown: string[] = [];
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -142,25 +241,13 @@ function parseArgs(): Args {
       i += 1;
       continue;
     }
-    if (arg === "--files") {
-      parsed.files = args[i + 1]
-        ?.split(",")
-        .map((file) => file.trim())
-        .filter(Boolean);
-      i += 1;
-      continue;
-    }
-    if (arg === "--require-usage") {
-      parsed.requireUsage = true;
-      continue;
-    }
-    if (arg === "--require-prop-map") {
-      parsed.requirePropMap = true;
-      continue;
-    }
-    if (arg === "--check-prop-map-usage") {
-      parsed.checkPropMapUsage = true;
-    }
+    unknown.push(arg);
+  }
+
+  if (unknown.length > 0) {
+    fail([
+      `unknown argument(s): ${unknown.join(", ")}; contract owns files and all required checks`,
+    ]);
   }
 
   return parsed;
@@ -179,30 +266,23 @@ function readArtifact(artifactPath: string): ComponentResolutionArtifact {
     fail([`component resolution artifact missing: ${artifactPath}`]);
   }
 
-  const artifact = JSON.parse(fs.readFileSync(artifactPath, "utf-8"));
-  const requiredKeys = ["screen", "source", "resolved", "unresolved", "customGenerated"];
-  const missingKeys = requiredKeys.filter((key) => !(key in artifact));
-  if (missingKeys.length > 0) {
-    fail([`component resolution artifact missing key(s): ${missingKeys.join(", ")}`]);
+  let rawArtifact: unknown;
+  try {
+    rawArtifact = JSON.parse(fs.readFileSync(artifactPath, "utf-8"));
+  } catch {
+    fail([`component resolution artifact is not valid JSON: ${artifactPath}`]);
   }
 
-  return artifact;
-}
-
-function getChangedTsxFiles(): string[] {
-  const names = new Set<string>();
-  for (const command of ["git diff --name-only", "git diff --cached --name-only"]) {
-    try {
-      const output = execSync(command, { encoding: "utf-8" });
-      for (const line of output.split("\n")) {
-        const file = line.trim();
-        if (file.endsWith(".tsx")) names.add(file);
-      }
-    } catch {
-      // no git — use --files
-    }
+  const parsed = componentResolutionArtifactSchema.safeParse(rawArtifact);
+  if (!parsed.success) {
+    const issues = parsed.error.issues.map((issue) => {
+      const location = issue.path.length > 0 ? issue.path.join(".") : "root";
+      return `component-resolution ${location}: ${issue.message}`;
+    });
+    fail(issues);
   }
-  return Array.from(names);
+
+  return parsed.data;
 }
 
 function normalizeImportPath(importPath: string): string {
@@ -405,11 +485,11 @@ function importedLocalNames(analysis: FileAnalysis, resolution: ResolutionEntry)
 
   for (const [localName, binding] of analysis.imports) {
     if (!allowed.has(binding.source)) continue;
-    if (binding.imported === resolution.repoComponent || binding.imported === "default") {
+    if (binding.imported === resolution.codeComponent || binding.imported === "default") {
       locals.add(localName);
     }
     if (binding.imported === "*") {
-      locals.add(`${localName}.${resolution.repoComponent}`);
+      locals.add(`${localName}.${resolution.codeComponent}`);
     }
   }
 
@@ -438,7 +518,7 @@ function stripFigmaPropId(name: string): string {
   return name.replace(/#\d+:\d+$/, "").trim();
 }
 
-function codeValuesFromEntry(entry: PropMapEntry): Set<string> {
+function codeValuesFromEntry(entry: PropMapMapping): Set<string> {
   const values = new Set<string>();
   if (entry.valueMap) {
     for (const mapped of Object.values(entry.valueMap)) {
@@ -457,7 +537,7 @@ function codeValuesFromEntry(entry: PropMapEntry): Set<string> {
   return values;
 }
 
-function figmaKeysFromEntry(entry: PropMapEntry): Set<string> {
+function figmaKeysFromEntry(entry: PropMapMapping): Set<string> {
   const keys = new Set<string>();
   if (entry.valueMap) {
     for (const key of Object.keys(entry.valueMap)) keys.add(key);
@@ -472,12 +552,13 @@ function indexPropMap(mapFile: PropMapFile): PropMapIndex {
   const figmaNames = new Map<string, { reactProp: string | null; codeValues: Set<string> }>();
   const mappedReactProps = new Set<string>();
 
-  for (const [rawName, entry] of Object.entries(mapFile.props ?? {})) {
+  for (const entry of mapFile.groups.flatMap((group) => group.mappings)) {
+    const rawName = entry.figmaProp;
     const figmaName = stripFigmaPropId(rawName);
     const kind = entry.mappingKind;
     let reactProp: string | null = null;
 
-    if (kind === "direct" || (!kind && typeof entry.reactProp === "string")) {
+    if (kind === "direct") {
       reactProp = entry.reactProp ?? null;
     } else if (kind === "override" && entry.valueOverrides) {
       for (const override of Object.values(entry.valueOverrides)) {
@@ -486,7 +567,6 @@ function indexPropMap(mapFile: PropMapFile): PropMapIndex {
     }
 
     if (reactProp) mappedReactProps.add(reactProp);
-    if (!kind && entry.alternateReactProp) mappedReactProps.add(entry.alternateReactProp);
 
     const indexed = { reactProp, codeValues: codeValuesFromEntry(entry) };
     figmaNames.set(figmaName, indexed);
@@ -498,9 +578,9 @@ function indexPropMap(mapFile: PropMapFile): PropMapIndex {
 
 function figmaValueKeysForReactProp(mapFile: PropMapFile, reactProp: string): Set<string> {
   const keys = new Set<string>();
-  for (const entry of Object.values(mapFile.props ?? {})) {
+  for (const entry of mapFile.groups.flatMap((group) => group.mappings)) {
     const kind = entry.mappingKind;
-    if (kind === "direct" || (!kind && entry.reactProp === reactProp)) {
+    if (kind === "direct" && entry.reactProp === reactProp) {
       for (const key of figmaKeysFromEntry(entry)) keys.add(key);
     }
     if (kind === "override" && entry.valueOverrides) {
@@ -508,11 +588,44 @@ function figmaValueKeysForReactProp(mapFile: PropMapFile, reactProp: string): Se
         if (reactProp in override) keys.add(figmaValue);
       }
     }
-    if (!kind && entry.alternateReactProp === reactProp) {
-      for (const key of figmaKeysFromEntry(entry)) keys.add(key);
-    }
   }
   return keys;
+}
+
+function readPropMapV2(mapPath: string, repoComponent: string, reasons: string[]) {
+  let mapFile: PropMapFile;
+  try {
+    mapFile = JSON.parse(fs.readFileSync(mapPath, "utf-8")) as PropMapFile;
+  } catch {
+    reasons.push(`prop-map unreadable JSON for ${repoComponent} (${mapPath})`);
+    return null;
+  }
+  if (mapFile.schemaVersion !== 2) {
+    reasons.push(`unsupported prop-map schemaVersion for ${repoComponent} (${mapPath})`);
+    return null;
+  }
+  if (mapFile.target?.component !== repoComponent || !Array.isArray(mapFile.groups)) {
+    reasons.push(`prop-map target/groups invalid for ${repoComponent} (${mapPath})`);
+    return null;
+  }
+  const validKinds = new Set(["direct", "override", "composition", "unmapped"]);
+  const validGroups =
+    mapFile.groups.length > 0 &&
+    mapFile.groups.every(
+      (group) =>
+        Boolean(group.figmaNodeId && group.name) &&
+        Array.isArray(group.mappings) &&
+        group.mappings.length > 0 &&
+        group.mappings.every(
+          (mapping) =>
+            Boolean(mapping.figmaProp && mapping.figmaType) && validKinds.has(mapping.mappingKind),
+        ),
+    );
+  if (!validGroups) {
+    reasons.push(`prop-map groups/mappings invalid for ${repoComponent} (${mapPath})`);
+    return null;
+  }
+  return mapFile;
 }
 
 function checkPropMapUsage(
@@ -521,10 +634,12 @@ function checkPropMapUsage(
   resolution: ResolutionEntry,
   reasons: string[],
 ) {
-  const mapPath = propMapPath(resolution.repoComponent);
+  if (resolution.kind !== "design-system") return;
+  const mapPath = propMapPath(resolution.codeComponent);
   if (!fs.existsSync(mapPath)) return;
 
-  const mapFile = JSON.parse(fs.readFileSync(mapPath, "utf-8")) as PropMapFile;
+  const mapFile = readPropMapV2(mapPath, resolution.codeComponent, reasons);
+  if (!mapFile) return;
   const index = indexPropMap(mapFile);
   const locals = importedLocalNames(analysis, resolution);
 
@@ -563,69 +678,178 @@ function checkPropMapUsage(
   }
 }
 
-function isPrimitiveDecision(decision: Decision): boolean {
-  return decision === "reuse" || decision === "create";
+function isDesignSystemResolution(resolution: ResolutionEntry) {
+  return resolution.kind === "design-system";
+}
+
+function expectedImportPath(targetFile: string): string {
+  return normalizeImportPath(targetFile.replace(/\.[cm]?[jt]sx?$/, ""));
+}
+
+function validateArtifactContract(artifact: ComponentResolutionArtifact, reasons: string[]): void {
+  const requestedIntents = new Map<string, string>();
+  const requestedNodeIds = new Set<string>();
+  for (const node of artifact.source.nodes) {
+    if (requestedIntents.has(node.intent)) {
+      reasons.push(`duplicate source intent: ${node.intent}`);
+    }
+    if (requestedNodeIds.has(node.nodeId)) {
+      reasons.push(`duplicate source nodeId: ${node.nodeId}`);
+    }
+    requestedIntents.set(node.intent, node.nodeId);
+    requestedNodeIds.add(node.nodeId);
+  }
+
+  const implementationFiles = new Set<string>();
+  for (const file of artifact.implementationFiles) {
+    if (implementationFiles.has(file)) reasons.push(`duplicate implementation file: ${file}`);
+    implementationFiles.add(file);
+    if (!fs.existsSync(file)) reasons.push(`implementation file missing: ${file}`);
+  }
+
+  const resolvedComponents = new Set<string>();
+  const resolvedFigmaNodes = new Set<string>();
+  for (const resolution of artifact.resolved) {
+    if (resolvedComponents.has(resolution.codeComponent)) {
+      reasons.push(`duplicate resolved code component: ${resolution.codeComponent}`);
+    }
+    resolvedComponents.add(resolution.codeComponent);
+    for (const figmaNode of resolution.figmaNodes) {
+      if (resolvedFigmaNodes.has(figmaNode)) {
+        reasons.push(`Figma node resolved more than once: ${figmaNode}`);
+      }
+      resolvedFigmaNodes.add(figmaNode);
+    }
+  }
+
+  for (const composition of artifact.screenCompositions) {
+    if (!implementationFiles.has(composition.filePath)) {
+      reasons.push(
+        `screen composition file must be listed in implementationFiles: ${composition.filePath}`,
+      );
+    }
+    if (!fs.existsSync(composition.filePath)) {
+      reasons.push(`screen composition file missing: ${composition.filePath}`);
+    }
+  }
+
+  for (const asset of artifact.assets) {
+    if (!fs.existsSync(asset.filePath)) reasons.push(`asset file missing: ${asset.filePath}`);
+  }
+
+  if (artifact.target.kind === "design-system") {
+    if (artifact.visualContracts.length > 0) {
+      reasons.push("design-system target must not declare screen fidelity visualContracts");
+    }
+    if (artifact.screenCompositions.length > 0) {
+      reasons.push("design-system target must not declare screenCompositions");
+    }
+    return;
+  }
+
+  if (artifact.visualContracts.length === 0) {
+    reasons.push("screen target requires at least one visualContract");
+    return;
+  }
+
+  const visualIntents = new Set<string>();
+  const outDirs = new Set<string>();
+  const gateCountBySourceIntent = new Map<string, number>();
+
+  for (const contract of artifact.visualContracts) {
+    if (visualIntents.has(contract.intent)) {
+      reasons.push(`duplicate visual contract intent: ${contract.intent}`);
+    }
+    visualIntents.add(contract.intent);
+
+    if (outDirs.has(contract.outDir)) {
+      reasons.push(`duplicate visual contract outDir: ${contract.outDir}`);
+    }
+    outDirs.add(contract.outDir);
+    if (path.posix.basename(contract.outDir) !== contract.intent) {
+      reasons.push(
+        `visual contract outDir must end with its intent "${contract.intent}": ${contract.outDir}`,
+      );
+    }
+
+    const requestedNodeId = requestedIntents.get(contract.sourceIntent);
+    if (!requestedNodeId) {
+      reasons.push(
+        `visual contract ${contract.intent} references unknown sourceIntent: ${contract.sourceIntent}`,
+      );
+    } else if (requestedNodeId !== contract.sourceNodeId) {
+      reasons.push(
+        `visual contract ${contract.intent} sourceNodeId ${contract.sourceNodeId} does not match requested ${contract.sourceIntent} node ${requestedNodeId}`,
+      );
+    }
+
+    if (contract.purpose === "gate") {
+      gateCountBySourceIntent.set(
+        contract.sourceIntent,
+        (gateCountBySourceIntent.get(contract.sourceIntent) ?? 0) + 1,
+      );
+    }
+    if (contract.purpose === "supplemental" && contract.profile !== "page") {
+      reasons.push(`supplemental visual contract must use profile=page: ${contract.intent}`);
+    }
+    if (contract.profile === "page" && FORBIDDEN_PAGE_ESCAPE.test(contract.pageReason)) {
+      reasons.push(
+        `forbidden pageReason escape in visual contract ${contract.intent}: ${contract.pageReason}`,
+      );
+    }
+  }
+
+  for (const intent of requestedIntents.keys()) {
+    const count = gateCountBySourceIntent.get(intent) ?? 0;
+    if (count !== 1) {
+      reasons.push(
+        `source intent ${intent} requires exactly one gate visualContract; found ${count}`,
+      );
+    }
+  }
 }
 
 function main() {
   const args = parseArgs();
   if (!args.artifact) {
-    fail([
-      "usage: figma-gate-components.ts --artifact <component-resolution.json> [--files a.tsx,b.tsx] [--require-usage] [--require-prop-map] [--check-prop-map-usage]",
-    ]);
+    fail(["usage: figma-gate-components.ts --artifact <component-resolution.json>"]);
   }
 
   const artifactPath = path.resolve(args.artifact);
   const artifact = readArtifact(artifactPath);
   const reasons: string[] = [];
+  validateArtifactContract(artifact, reasons);
 
   if (artifact.unresolved.length > 0) {
-    reasons.push(`unresolved node(s): ${artifact.unresolved.join(", ")}`);
+    reasons.push(
+      `unresolved node(s): ${artifact.unresolved
+        .map((entry) => `${entry.figmaNode} (${entry.reason})`)
+        .join(", ")}`,
+    );
   }
 
   for (const resolution of artifact.resolved) {
-    if (!VALID_DECISIONS.has(resolution.decision)) {
+    if (!isDesignSystemResolution(resolution)) continue;
+    const mapFilePath = propMapPath(resolution.codeComponent);
+    if (!fs.existsSync(mapFilePath)) {
       reasons.push(
-        `invalid decision "${resolution.decision}" for ${resolution.repoComponent}; expected reuse|create|custom`,
+        `prop-map missing for ${resolution.codeComponent} (${mapFilePath}); run figma-props-sync`,
       );
+      continue;
     }
-    if (resolution.decision === "custom") {
-      const listed = artifact.customGenerated.some(
-        (entry) => entry.componentName === resolution.repoComponent,
-      );
-      if (!listed) {
-        reasons.push(
-          `decision "custom" for ${resolution.repoComponent} missing from customGenerated[]`,
-        );
-      }
-    }
-  }
-
-  if (args.requirePropMap) {
-    for (const resolution of artifact.resolved) {
-      if (!isPrimitiveDecision(resolution.decision)) continue;
-      const mapFile = propMapPath(resolution.repoComponent);
-      if (!fs.existsSync(mapFile)) {
-        reasons.push(
-          `prop-map missing for ${resolution.repoComponent} (${mapFile}); run figma-props-sync or omit --require-prop-map after explicit user force`,
-        );
-      }
-    }
-  }
-
-  for (const custom of artifact.customGenerated) {
-    if (!custom.componentName || !custom.filePath || !custom.customGeneratedReason) {
+    const mapFile = readPropMapV2(mapFilePath, resolution.codeComponent, reasons);
+    if (!mapFile) continue;
+    const expected = expectedImportPath(mapFile.target.file);
+    if (normalizeImportPath(resolution.importPath) !== expected) {
       reasons.push(
-        "customGenerated entry must include componentName, filePath, customGeneratedReason",
+        `importPath mismatch for ${resolution.codeComponent}; artifact=${resolution.importPath}, prop-map target=${expected}`,
       );
     }
   }
 
-  const files = (args.files?.length ? args.files : getChangedTsxFiles()).filter((file) =>
-    file.endsWith(".tsx"),
-  );
-  const approvedCustom = new Set(artifact.customGenerated.map((entry) => entry.componentName));
-  const resolvedComponents = new Set(artifact.resolved.map((entry) => entry.repoComponent));
+  const files = artifact.implementationFiles.filter((file) => file.endsWith(".tsx"));
+  const approvedCustom = new Set(artifact.screenCompositions.map((entry) => entry.componentName));
+  const resolvedComponents = new Set(artifact.resolved.map((entry) => entry.codeComponent));
   const seenResolvedUsage = new Set<string>();
 
   for (const file of files) {
@@ -642,38 +866,34 @@ function main() {
     }
 
     for (const resolution of artifact.resolved) {
-      if (!isPrimitiveDecision(resolution.decision)) continue;
-
       if (usesResolution(analysis, resolution)) {
-        seenResolvedUsage.add(resolution.repoComponent);
-        if (args.checkPropMapUsage || args.requirePropMap) {
+        seenResolvedUsage.add(resolution.codeComponent);
+        if (isDesignSystemResolution(resolution)) {
           checkPropMapUsage(file, analysis, resolution, reasons);
         }
       }
 
+      if (!isDesignSystemResolution(resolution)) continue;
       const rawTags = new Set([
-        ...(primitiveRawTags[resolution.repoComponent] ?? []),
-        ...(semanticRoleComponents[resolution.repoComponent] ?? []),
+        ...(primitiveRawTags[resolution.codeComponent] ?? []),
+        ...(semanticRoleComponents[resolution.codeComponent] ?? []),
       ]);
       if (rawTags.size === 0) continue;
 
       const matchingRaw = analysis.rawUsages.filter((usage) => rawTags.has(usage.tag));
       if (matchingRaw.length > 0) {
         reasons.push(
-          `raw primitive markup in ${file}; ${matchingRaw.map(formatRawUsage).join(", ")}; resolved ${resolution.figmaNode} must use ${resolution.repoComponent} from ${resolution.importPath} (decision=${resolution.decision})`,
+          `raw primitive markup in ${file}; ${matchingRaw.map(formatRawUsage).join(", ")}; resolved ${resolution.figmaNodes.join("/")} must use ${resolution.codeComponent} from ${resolution.importPath} (decision=${resolution.decision})`,
         );
       }
     }
   }
 
-  if (args.requireUsage) {
-    for (const resolution of artifact.resolved) {
-      if (
-        isPrimitiveDecision(resolution.decision) &&
-        !seenResolvedUsage.has(resolution.repoComponent)
-      ) {
-        reasons.push(`resolved component not used in scanned files: ${resolution.repoComponent}`);
-      }
+  for (const resolution of artifact.resolved) {
+    if (!seenResolvedUsage.has(resolution.codeComponent)) {
+      reasons.push(
+        `resolved component not used in implementationFiles: ${resolution.codeComponent}`,
+      );
     }
   }
 
@@ -683,9 +903,11 @@ function main() {
 
   console.log("PASS");
   console.log(`artifact: ${path.relative(process.cwd(), artifactPath)}`);
-  console.log(`screen: ${artifact.screen}`);
+  console.log(`name: ${artifact.name}`);
   console.log(`resolved: ${artifact.resolved.length}`);
-  console.log(`files: ${files.length}`);
+  console.log(`implementation-files: ${artifact.implementationFiles.length}`);
+  console.log(`tsx-files-scanned: ${files.length}`);
+  console.log(`visual-contracts: ${artifact.visualContracts.length}`);
   console.log("parser: typescript-ast");
 }
 

@@ -1,47 +1,72 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "Badge",
-  "codeFile": "src/components/ui/badge.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:d5322ca386d8c685ff22e199f40f23aebabd4a0a100edd2c76b1c5ef96c37a44"
+  },
+  "target": {
+    "component": "Badge",
+    "file": "src/components/ui/badge.tsx",
+    "apiHash": "sha256:29dbf514489a5f241bbc135a7ce2994820bc761081e832ffd674fb33bc3307c6"
+  },
+  "groups": [
     {
+      "figmaNodeId": "184:6540",
       "name": "Badge",
-      "figmaNodeId": "184:6540"
+      "mappings": [
+        {
+          "figmaProp": "Show icon#11053:0",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "showIcon",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "showIcon"
+            }
+          ]
+        },
+        {
+          "figmaProp": "Type",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "type",
+          "valueMap": {
+            "bold": "bold",
+            "regular": "regular"
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "type"
+            }
+          ]
+        },
+        {
+          "figmaProp": "Status",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "status",
+          "valueMap": {
+            "Inprogress": "inprogress",
+            "success": "success",
+            "disable": "disable",
+            "danger": "danger",
+            "error": "error",
+            "waiting": "waiting"
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "status"
+            }
+          ]
+        }
+      ]
     }
-  ],
-  "props": {
-    "Show icon#11053:0": {
-      "mappingKind": "direct",
-      "reactProp": "showIcon",
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    },
-    "Type": {
-      "mappingKind": "direct",
-      "reactProp": "type",
-      "type": "VARIANT",
-      "valueMap": {
-        "bold": "bold",
-        "regular": "regular"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    },
-    "Status": {
-      "mappingKind": "direct",
-      "reactProp": "status",
-      "type": "VARIANT",
-      "valueMap": {
-        "Inprogress": "inprogress",
-        "success": "success",
-        "disable": "disable",
-        "danger": "danger",
-        "error": "error",
-        "waiting": "waiting"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    }
-  }
+  ]
 }

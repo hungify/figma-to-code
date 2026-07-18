@@ -1,124 +1,172 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "Button",
-  "codeFile": "src/components/ui/button.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:dee73de0afbeca423b00d8c8e0bcb57accf3f4ebfff4b46a0082339f2ff61cde"
+  },
+  "target": {
+    "component": "Button",
+    "file": "src/components/ui/button.tsx",
+    "apiHash": "sha256:a643941cd36830fb9bfe022da9ddcec2a227f78521ddbf27c8c1605e66ac9ad7"
+  },
+  "groups": [
     {
+      "figmaNodeId": "18:3773",
       "name": "btn-size",
-      "figmaNodeId": "18:3773"
-    },
-    {
-      "name": "btn-style",
-      "figmaNodeId": "28:383"
-    },
-    {
-      "name": "btn",
-      "figmaNodeId": "28:518"
-    }
-  ],
-  "props": {
-    "Show prepend#101:10": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "note": "Leading icon child."
-    },
-    "Show append#101:15": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "note": "Trailing icon child."
-    },
-    "Instance prepend#101:20": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "INSTANCE_SWAP",
-      "confidence": "high",
-      "note": "Leading lucide icon instance."
-    },
-    "Instance Append#101:25": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "INSTANCE_SWAP",
-      "confidence": "high",
-      "note": "Trailing lucide icon instance."
-    },
-    "Size": {
-      "mappingKind": "direct",
-      "reactProp": "size",
-      "type": "VARIANT",
-      "valueMap": {
-        "Small": "sm",
-        "Regular": "md",
-        "Large": "lg",
-        "XLarge": "xl"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    },
-    "type": {
-      "mappingKind": "direct",
-      "reactProp": "variant",
-      "type": "VARIANT",
-      "valueMap": {
-        "Default": "filled",
-        "Outlined": "outline"
-      },
-      "confidence": "medium",
-      "verifiedVia": "raw-code-match",
-      "note": "Duplicate of btn.Type."
-    },
-    "Type": {
-      "mappingKind": "direct",
-      "reactProp": "variant",
-      "type": "VARIANT",
-      "valueMap": {
-        "Filled": "filled",
-        "Outlined": "outline"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match"
-    },
-    "Color": {
-      "mappingKind": "direct",
-      "reactProp": "color",
-      "type": "VARIANT",
-      "valueMap": {
-        "Green": "green",
-        "Lime": "lime",
-        "Blue": "blue",
-        "Red": "red",
-        "Danger": "danger",
-        "Yellow": "yellow",
-        "Grey": "grey"
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match",
-      "note": "Danger uses orange token scale."
-    },
-    "State": {
-      "mappingKind": "override",
-      "type": "VARIANT",
-      "valueOverrides": {
-        "Default": {},
-        "Hover": {
-          "forceState": "hover"
+      "mappings": [
+        {
+          "figmaProp": "Show prepend#101:10",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Leading icon child."
         },
-        "Active": {
-          "forceState": "active"
+        {
+          "figmaProp": "Show append#101:15",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Trailing icon child."
         },
-        "Focused": {
-          "forceState": "focus"
+        {
+          "figmaProp": "Instance prepend#101:20",
+          "figmaType": "INSTANCE_SWAP",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Leading lucide icon instance."
         },
-        "Disable": {
-          "disabled": true
+        {
+          "figmaProp": "Instance Append#101:25",
+          "figmaType": "INSTANCE_SWAP",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Trailing lucide icon instance."
+        },
+        {
+          "figmaProp": "Size",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "size",
+          "valueMap": {
+            "Small": "sm",
+            "Regular": "md",
+            "Large": "lg",
+            "XLarge": "xl"
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "size"
+            }
+          ]
         }
-      },
-      "confidence": "high",
-      "note": "forceState from ButtonProps; disabled inherited."
+      ]
+    },
+    {
+      "figmaNodeId": "28:383",
+      "name": "btn-style",
+      "mappings": [
+        {
+          "figmaProp": "type",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "medium",
+          "reactProp": "variant",
+          "valueMap": {
+            "Default": "filled",
+            "Outlined": "outline"
+          },
+          "note": "Duplicate of btn.Type.",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "variant"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "figmaNodeId": "28:518",
+      "name": "btn",
+      "mappings": [
+        {
+          "figmaProp": "Type",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "variant",
+          "valueMap": {
+            "Filled": "filled",
+            "Outlined": "outline"
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "variant"
+            }
+          ]
+        },
+        {
+          "figmaProp": "Color",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "color",
+          "valueMap": {
+            "Green": "green",
+            "Lime": "lime",
+            "Blue": "blue",
+            "Red": "red",
+            "Danger": "danger",
+            "Yellow": "yellow",
+            "Grey": "grey"
+          },
+          "note": "Danger uses orange token scale.",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "color"
+            }
+          ]
+        },
+        {
+          "figmaProp": "State",
+          "figmaType": "VARIANT",
+          "mappingKind": "override",
+          "confidence": "high",
+          "valueOverrides": {
+            "Default": {},
+            "Hover": {
+              "forceState": "hover"
+            },
+            "Active": {
+              "forceState": "active"
+            },
+            "Focused": {
+              "forceState": "focus"
+            },
+            "Disable": {
+              "disabled": true
+            }
+          },
+          "note": "forceState from ButtonProps; disabled inherited.",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "forceState"
+            },
+            {
+              "kind": "external-type",
+              "reactProp": "disabled",
+              "path": "node_modules/.pnpm/@types+react@19.2.17/node_modules/@types/react/index.d.ts",
+              "hash": "sha256:dc782ff85b2cb10075ecffc158af7bfb27ff97bf8491c917efea0c3d622d5ac4"
+            }
+          ]
+        }
+      ]
     }
-  }
+  ]
 }

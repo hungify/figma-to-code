@@ -1,57 +1,70 @@
 {
-  "generatedAt": "2026-07-05T14:21:45Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "BreadcrumbPage",
-  "codeFile": "src/components/ui/breadcrumb.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:f088bf58b74fbb6f517f7df6e2dc810cbf8f86e2294c212791c2e2ee3c8bd2ea"
+  },
+  "target": {
+    "component": "BreadcrumbPage",
+    "file": "src/components/ui/breadcrumb.tsx",
+    "apiHash": "sha256:aafe674bf0194225025031a7800e30f59e2cf43da2c8d67259d736a27fc5b708"
+  },
+  "groups": [
     {
+      "figmaNodeId": "46:5274",
       "name": ".Breadcrumb page",
-      "figmaNodeId": "46:5274"
+      "mappings": [
+        {
+          "figmaProp": "⮑ Label#1354:0",
+          "figmaType": "TEXT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "children",
+          "note": "Text content maps to BreadcrumbPage children. Verified by reading BreadcrumbPage implementation in src/components/ui/breadcrumb.tsx.",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "children"
+            }
+          ]
+        },
+        {
+          "figmaProp": "Dropdown menu#1354:4",
+          "figmaType": "BOOLEAN",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "dropdown",
+          "note": "BreadcrumbPageProps defines dropdown?: boolean in src/components/ui/breadcrumb.tsx.",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "dropdown"
+            }
+          ]
+        },
+        {
+          "figmaProp": "Icon#1512:6",
+          "figmaType": "INSTANCE_SWAP",
+          "mappingKind": "composition",
+          "confidence": "medium",
+          "note": "Composition-only metadata. BreadcrumbPage has no direct icon prop; icon-only current item would need custom children."
+        },
+        {
+          "figmaProp": "State",
+          "figmaType": "VARIANT",
+          "mappingKind": "unmapped",
+          "confidence": "medium",
+          "note": "Active should select BreadcrumbPage as the code component. Default/Hover should select BreadcrumbLink; no direct BreadcrumbPage state prop exists."
+        },
+        {
+          "figmaProp": "Content",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Composition-only metadata. Label uses text children; Icon uses selected icon instance as children."
+        }
+      ]
     }
-  ],
-  "props": {
-    "\u2b91 Label#1354:0": {
-      "reactProp": "children",
-      "type": "TEXT",
-      "confidence": "high",
-      "verifiedVia": "source-read",
-      "note": "Text content maps to BreadcrumbPage children. Verified by reading BreadcrumbPage implementation in src/components/ui/breadcrumb.tsx."
-    },
-    "Dropdown menu#1354:4": {
-      "reactProp": "dropdown",
-      "type": "BOOLEAN",
-      "confidence": "high",
-      "verifiedVia": "source-read",
-      "note": "BreadcrumbPageProps defines dropdown?: boolean in src/components/ui/breadcrumb.tsx."
-    },
-    "Icon#1512:6": {
-      "reactProp": null,
-      "type": "INSTANCE_SWAP",
-      "confidence": "medium",
-      "note": "Composition-only metadata. BreadcrumbPage has no direct icon prop; icon-only current item would need custom children."
-    },
-    "State": {
-      "reactProp": null,
-      "type": "VARIANT",
-      "figmaValues": ["Default", "Hover", "Active"],
-      "valueMap": {
-        "Default": null,
-        "Hover": null,
-        "Active": null
-      },
-      "confidence": "medium",
-      "note": "Active should select BreadcrumbPage as the code component. Default/Hover should select BreadcrumbLink; no direct BreadcrumbPage state prop exists."
-    },
-    "Content": {
-      "reactProp": null,
-      "type": "VARIANT",
-      "figmaValues": ["Label", "Icon"],
-      "valueMap": {
-        "Label": null,
-        "Icon": null
-      },
-      "confidence": "high",
-      "note": "Composition-only metadata. Label uses text children; Icon uses selected icon instance as children."
-    }
-  }
+  ]
 }

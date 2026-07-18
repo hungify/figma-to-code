@@ -1,44 +1,69 @@
 {
-  "generatedAt": "2026-07-17T14:55:13Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "Input",
-  "codeFile": "src/components/ui/input.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:b97b7e477b2b4b942bd25eba43c1c2f1bcf208daa42fc214c2ad805109cc7b7c"
+  },
+  "target": {
+    "component": "Input",
+    "file": "src/components/ui/input.tsx",
+    "apiHash": "sha256:05ec7588af6aa56e13ff211ca8009d864d940dd7e1ce9bdfd638a50e5ae4b881"
+  },
+  "groups": [
     {
+      "figmaNodeId": "43:1940",
       "name": "text-field",
-      "figmaNodeId": "43:1940"
-    }
-  ],
-  "props": {
-    "Type": {
-      "mappingKind": "unmapped",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "low",
-      "note": "Figma Type only Default; no Input type enum."
-    },
-    "Status": {
-      "mappingKind": "override",
-      "type": "VARIANT",
-      "valueOverrides": {
-        "Default": {},
-        "Hover": {
-          "forceState": "hover"
+      "mappings": [
+        {
+          "figmaProp": "Type",
+          "figmaType": "VARIANT",
+          "mappingKind": "unmapped",
+          "confidence": "low",
+          "note": "Figma Type only Default; no Input type enum."
         },
-        "Filled": {},
-        "Focused": {
-          "forceState": "focus"
-        },
-        "Error": {
-          "aria-invalid": true
-        },
-        "Disable": {
-          "disabled": true
+        {
+          "figmaProp": "Status",
+          "figmaType": "VARIANT",
+          "mappingKind": "override",
+          "confidence": "high",
+          "valueOverrides": {
+            "Default": {},
+            "Hover": {
+              "forceState": "hover"
+            },
+            "Filled": {},
+            "Focused": {
+              "forceState": "focus"
+            },
+            "Error": {
+              "aria-invalid": true
+            },
+            "Disable": {
+              "disabled": true
+            }
+          },
+          "note": "Filled = value present (composition). Error uses aria-invalid.",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "forceState"
+            },
+            {
+              "kind": "external-type",
+              "reactProp": "aria-invalid",
+              "path": "node_modules/.pnpm/@types+react@19.2.17/node_modules/@types/react/index.d.ts",
+              "hash": "sha256:dc782ff85b2cb10075ecffc158af7bfb27ff97bf8491c917efea0c3d622d5ac4"
+            },
+            {
+              "kind": "external-type",
+              "reactProp": "disabled",
+              "path": "node_modules/.pnpm/@types+react@19.2.17/node_modules/@types/react/index.d.ts",
+              "hash": "sha256:dc782ff85b2cb10075ecffc158af7bfb27ff97bf8491c917efea0c3d622d5ac4"
+            }
+          ]
         }
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match",
-      "note": "Filled = value present (composition). Error uses aria-invalid."
+      ]
     }
-  }
+  ]
 }

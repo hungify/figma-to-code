@@ -1,39 +1,55 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "PaginationPrevious",
-  "codeFile": "src/components/ui/pagination.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:fbc4f03a2b64c88d7fa36e1c8ea2208eb3d6380226582c1d8c1f66693f0a3ece"
+  },
+  "target": {
+    "component": "PaginationPrevious",
+    "file": "src/components/ui/pagination.tsx",
+    "apiHash": "sha256:74197fa071554b70021ea80fac86ffaca637e364e9971029491bf4d9b08f601f"
+  },
+  "groups": [
     {
+      "figmaNodeId": "184:9643",
       "name": "Pagination-btn",
-      "figmaNodeId": "184:9643"
-    }
-  ],
-  "props": {
-    "style": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "medium",
-      "note": "text vs icon — children / className."
-    },
-    "type": {
-      "mappingKind": "composition",
-      "reactProp": null,
-      "type": "VARIANT",
-      "confidence": "high",
-      "note": "Previous → PaginationPrevious; Next → PaginationNext."
-    },
-    "State": {
-      "mappingKind": "override",
-      "type": "VARIANT",
-      "valueOverrides": {
-        "Regular": {},
-        "Disabled": {
-          "disabled": true
+      "mappings": [
+        {
+          "figmaProp": "style",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "medium",
+          "note": "text vs icon — children / className."
+        },
+        {
+          "figmaProp": "type",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "high",
+          "note": "Previous → PaginationPrevious; Next → PaginationNext."
+        },
+        {
+          "figmaProp": "State",
+          "figmaType": "VARIANT",
+          "mappingKind": "override",
+          "confidence": "high",
+          "valueOverrides": {
+            "Regular": {},
+            "Disabled": {
+              "disabled": true
+            }
+          },
+          "evidence": [
+            {
+              "kind": "external-type",
+              "reactProp": "disabled",
+              "path": "node_modules/.pnpm/@types+react@19.2.17/node_modules/@types/react/index.d.ts",
+              "hash": "sha256:dc782ff85b2cb10075ecffc158af7bfb27ff97bf8491c917efea0c3d622d5ac4"
+            }
+          ]
         }
-      },
-      "confidence": "high"
+      ]
     }
-  }
+  ]
 }

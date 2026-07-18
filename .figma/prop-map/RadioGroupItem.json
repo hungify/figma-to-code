@@ -1,46 +1,68 @@
 {
-  "generatedAt": "2026-07-17T14:52:37Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "RadioGroupItem",
-  "codeFile": "src/components/ui/radio-group.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:ae7e386e56165889329dfbc3452767322cf35872a209770c9d4bf07b42096761"
+  },
+  "target": {
+    "component": "RadioGroupItem",
+    "file": "src/components/ui/radio-group.tsx",
+    "apiHash": "sha256:349b30a145dc3a4e54f13471f137adc70bcbbf9af1d408e8ee5b424902ec3354"
+  },
+  "groups": [
     {
+      "figmaNodeId": "46:4532",
       "name": "Radio",
-      "figmaNodeId": "46:4532"
-    }
-  ],
-  "props": {
-    "Checked?": {
-      "mappingKind": "direct",
-      "reactProp": "checked",
-      "type": "VARIANT",
-      "valueMap": {
-        "False": false,
-        "True": true
-      },
-      "confidence": "medium",
-      "note": "Prefer RadioGroup value; checked for static showcase."
-    },
-    "State": {
-      "mappingKind": "override",
-      "type": "VARIANT",
-      "valueOverrides": {
-        "Default": {},
-        "Focus": {
-          "forceState": "focus"
+      "mappings": [
+        {
+          "figmaProp": "Checked?",
+          "figmaType": "VARIANT",
+          "mappingKind": "composition",
+          "confidence": "medium",
+          "note": "Prefer RadioGroup value; checked for static showcase."
         },
-        "Error": {
-          "aria-invalid": true
-        },
-        "Error Focus": {
-          "forceState": "focus",
-          "aria-invalid": true
-        },
-        "Disabled": {
-          "disabled": true
+        {
+          "figmaProp": "State",
+          "figmaType": "VARIANT",
+          "mappingKind": "override",
+          "confidence": "high",
+          "valueOverrides": {
+            "Default": {},
+            "Focus": {
+              "forceState": "focus"
+            },
+            "Error": {
+              "aria-invalid": true
+            },
+            "Error Focus": {
+              "forceState": "focus",
+              "aria-invalid": true
+            },
+            "Disabled": {
+              "disabled": true
+            }
+          },
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "forceState"
+            },
+            {
+              "kind": "external-type",
+              "reactProp": "aria-invalid",
+              "path": "node_modules/.pnpm/@types+react@19.2.17/node_modules/@types/react/index.d.ts",
+              "hash": "sha256:dc782ff85b2cb10075ecffc158af7bfb27ff97bf8491c917efea0c3d622d5ac4"
+            },
+            {
+              "kind": "external-type",
+              "reactProp": "disabled",
+              "path": "node_modules/.pnpm/@base-ui+react@1.6.0_@types+react@19.2.17_react-dom@19.2.7_react@19.2.7__react@19.2.7/node_modules/@base-ui/react/radio/root/RadioRoot.d.ts",
+              "hash": "sha256:7bbc9ebd20315881e5931961f4d08b297ff4acecf3e25124930376296e062ec7"
+            }
+          ]
         }
-      },
-      "confidence": "high"
+      ]
     }
-  }
+  ]
 }

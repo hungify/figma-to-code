@@ -1,14 +1,26 @@
 {
-  "btn": {
-    "figmaNodeId": "28:518",
-    "codeComponent": "Button",
-    "codeFile": "src/components/ui/button.tsx",
-    "props": {
-      "Size": {
-        "reactProp": "size",
-        "type": "VARIANT",
-        "confidence": "high"
-      }
+  "schemaVersion": 2,
+  "fileKey": "abc123",
+  "components": [
+    {
+      "codeComponent": "Button",
+      "codeFile": "src/components/ui/button.tsx",
+      "groups": [
+        {
+          "figmaNodeId": "28:518",
+          "name": "btn",
+          "mappings": [
+            {
+              "figmaProp": "Size",
+              "figmaType": "VARIANT",
+              "reactProp": "size",
+              "valueMap": { "Small": "sm", "Large": "lg" },
+              "confidence": "high",
+              "evidence": [{ "kind": "code-api", "reactProp": "size" }]
+            }
+          ]
+        }
+      ]
     }
-  }
+  ]
 }

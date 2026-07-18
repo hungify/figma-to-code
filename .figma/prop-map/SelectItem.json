@@ -1,51 +1,71 @@
 {
-  "generatedAt": "2026-07-17T14:55:13Z",
-  "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
-  "codeComponent": "SelectItem",
-  "codeFile": "src/components/ui/select.tsx",
-  "figmaGroups": [
+  "schemaVersion": 2,
+  "syncedAt": "2026-07-18T13:24:57Z",
+  "source": {
+    "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+    "definitionHash": "sha256:85b2f45eefe317cc37375aad63048514021cae40c3a62027e262b9cd9b649d5b"
+  },
+  "target": {
+    "component": "SelectItem",
+    "file": "src/components/ui/select.tsx",
+    "apiHash": "sha256:7a2302a71b3e64e8192948991d55248152772fc653f8cfabb68d6a242686c34c"
+  },
+  "groups": [
     {
+      "figmaNodeId": "120:1531",
       "name": "Menu Item",
-      "figmaNodeId": "120:1531"
-    }
-  ],
-  "props": {
-    "Checkbox": {
-      "mappingKind": "direct",
-      "reactProp": "checkbox",
-      "type": "VARIANT",
-      "figmaValues": ["False", "True"],
-      "codeValues": [false, true],
-      "valueMap": {
-        "False": false,
-        "True": true
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match",
-      "note": "SelectItemProps.checkbox in select.tsx (extractor misses nested types)."
-    },
-    "State": {
-      "mappingKind": "override",
-      "type": "VARIANT",
-      "figmaValues": ["default", "hover", "active", "disable", "focus"],
-      "valueOverrides": {
-        "default": {},
-        "hover": {
-          "forceState": "hover"
+      "mappings": [
+        {
+          "figmaProp": "Checkbox",
+          "figmaType": "VARIANT",
+          "mappingKind": "direct",
+          "confidence": "high",
+          "reactProp": "checkbox",
+          "valueMap": {
+            "False": false,
+            "True": true
+          },
+          "note": "SelectItemProps.checkbox in select.tsx (extractor misses nested types).",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "checkbox"
+            }
+          ]
         },
-        "active": {
-          "forceState": "active"
-        },
-        "focus": {
-          "forceState": "focus"
-        },
-        "disable": {
-          "disabled": true
+        {
+          "figmaProp": "State",
+          "figmaType": "VARIANT",
+          "mappingKind": "override",
+          "confidence": "high",
+          "valueOverrides": {
+            "default": {},
+            "hover": {
+              "forceState": "hover"
+            },
+            "active": {
+              "forceState": "active"
+            },
+            "focus": {
+              "forceState": "focus"
+            },
+            "disable": {
+              "disabled": true
+            }
+          },
+          "note": "forceState + disabled on SelectItem.",
+          "evidence": [
+            {
+              "kind": "code-api",
+              "reactProp": "forceState"
+            },
+            {
+              "kind": "code-api",
+              "reactProp": "disabled"
+            }
+          ]
         }
-      },
-      "confidence": "high",
-      "verifiedVia": "raw-code-match",
-      "note": "forceState + disabled on SelectItem."
+      ]
     }
-  }
+  ]
 }

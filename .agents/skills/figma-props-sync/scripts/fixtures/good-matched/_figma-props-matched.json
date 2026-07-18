@@ -1,28 +1,34 @@
 {
-  "btn": {
-    "figmaNodeId": "28:518",
-    "codeComponent": "Button",
-    "codeFile": "src/components/ui/button.tsx",
-    "props": {
-      "Size": {
-        "mappingKind": "direct",
-        "reactProp": "size",
-        "type": "VARIANT",
-        "figmaValues": ["Small", "Large"],
-        "valueMap": {
-          "Small": "sm",
-          "Large": "lg"
-        },
-        "confidence": "high",
-        "verifiedVia": "raw-code-match"
-      },
-      "Show prepend#101:10": {
-        "mappingKind": "composition",
-        "reactProp": null,
-        "type": "BOOLEAN",
-        "confidence": "high",
-        "note": "Leading icon child only; no Button prop."
-      }
+  "schemaVersion": 2,
+  "fileKey": "abc123",
+  "components": [
+    {
+      "codeComponent": "Button",
+      "codeFile": "src/components/ui/button.tsx",
+      "groups": [
+        {
+          "figmaNodeId": "28:518",
+          "name": "btn",
+          "mappings": [
+            {
+              "figmaProp": "Size",
+              "figmaType": "VARIANT",
+              "mappingKind": "direct",
+              "reactProp": "size",
+              "valueMap": { "Small": "sm", "Large": "lg" },
+              "confidence": "high",
+              "evidence": [{ "kind": "code-api", "reactProp": "size" }]
+            },
+            {
+              "figmaProp": "Show prepend#101:10",
+              "figmaType": "BOOLEAN",
+              "mappingKind": "composition",
+              "confidence": "high",
+              "note": "Leading icon child only; no Button prop."
+            }
+          ]
+        }
+      ]
     }
-  }
+  ]
 }

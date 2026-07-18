@@ -1,49 +1,65 @@
 ---
 name: figma-implement-design
-description: Implements UI from Figma into this repo with component-resolution, prop-map, visual gold diff, and AST gate. Use when user provides a Figma URL/node, or says "implement design", "generate code from Figma", "implement component", or asks to match Figma specs. For canvas writes use figma-use; for design-system prop maps use figma-props-sync first.
+description: Implements or reviews Figma-derived UI in this repo using a validated implementation contract, design-system prop maps, visual fidelity checks, and an AST component gate. Use when user provides a Figma URL/node, asks to implement the current Figma Desktop selection, says "implement design", "generate code from Figma", "implement component", asks to match Figma specs, or asks to review code generated from Figma. For canvas writes use figma-use; for design-system prop maps use figma-props-sync first.
 ---
 
 # Implement Design
 
-Figma MCP = design context, not final code. Prefer `src/components/ui` + tokens. **Never hand-edit** `.figma/prop-map/*.json` (`figma-props-sync` owns them).
+Figma MCP = design context (`get_design_context` / screenshot), not final code.  
+Visual Step 6 = **`figma-fidelity` MCP** (`fidelity_*`) — see [visual.md](references/visual.md).  
+Prefer `src/components/ui` + tokens. **Never hand-edit** `.figma/prop-map/*.json` (`figma-props-sync` owns them).
 
 **Read on demand (progressive disclosure):**
 
 | When                             | File                                                 |
 | -------------------------------- | ---------------------------------------------------- |
-| Step 4 / gate flags              | [reference.md](reference.md)                         |
+| Step 3–4 / contract and gate     | [reference.md](reference.md)                         |
 | Step 5 screens — clean structure | [references/structure.md](references/structure.md)   |
 | Step 5 screens — testids / e2e   | [references/automation.md](references/automation.md) |
+| Step 5–7 behavior / a11y         | [references/validation.md](references/validation.md) |
 | Step 6 visual gold loop          | [references/visual.md](references/visual.md)         |
+
+## Boundaries
+
+- Deliverable is application code → continue with this skill.
+- Create/edit/delete Figma canvas nodes → use `figma-use`.
+- Build a full screen in Figma from code or description → use `figma-generate-design`.
+- Create Code Connect mappings only → use `figma-code-connect`.
+- Create reusable `AGENTS.md`/design-system rules → use `figma-create-design-system-rules`.
 
 ## Prerequisites
 
-- Figma MCP connected
-- URL `…/design/:fileKey/…?node-id=1-2` → `fileKey` + `nodeId` (`1-2` → `1:2`)
+- Figma MCP connected (design fetch)
+- `figma-fidelity` MCP connected (visual gate) — `pnpm add -D github:hungify/figma-fidelity` + `pnpm exec figma-fidelity setup --project`; `FIGMA_ACCESS_TOKEN` in `.env`
+- Remote Figma MCP: URL required. Parse `…/design/:fileKey/…?node-id=1-2` → `fileKey` + `nodeId` (`1-2` → `1:2`).
+- Figma Desktop MCP: URL or current selected node. With selection-based input, use current file/selection and omit `fileKey` where the tool API expects it.
 
 ## Workflow (order, no skip)
 
 ### 1. Fetch
 
-`get_design_context` + `get_screenshot` per user node. Truncated → `get_metadata` → child fetch only. Dual mobile+desktop → fetch **both** nodes.
+`get_design_context` + `get_screenshot` per user node or current Desktop selection. Truncated → `get_metadata` → child fetch only. Dual mobile+desktop → fetch **both** nodes.
 
 ### 2. Assets
 
-MCP asset URLs (`localhost` OK). Icons: `lucide-react` `*Icon`; brands: `@icons-pack/react-simple-icons`. No new icon packages without approval.
+- **UI icons:** `lucide-react` `*Icon` only (eye-off → `EyeOffIcon`, etc.). Do **not** save Figma icon SVGs under `public/`.
+- **Brands:** `@icons-pack/react-simple-icons`.
+- **Download MCP localhost/SVG** only for photos / illustrations / logos / decorative art with no lucide or simple-icons match — never for standard UI chrome icons.
+- No new icon packages without approval.
 
 ### 3. Resolve (before JSX)
 
 1. `src/components/ui/` → 2. prop-map by exact Figma name → 3. `pnpm ui add` / `figma-props-sync` or **stop**
-2. Write `.figma/artifacts/<feature>/<screen>/component-resolution.json`
-3. **Stop** if `unresolved` non-empty
+2. Write validated `.figma/artifacts/<feature>/<screen>/component-resolution.json`: every requested node, implementation file, resolution, asset, screen composition, and visual contract
+3. **Stop** if `unresolved` is non-empty; do not start JSX
 
-`decision`: `reuse` | `create` | `custom` only (never `extend`). Dual nodes: `source.nodeId` + `source.desktopNodeId`. Layout chrome (Header/Footer) may be `notes` + reuse layout components.
+Design-system `decision`: `reuse` | `create` only. Layout: `reuse` only. No `custom`, `extend`, inferred source fields, or prose-only chrome resolution. Feature-specific blocks belong in `screenCompositions[]`, not `resolved[]`.
 
-Minimal shape: see [reference.md](reference.md#resolution-artifact).
+Normative shape and invariants: [reference.md](reference.md).
 
 ### 4. Props
 
-For each `reuse`/`create`: load prop-map → apply `mappingKind` ([reference.md](reference.md)). No className guessing for mapped props. Missing map → **STOP** (or user-force + guessed comment, gate without `--require-prop-map`). Skip for `custom`.
+For each `kind: "design-system"`: load its validated prop map → apply `groups[].mappings[].mappingKind` ([reference.md](reference.md)). Missing/invalid/stale map → **STOP** and run `figma-props-sync`; there is no guessed-props or weakened-gate path. Skip prop maps only for `kind: "layout"` and screen compositions.
 
 ### 5. Code
 
@@ -53,26 +69,23 @@ For each `reuse`/`create`: load prop-map → apply `mappingKind` ([reference.md]
 - Feature: `src/features/<feature>/screens/<screen>/…`; thin route → screen component
 - Screens: **read** [references/automation.md](references/automation.md) — `testids.ts` + root/primary `data-testid`
 - Forms: required/optional match Figma; note placeholder `href="#"`
-- Gate `--files`: every screen TSX that uses resolved primitives (see structure.md)
+- Screens and interactive components: read [references/validation.md](references/validation.md); implement responsive constraints, component states, accessibility, and deviation reporting
+- Keep `implementationFiles[]` complete; the gate derives its scan coverage from the artifact
 
 ### 6. Visual parity (screens only)
 
-Skip DS/ui/showcase. **Read and follow** [references/visual.md](references/visual.md).
+Skip DS/ui/showcase. **Read and follow** [references/visual.md](references/visual.md) (mandatory — includes login postmortem).
 
-Core rule: **1 user Figma node → 1 gold/actual/diff contract** (folder `mobile/` and/or `desktop/`). Do not invent a second breakpoint; do not skip a requested node. `FIGMA_VISUAL_MIN_MATCH` (default `0.99`), max **3** fix rounds **per node**.
-
-**Do not trust stale scores.** Re-capture after code changes. Named content frames (card/modal) → **mandatory** content-node gold + `--selector` + `--max-diff-pixels 500`. Full-page uses cluster check (`worstCell`). **Read `diff.png`**, not only `pass=true`.
+Finalize `visualContracts[]`, execute each contract through the MCP-first loop in `visual.md`, and stop unless every required source intent reaches `fidelity_done_gate.done === true`. Do not reconstruct contract inputs from memory or prose notes.
 
 ### 7. Gate → lint
 
 ```bash
 pnpm figma-gate:components -- \
-  --artifact .figma/artifacts/<feature>/<screen>/component-resolution.json \
-  --files src/features/<feature>/screens/<screen>/<screen>-screen.tsx,src/features/<feature>/screens/<screen>/components/<block>.tsx \
-  --require-prop-map --check-prop-map-usage
+  --artifact .figma/artifacts/<feature>/<screen>/component-resolution.json
 ```
 
-Must `PASS`, then `pnpm lint`. Flags: [reference.md](reference.md#gate-flags). Pressure: `pnpm figma-gate:test`.
+Must `PASS`. Complete behavioral/accessibility review from [references/validation.md](references/validation.md), then `pnpm lint`. All contract checks are mandatory; weakening flags are rejected. Pressure: `pnpm figma-gate:test`.
 
 ### 8. Optional E2E (screens)
 
@@ -80,16 +93,14 @@ After visual + gate: **ask confirm** → thin POM + `@smoke` from testids. Detai
 
 ## Failures
 
-| Symptom                    | Fix                                                                 |
-| -------------------------- | ------------------------------------------------------------------- |
-| Truncated MCP              | `get_metadata` → child fetch                                        |
-| Visual fail                | that node’s `diff.png` + fix ≤3 ([visual.md](references/visual.md)) |
-| Full-page pass, card wrong | content-node gold + `--selector` + `--max-diff-pixels 500`          |
-| `clusterFail=true`         | red cluster in one region — fix that area or use content crop       |
-| Stale PASS after wipe      | re-capture; never report old `visual-score.json`                    |
-| Hybrid artifacts           | normalize folders per visual.md                                     |
-| Bad props                  | `figma-props-sync` → Step 4                                         |
-| Messy / monolith screen    | clean up per [structure.md](references/structure.md) + siblings     |
-| Invented structure         | rematch sibling under `src/features/*/screens/*`                    |
+| Symptom                          | Fix                                                                                 |
+| -------------------------------- | ----------------------------------------------------------------------------------- |
+| Truncated Figma context          | `get_metadata` → child fetch                                                        |
+| Visual/contract failure          | follow [visual.md](references/visual.md); stop with exact artifacts after its limit |
+| Bad props                        | `figma-props-sync` → Step 4                                                         |
+| Invalid artifact / unknown field | regenerate the contract from [reference.md](reference.md)                           |
+| Missing implementation usage     | fix `resolved[]` or `implementationFiles[]`; never pass a narrower manual file list |
+| Messy / monolith screen          | clean up per [structure.md](references/structure.md) + siblings                     |
+| Invented structure               | rematch sibling under `src/features/*/screens/*`                                    |
 
 **Default: single agent** + this skill. Do not spawn parallel implement agents on the same files.

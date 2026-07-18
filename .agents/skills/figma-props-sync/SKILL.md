@@ -5,72 +5,71 @@ description: Use when building or updating `.figma/prop-map/*.json` from a Figma
 
 # figma-props-sync
 
-Build `.figma/prop-map/<CodeComponent>.json` (1 file / code component) for `figma-implement-design`. **Never hand-edit** prop-map — only this pipeline.
+Build validated `.figma/prop-map/<CodeComponent>.json` files for `figma-implement-design`. Never hand-edit committed prop maps; regenerate through this pipeline.
 
 ## Storage
 
-| Path                                                                                      | Role                                              |
-| ----------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| `.figma/cache/_figma-props-raw.json`, `_code-props-raw.json`, `_figma-props-matched.json` | Cycle temps; deleted after `finalize`; gitignored |
-| `.figma/cache/code-props-cache.json`                                                      | Persistent extract cache; kept                    |
-| `.figma/prop-map/*.json`                                                                  | Final — **commit**                                |
+| Path                                                                                      | Role                                                  |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `.figma/cache/_figma-props-raw.json`, `_code-props-raw.json`, `_figma-props-matched.json` | Cycle artifacts; deleted after `finalize`; gitignored |
+| `.figma/cache/code-props-cache.json`                                                      | Persistent extraction cache                           |
+| `.figma/prop-map/*.json`                                                                  | Final schema v2 files; commit                         |
 
 ## Prerequisites
 
-1. `FIGMA_ACCESS_TOKEN` or `FIGMA_TOKEN` in `.env` (REST PAT — **not** MCP). Script auto-loads `.env`.
-2. Link to **DS section / COMPONENT_SET** (not a screen). Confirm if unsure.
-3. Parse `fileKey` + `nodeId`(s) first.
+1. `FIGMA_ACCESS_TOKEN` in `.env`.
+2. A design-system section or `COMPONENT_SET`, not a screen.
+3. Parse the Figma `fileKey` and all target `nodeId` values.
 
 ## Commands
 
 ```bash
 pnpm figma-props:fetch -- --file-key <key> --node-ids <id1,id2,...>
 pnpm figma-props:extract -- --ui-dir src/components
-# agent writes .figma/cache/_figma-props-matched.json
+# agent writes validated .figma/cache/_figma-props-matched.json
 pnpm figma-props:finalize
+pnpm figma-props:check
 pnpm figma-props:test
 ```
 
-Optional: `--cache-dir <path>` on any subcommand.
+`--cache-dir <path>` is supported by each command.
 
 ## Phase 1 — Fetch
 
-`pnpm figma-props:fetch -- --file-key … --node-ids …`
+Fetch Figma REST nodes and preserve every `COMPONENT`/`COMPONENT_SET` group with its `componentPropertyDefinitions`. Stop on authentication failure. See [references/fixture-example.json](references/fixture-example.json) for the offline raw shape.
 
-- REST nodes API → `COMPONENT` / `COMPONENT_SET` with `componentPropertyDefinitions`
-- → `_figma-props-raw.json`
-- 401/403 → stop
+## Phase 2 — Extract code API
 
-Offline shape: [references/fixture-example.json](references/fixture-example.json).
+The hybrid TypeScript AST + react-docgen extractor walks `.tsx`, indexes every named exported component by `(codeComponent, codeFile)`, and resolves:
 
-## Phase 2 — Extract (no match)
+- local aliases, interfaces, intersections, `Pick`/`Omit`, and interface inheritance;
+- component props inherited from installed packages;
+- referenced CVA variants;
+- destructured source props when their type cannot be resolved.
 
-`pnpm figma-props:extract -- --ui-dir src/components`
+It emits API-only hashes so unrelated implementation edits do not stale prop maps. `pnpm figma-props:check` fails on any non-v2 map or actual API drift.
 
-- Walk `.tsx`; regex `*Props` + `cva` → `_code-props-raw.json` (+ hash cache)
+## Phase 2.5 — Match
 
-## Phase 2.5 — Match (agent only)
+Read both raw artifacts and write `_figma-props-matched.json` exactly as specified in [references/schema.md](references/schema.md).
 
-Read raw + code raw → write `_figma-props-matched.json`.
+Hard rules:
 
-- Nested Figma sets (`btn-size` / `btn`) often → **one** `codeComponent`
-- Per prop: required fields + `mappingKind` rules → [references/schema.md](references/schema.md)
-- Hard rules:
-  - Inherited/Base UI props: no `high` without `verifiedVia: "external-type-check"` + `.d.ts` path in `note`
-  - `composition` ≠ `unmapped`
-  - Duplicate Figma names → keep both, lower confidence, `_devReviewNeeded`
-  - Unused code props → note / `_devReviewNeeded`
+- Keep mappings nested under their owning Figma group; never flatten duplicate property names across groups.
+- Use only `direct`, `override`, `composition`, or `unmapped`.
+- Use structured evidence. External declarations and direct source reads require exact paths and hashes.
+- `composition` is a real implementation decision; do not label it `unmapped`.
+- Every Figma value must be covered exactly. Do not copy redundant `figmaValues` or `codeValues` into the match artifact.
+- Never invent a React prop to mirror a Figma property. The guaranteed code component is authoritative; represent the difference as composition or unmapped.
 
 ## Phase 3 — Finalize
 
-`pnpm figma-props:finalize`
+`pnpm figma-props:finalize` validates schema, Figma definitions, code API, values, and evidence. It then emits one prop-map file per code component, removes obsolete prop-map files, clears cycle artifacts, and prints confidence/mapping totals.
 
-Validate → group by `codeComponent` → `.figma/prop-map/<CodeComponent>.json` → delete cycle temps → print summary.
+## Phase 4 — Fix drift
 
-## Phase 4 — Fix
+For a missing, invalid, or stale map: fetch, extract, rewrite the matched artifact, and finalize again. Do not hot-patch committed JSON.
 
-Wrong map → edit matched (re-fetch/extract if needed) → `finalize` again. Hot-patch committed JSON only if user asks (next sync overwrites).
+## Contract with implement
 
-## vs implement
-
-Implement reads **only** `.figma/prop-map/X.json`. Missing → stop + this skill. Legacy maps (no `mappingKind`) still readable; next sync here should emit current schema. Never rename code to match Figma — report low-confidence instead.
+`figma-implement-design` reads only validated prop maps. Missing, invalid, or stale maps are a hard stop: run this pipeline and finalize before resuming implementation. Code component names and APIs stay authoritative; this skill records Figma-to-code differences rather than renaming code.

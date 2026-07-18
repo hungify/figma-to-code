@@ -1,15 +1,22 @@
 {
-  "screen": "pressure-figma-prop",
-  "source": { "fileKey": "x", "nodeId": "1-2" },
+  "schemaVersion": 2,
+  "name": "pressure-figma-prop",
+  "target": { "kind": "design-system" },
+  "source": { "fileKey": "x", "nodes": [{ "intent": "component", "nodeId": "1:2" }] },
+  "implementationFiles": [
+    ".agents/skills/figma-implement-design/scripts/fixtures/bad-figma-prop-name/BadFigmaPropName.tsx"
+  ],
   "resolved": [
     {
-      "figmaNode": "Button",
-      "repoComponent": "Button",
+      "kind": "design-system",
+      "figmaNodes": ["Button"],
+      "codeComponent": "Button",
       "importPath": "#/components/ui/button",
-      "decision": "reuse",
-      "source": "prop-map"
+      "decision": "reuse"
     }
   ],
   "unresolved": [],
-  "customGenerated": []
+  "screenCompositions": [],
+  "assets": [],
+  "visualContracts": []
 }
