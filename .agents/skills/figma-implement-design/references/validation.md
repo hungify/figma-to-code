@@ -1,6 +1,8 @@
 # Behavioral validation
 
-**Read in Step 5 and Step 7** for screens or interactive components. Visual pixel comparison stays in [visual.md](visual.md); test locators stay in [automation.md](automation.md).
+**Read during UI implementation and accessibility verification** for screens or interactive components. Pixel comparison and test locators stay in the screen skill's [visual](../../figma-implement-screen/references/visual.md) and [automation](../../figma-implement-screen/references/automation.md) references.
+
+This validation covers behavior visible at the UI boundary: responsive layout, supplied component states, semantics, focus, keyboard use, and callback wiring. It does not invent or certify business rules, API effects, authentication, persistence, or product workflows.
 
 ## Responsive behavior
 
@@ -19,7 +21,7 @@ Inventory states exposed by Figma component properties and existing code primiti
 - Implement supplied hover, focus, active, disabled, selected/checked, error, and loading states through prop maps and existing component APIs.
 - Preserve keyboard and pointer behavior from accessible primitives.
 - Do not invent business states absent from design/product requirements.
-- Verify every supplied state; a default-state screenshot alone does not complete an interactive component.
+- Expose and manually inspect every supplied state; a default-state screenshot alone is weak UI evidence.
 
 ## Accessibility
 
@@ -43,11 +45,12 @@ Report each deviation with:
 
 Add a code comment only when the reason remains non-obvious to future maintainers. A deviation never bypasses prop-map, component, or fidelity gates. Stop for user direction when impact is material or requires a product/design choice.
 
-## Completion checklist
+## Developer review checklist
 
 - [ ] Responsive constraints implemented without invented layouts
-- [ ] Supplied interactive states implemented and verified
+- [ ] Supplied interactive states implemented and available for manual review
 - [ ] Keyboard interaction and visible focus work
 - [ ] Labels, roles, errors, and disabled states are accessible
 - [ ] Assets and content have correct accessible treatment
 - [ ] Deviations are absent or explicitly reported with evidence
+- [ ] Business-logic behavior is marked out of scope or handed to its owning task

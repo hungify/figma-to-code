@@ -33,4 +33,3 @@ dist
 # Figma fidelity run outputs — entire tree ephemeral (gold/meta/actual/diff/score/…).
 # Re-fetch + re-run via fidelity_*; do not commit. Keep `.figma/prop-map/` (committed).
 .figma/artifacts/
-eval/figma-screens/last-scorecard.json

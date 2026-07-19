@@ -20,7 +20,13 @@
           "figmaType": "TEXT",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "TooltipContent children text."
+          "note": "TooltipContent children text.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:9c9dad932919b657b6a323ed8645368a205f023532fc7ff8fecb20c7aeaa3edf",
+            "reviewedProps": [],
+            "dispositions": {}
+          }
         },
         {
           "figmaProp": "Side",

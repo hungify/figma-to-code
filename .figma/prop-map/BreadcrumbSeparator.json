@@ -20,21 +20,45 @@
           "figmaType": "TEXT",
           "mappingKind": "composition",
           "confidence": "low",
-          "note": "Separator usually has no label."
+          "note": "Separator usually has no label.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:8230949d0233001a6def2b6313544a19fa4aa7b240b6a2f8be010f47335a7de6",
+            "reviewedProps": ["variant"],
+            "dispositions": {
+              "variant": "Separator usually has no label."
+            }
+          }
         },
         {
           "figmaProp": "Dropdown menu#1354:4",
           "figmaType": "BOOLEAN",
           "mappingKind": "unmapped",
           "confidence": "low",
-          "note": "N/A for separator."
+          "note": "N/A for separator.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:8230949d0233001a6def2b6313544a19fa4aa7b240b6a2f8be010f47335a7de6",
+            "reviewedProps": ["variant"],
+            "dispositions": {
+              "variant": "N/A for separator."
+            }
+          }
         },
         {
           "figmaProp": "Content",
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "medium",
-          "note": "Chevron/ellipsis content."
+          "note": "Chevron/ellipsis content.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:8230949d0233001a6def2b6313544a19fa4aa7b240b6a2f8be010f47335a7de6",
+            "reviewedProps": ["variant"],
+            "dispositions": {
+              "variant": "Chevron/ellipsis content."
+            }
+          }
         }
       ]
     }

@@ -6,6 +6,7 @@ import { ButtonShowcase } from "#/components/button-showcase";
 import { CheckboxShowcase } from "#/components/checkbox-showcase";
 import { ChipShowcase } from "#/components/chip-showcase";
 import { FileUploadShowcase } from "#/components/file-upload-showcase";
+import { FooterShowcase } from "#/components/footer-showcase";
 import { HeaderShowcase } from "#/components/header-showcase";
 import { InputShowcase } from "#/components/input-showcase";
 import { LabelShowcase } from "#/components/label-showcase";
@@ -13,13 +14,22 @@ import { PaginationShowcase } from "#/components/pagination-showcase";
 import { RadioShowcase } from "#/components/radio-showcase";
 import { SelectShowcase } from "#/components/select-showcase";
 import { ServiceTagShowcase } from "#/components/service-tag-showcase";
+import { SidebarShowcase } from "#/components/sidebar-showcase";
+import { SonnerShowcase } from "#/components/sonner-showcase";
 import { SwitchShowcase } from "#/components/switch-showcase";
 import { TabShowcase } from "#/components/tab-showcase";
 import { TextareaShowcase } from "#/components/textarea-showcase";
+import { TooltipShowcase } from "#/components/tooltip-showcase";
+import { TopMenuItemShowcase } from "#/components/top-menu-item-showcase";
 
 const showcases = [
   { id: "header", label: "Header", component: HeaderShowcase },
+  { id: "sidebar", label: "Sidebar", component: SidebarShowcase },
+  { id: "footer", label: "Footer", component: FooterShowcase },
+  { id: "top-menu-item", label: "Top Menu Item", component: TopMenuItemShowcase },
   { id: "button", label: "Button", component: ButtonShowcase },
+  { id: "tooltip", label: "Tooltip", component: TooltipShowcase },
+  { id: "sonner", label: "Sonner", component: SonnerShowcase },
   { id: "input", label: "Input", component: InputShowcase },
   { id: "textarea", label: "Textarea", component: TextareaShowcase },
   { id: "select", label: "Select", component: SelectShowcase },

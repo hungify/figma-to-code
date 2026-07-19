@@ -20,35 +20,80 @@
           "figmaType": "TEXT",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Link/page text children."
+          "note": "Link/page text children.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:8d061d1bc39b50eddaa4861bbdbb66aa065ca27aeaacd3134d961a53b0db09a0",
+            "reviewedProps": ["dropdown", "forceState"],
+            "dispositions": {
+              "dropdown": "Link/page text children.",
+              "forceState": "Link/page text children."
+            }
+          }
         },
         {
           "figmaProp": "Dropdown menu#1354:4",
           "figmaType": "BOOLEAN",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Optional dropdown slot."
+          "note": "Optional dropdown slot.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:8d061d1bc39b50eddaa4861bbdbb66aa065ca27aeaacd3134d961a53b0db09a0",
+            "reviewedProps": ["dropdown", "forceState"],
+            "dispositions": {
+              "dropdown": "Optional dropdown slot.",
+              "forceState": "Optional dropdown slot."
+            }
+          }
         },
         {
           "figmaProp": "Icon#1512:6",
           "figmaType": "INSTANCE_SWAP",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Optional icon child."
+          "note": "Optional icon child.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:8d061d1bc39b50eddaa4861bbdbb66aa065ca27aeaacd3134d961a53b0db09a0",
+            "reviewedProps": ["dropdown", "forceState"],
+            "dispositions": {
+              "dropdown": "Optional icon child.",
+              "forceState": "Optional icon child."
+            }
+          }
         },
         {
           "figmaProp": "State",
           "figmaType": "VARIANT",
           "mappingKind": "unmapped",
           "confidence": "medium",
-          "note": "Use BreadcrumbPage for current; Link for others."
+          "note": "Use BreadcrumbPage for current; Link for others.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:8d061d1bc39b50eddaa4861bbdbb66aa065ca27aeaacd3134d961a53b0db09a0",
+            "reviewedProps": ["dropdown", "forceState"],
+            "dispositions": {
+              "dropdown": "Use BreadcrumbPage for current; Link for others.",
+              "forceState": "Use BreadcrumbPage for current; Link for others."
+            }
+          }
         },
         {
           "figmaProp": "Content",
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Content layout variants."
+          "note": "Content layout variants.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:8d061d1bc39b50eddaa4861bbdbb66aa065ca27aeaacd3134d961a53b0db09a0",
+            "reviewedProps": ["dropdown", "forceState"],
+            "dispositions": {
+              "dropdown": "Content layout variants.",
+              "forceState": "Content layout variants."
+            }
+          }
         }
       ]
     }

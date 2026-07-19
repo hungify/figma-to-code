@@ -29,7 +29,7 @@ function loadDotEnv() {
 
 loadDotEnv();
 
-const DEFAULT_CACHE_DIR = ".figma/cache";
+const SHARED_CACHE_DIR = ".figma/cache";
 const DEFAULT_UI_DIR = "src/components";
 const CODE_CACHE_NAME = "code-props-cache.json";
 const PROP_MAP_DIR = ".figma/prop-map";
@@ -43,6 +43,23 @@ function cachePaths(cacheDir) {
     matched: path.join(cacheDir, "_figma-props-matched.json"),
     codeCache: path.join(cacheDir, CODE_CACHE_NAME),
   };
+}
+
+function isolatedCacheDir(args, command) {
+  const cacheDir = args["cache-dir"];
+  if (typeof cacheDir !== "string" || cacheDir.trim().length === 0) {
+    console.error(
+      `❌ ${command} requires isolated --cache-dir <path>; reuse the same path for one fetch/extract/finalize cycle`,
+    );
+    process.exit(1);
+  }
+  if (path.resolve(cacheDir) === path.resolve(SHARED_CACHE_DIR)) {
+    console.error(
+      `❌ Shared cache ${SHARED_CACHE_DIR} is forbidden; use ${SHARED_CACHE_DIR}/<task-id>`,
+    );
+    process.exit(1);
+  }
+  return cacheDir;
 }
 
 function parseArgs(argv) {
@@ -124,7 +141,6 @@ function collectComponents(node, acc) {
 }
 
 async function cmdFetch(args) {
-  const paths = cachePaths(args["cache-dir"] || DEFAULT_CACHE_DIR);
   const token = process.env.FIGMA_ACCESS_TOKEN;
   if (!token) {
     console.error("❌ Missing FIGMA_ACCESS_TOKEN in .env");
@@ -134,6 +150,7 @@ async function cmdFetch(args) {
     console.error("❌ Need --file-key and --node-ids");
     process.exit(1);
   }
+  const paths = cachePaths(isolatedCacheDir(args, "fetch"));
 
   const nodeIds = args["node-ids"]
     .split(",")
@@ -171,6 +188,88 @@ async function cmdFetch(args) {
       `   - ${c.name} (${c.figmaNodeId}) ${Object.keys(c.propertyDefinitions).length} props`,
     );
   }
+}
+
+async function fetchDefinitionGroups(fileKey, nodeIds) {
+  const token = process.env.FIGMA_ACCESS_TOKEN;
+  if (!token) throw new Error("Missing FIGMA_ACCESS_TOKEN in .env");
+  const url = `https://api.figma.com/v1/files/${encodeURIComponent(fileKey)}/nodes?ids=${nodeIds.join(",")}`;
+  const res = await fetch(url, { headers: { "X-Figma-Token": token } });
+  if (!res.ok) throw new Error(`Figma REST ${res.status}: ${res.statusText}`);
+  const data = await res.json();
+  const components = [];
+  for (const entry of Object.values(data.nodes || {})) {
+    if (entry?.document) collectComponents(entry.document, components);
+  }
+  return components;
+}
+
+async function cmdVerifySource(args) {
+  const propMapDir = args["prop-map-dir"] || PROP_MAP_DIR;
+  const requested = String(args.components || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+  if (requested.length === 0) {
+    console.error("❌ Need --components Button,Input");
+    process.exit(1);
+  }
+  const maps = requested.map((component) => {
+    const filePath = path.join(propMapDir, `${component}.json`);
+    if (!fs.existsSync(filePath)) throw new Error(`prop map missing: ${filePath}`);
+    const propMap = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const problems = validateCommittedStructure(propMap);
+    if (propMap.schemaVersion !== 2 || problems.length > 0) {
+      throw new Error(
+        `${component}.json invalid: ${problems.join("; ") || "schemaVersion 2 required"}`,
+      );
+    }
+    return { component, propMap };
+  });
+
+  const groupsByFile = new Map();
+  for (const { propMap } of maps) {
+    const fileKey = propMap.source.fileKey;
+    const nodeIds = propMap.groups.map((group) => group.figmaNodeId);
+    const current = groupsByFile.get(fileKey) || new Set();
+    nodeIds.forEach((nodeId) => current.add(nodeId));
+    groupsByFile.set(fileKey, current);
+  }
+  const fetchedByFile = new Map();
+  for (const [fileKey, nodeIds] of groupsByFile) {
+    const groups = await fetchDefinitionGroups(fileKey, [...nodeIds]);
+    fetchedByFile.set(fileKey, new Map(groups.map((group) => [group.figmaNodeId, group])));
+  }
+
+  const stale = [];
+  for (const { component, propMap } of maps) {
+    const fetched = fetchedByFile.get(propMap.source.fileKey);
+    const definitions = propMap.groups.map((group) => {
+      const current = fetched?.get(group.figmaNodeId);
+      if (!current) {
+        stale.push(`${component}: Figma group missing ${group.figmaNodeId} (${group.name})`);
+      } else if (current.name !== group.name) {
+        stale.push(
+          `${component}: Figma group renamed ${group.figmaNodeId}: ${group.name} -> ${current.name}`,
+        );
+      }
+      return {
+        name: group.name,
+        figmaNodeId: group.figmaNodeId,
+        propertyDefinitions: current?.propertyDefinitions ?? {},
+      };
+    });
+    const currentHash = hashJson(definitions);
+    if (currentHash !== propMap.source.definitionHash) {
+      stale.push(`${component}: Figma definition hash changed`);
+    }
+  }
+  if (stale.length > 0) {
+    console.error("❌ Stale Figma prop sources:");
+    stale.forEach((problem) => console.error(`   - ${problem}`));
+    process.exit(1);
+  }
+  console.log(`✅ Current Figma definitions match ${maps.length} prop map(s)`);
 }
 
 function nodeName(node) {
@@ -508,7 +607,7 @@ function extractComponentsFromSource(source, filePath) {
 }
 
 function cmdExtractCode(args) {
-  const paths = cachePaths(args["cache-dir"] || DEFAULT_CACHE_DIR);
+  const paths = cachePaths(isolatedCacheDir(args, "extract-code"));
   const uiDir = args["ui-dir"] || DEFAULT_UI_DIR;
   if (!fs.existsSync(uiDir)) {
     console.error(`❌ Missing dir ${uiDir}`);
@@ -592,6 +691,10 @@ function cmdExtractCode(args) {
   const staleMaps = checkCommittedCodeDrift(
     { components: codeComponents, componentIndex },
     args["prop-map-dir"] || PROP_MAP_DIR,
+    String(args.components || "")
+      .split(",")
+      .map((value) => value.trim())
+      .filter(Boolean),
   );
   if (staleMaps.length > 0) {
     console.log(`⚠️  ${staleMaps.length} invalid/stale prop-map(s):`);
@@ -638,11 +741,19 @@ function findCodeComponent(codeRaw, componentName, codeFile) {
     .find((candidate) => candidate && (!codeFile || candidate.file === codeFile));
 }
 
-function checkCommittedCodeDrift(codeRaw, propMapDir) {
+function checkCommittedCodeDrift(codeRaw, propMapDir, requestedComponents = []) {
   if (!fs.existsSync(propMapDir)) return [];
   const stale = [];
-  for (const fileName of fs.readdirSync(propMapDir).filter((name) => name.endsWith(".json"))) {
+  const fileNames =
+    requestedComponents.length > 0
+      ? [...new Set(requestedComponents)].map((component) => `${component}.json`)
+      : fs.readdirSync(propMapDir).filter((name) => name.endsWith(".json"));
+  for (const fileName of fileNames) {
     const filePath = path.join(propMapDir, fileName);
+    if (!fs.existsSync(filePath)) {
+      stale.push(`${fileName}: prop map missing`);
+      continue;
+    }
     let propMap;
     try {
       propMap = JSON.parse(fs.readFileSync(filePath, "utf-8"));
@@ -666,6 +777,17 @@ function checkCommittedCodeDrift(codeRaw, propMapDir) {
     }
     if (propMap.target?.apiHash !== current.codeApiHash) {
       stale.push(`${fileName}: code API hash changed`);
+    }
+    for (const group of propMap.groups) {
+      for (const mapping of group.mappings) {
+        if (mapping.mappingKind !== "composition" && mapping.mappingKind !== "unmapped") continue;
+        const candidates = exactCodePropCandidates(mapping.figmaProp, current);
+        if (candidates.length > 0) {
+          stale.push(
+            `${fileName}: ${group.name}.${mapping.figmaProp} hides exact code prop candidate [${candidates.join(", ")}]`,
+          );
+        }
+      }
     }
   }
   return stale;
@@ -735,6 +857,26 @@ function figmaValuesForRawProp(rawProp) {
 
 function sameValue(left, right) {
   return String(left).toLowerCase() === String(right).toLowerCase();
+}
+
+function normalizedPropName(value) {
+  return String(value ?? "")
+    .replace(/#\d+:\d+$/, "")
+    .replace(/[^a-zA-Z0-9]/g, "")
+    .toLowerCase();
+}
+
+function exactCodePropCandidates(figmaProp, codeComponent) {
+  const normalized = normalizedPropName(figmaProp);
+  if (!normalized) return [];
+  return Object.entries(codeComponent?.props ?? {})
+    .filter(
+      ([reactProp, codeProp]) =>
+        normalizedPropName(reactProp) === normalized &&
+        codeProp?.source !== "external-type" &&
+        codeProp?.type !== "unknown",
+    )
+    .map(([reactProp]) => reactProp);
 }
 
 function validateValueCoverage(problems, context, mapping, rawProp) {
@@ -871,7 +1013,37 @@ function validateMapping(problems, context, mapping, rawProp, codeComponent, cod
   ) {
     problems.push(`${context}: ${mapping.mappingKind} must not set values/evidence`);
   }
+  if (mapping.mappingKind === "composition" || mapping.mappingKind === "unmapped") {
+    const exactCandidates = exactCodePropCandidates(mapping.figmaProp, codeComponent);
+    if (exactCandidates.length > 0) {
+      problems.push(
+        `${context}: ${mapping.mappingKind} rejected because exact code prop candidate exists [${exactCandidates.join(", ")}]; use direct/override or rename the Figma property`,
+      );
+    }
+  }
   validateValueCoverage(problems, context, mapping, rawProp);
+
+  if (mapping.mappingKind === "direct" && !mapping.valueMap && rawProp) {
+    const figmaValues = figmaValuesForRawProp(rawProp);
+    const codeProp = codeComponent?.props?.[mapping.reactProp];
+    const codeValues = codeProp?.values?.map(String) ?? [];
+    if (figmaValues.length > 0) {
+      const implicitBooleanMapping = rawProp.type === "BOOLEAN" && codeProp?.type === "boolean";
+      if (!implicitBooleanMapping && codeValues.length === 0) {
+        problems.push(
+          `${context}: direct enumerable mapping cannot prove code values; full valueMap required (Figma [${figmaValues.join(", ")}])`,
+        );
+      } else if (
+        !implicitBooleanMapping &&
+        (figmaValues.length !== codeValues.length ||
+          figmaValues.some((value) => !codeValues.some((candidate) => sameValue(candidate, value))))
+      ) {
+        problems.push(
+          `${context}: direct Figma/code values differ; full valueMap required (Figma [${figmaValues.join(", ")}], code [${codeValues.join(", ")}])`,
+        );
+      }
+    }
+  }
 
   for (const reactProp of mappingReactProps(mapping)) {
     const codeProp = codeComponent?.props?.[reactProp];
@@ -917,6 +1089,7 @@ function validateMatched(matched, raw, codeRaw) {
     return problems;
   }
   const seenComponents = new Set();
+  const seenComponentNames = new Set();
   for (const component of matched.components) {
     const context = component.codeComponent ?? "unknown-component";
     for (const key of Object.keys(component)) {
@@ -930,6 +1103,12 @@ function validateMatched(matched, raw, codeRaw) {
     if (seenComponents.has(componentKey))
       problems.push(`${context}: duplicate component/file entry`);
     seenComponents.add(componentKey);
+    if (seenComponentNames.has(component.codeComponent)) {
+      problems.push(
+        `${context}: duplicate codeComponent would overwrite ${component.codeComponent}.json`,
+      );
+    }
+    seenComponentNames.add(component.codeComponent);
     const codeComponent = findCodeComponent(codeRaw, component.codeComponent, component.codeFile);
     if (!codeComponent) {
       problems.push(`${context}: component/file missing from extracted code API`);
@@ -977,13 +1156,19 @@ function validateMatched(matched, raw, codeRaw) {
           component.codeFile,
         );
       }
+      const missingProps = Object.keys(rawComponent.propertyDefinitions ?? {}).filter(
+        (figmaProp) => !seenProps.has(figmaProp),
+      );
+      if (missingProps.length > 0) {
+        problems.push(`${groupContext}: missing Figma properties [${missingProps.join(", ")}]`);
+      }
     }
   }
   return problems;
 }
 
 function cmdFinalize(args) {
-  const paths = cachePaths(args["cache-dir"] || DEFAULT_CACHE_DIR);
+  const paths = cachePaths(isolatedCacheDir(args, "finalize"));
   if (!fs.existsSync(paths.matched)) {
     console.error(`❌ Missing ${paths.matched} (write Phase 2.5 matched first)`);
     process.exit(1);
@@ -1005,6 +1190,14 @@ function cmdFinalize(args) {
   if (problems.length > 0) {
     console.error(`❌ Invalid ${paths.matched}:`);
     problems.forEach((p) => console.error("   - " + p));
+    process.exit(1);
+  }
+
+  const prune = args.prune === true || args.prune === "true";
+  if (prune) {
+    console.error(
+      "❌ --prune is disabled: finalize cannot independently prove complete-library scope; remove obsolete maps in a separate reviewed change",
+    );
     process.exit(1);
   }
 
@@ -1045,12 +1238,7 @@ function cmdFinalize(args) {
   }
 
   console.log(`✅ Wrote ${writtenFiles.length} → ${propMapDir}/`);
-  const expectedFiles = new Set(writtenFiles.map((filePath) => path.basename(filePath)));
-  for (const fileName of fs.readdirSync(propMapDir).filter((name) => name.endsWith(".json"))) {
-    if (expectedFiles.has(fileName)) continue;
-    fs.unlinkSync(path.join(propMapDir, fileName));
-    console.log(`🧹 Removed obsolete ${fileName}`);
-  }
+  console.log("   Existing prop maps preserved (--prune is intentionally disabled)");
 
   let totalProps = 0,
     high = 0,
@@ -1087,6 +1275,7 @@ function cmdFinalize(args) {
     console.log(`⚠️  ${unmapped} unmapped — check note in prop-map`);
   }
   console.log(`📌 Commit ${propMapDir}/`);
+  console.log("review: developer mapping/API review required; finalize is not merge approval");
 
   for (const p of [paths.raw, paths.codeRaw, paths.matched]) {
     if (fs.existsSync(p)) fs.unlinkSync(p);
@@ -1101,9 +1290,10 @@ async function main() {
   if (command === "fetch") return cmdFetch(args);
   if (command === "extract-code") return cmdExtractCode(args);
   if (command === "finalize") return cmdFinalize(args);
+  if (command === "verify-source") return cmdVerifySource(args);
 
   console.error(
-    "Usage: node figma-props-sync.cjs <fetch|extract-code|finalize> [--cache-dir .figma/cache] [--options]",
+    "Usage: node figma-props-sync.cjs <fetch|extract-code|finalize|verify-source> --cache-dir .figma/cache/<task-id> [--options]",
   );
   process.exit(1);
 }

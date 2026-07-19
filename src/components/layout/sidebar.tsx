@@ -10,8 +10,7 @@ import {
   XIcon,
   type LucideIcon,
 } from "lucide-react";
-import type { ComponentPropsWithoutRef, CSSProperties, MouseEventHandler, ReactNode } from "react";
-import { useState } from "react";
+import type { ComponentPropsWithoutRef, MouseEventHandler, ReactNode } from "react";
 
 import {
   Sheet,
@@ -25,11 +24,13 @@ import {
   SidebarContent as ShadcnSidebarContent,
   SidebarGroup as ShadcnSidebarGroup,
   SidebarGroupContent as ShadcnSidebarGroupContent,
+  SidebarHeader as ShadcnSidebarHeader,
   SidebarMenu as ShadcnSidebarMenu,
   SidebarMenuButton as ShadcnSidebarMenuButton,
   SidebarMenuItem as ShadcnSidebarMenuItem,
   SidebarProvider as ShadcnSidebarProvider,
   SidebarSeparator as ShadcnSidebarSeparator,
+  useSidebar as useShadcnSidebar,
 } from "#/components/ui/sidebar";
 import { cn } from "#/lib/utils";
 
@@ -55,7 +56,6 @@ type SidebarGroup = {
 };
 
 type SidebarProps = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
-  collapsed?: boolean;
   groups?: readonly SidebarGroup[];
   label?: string;
 };
@@ -139,7 +139,7 @@ function SidebarItemButton({
         "hover:bg-grey-50 hover:text-grey-500 focus-visible:ring-3 focus-visible:ring-green-100",
         isActive &&
           "border-l-2 border-green-600 bg-green-50 text-green-600 hover:bg-green-50 hover:text-green-600",
-        isIcon ? "w-[52px] justify-center" : "w-[205px] justify-start",
+        isIcon ? "w-13 justify-center" : "w-51.25 justify-start",
         className,
       )}
       {...props}
@@ -161,85 +161,62 @@ function SidebarSeparator({ children }: { children?: ReactNode }) {
 
 function Sidebar({
   className,
-  collapsed = false,
   groups = defaultSidebarGroups,
   label = "メニュー",
   ...props
 }: SidebarProps) {
-  const [isCollapsed, setIsCollapsed] = useState(collapsed);
+  const { state, toggleSidebar } = useShadcnSidebar();
+  const isCollapsed = state === "collapsed";
 
   return (
-    <ShadcnSidebarProvider
-      defaultOpen={!isCollapsed}
-      className="min-h-0 w-fit"
-      style={
-        {
-          "--sidebar-width": isCollapsed ? "84px" : "250px",
-          "--sidebar-width-icon": "84px",
-        } as CSSProperties
-      }
+    <ShadcnSidebar
+      collapsible="icon"
+      variant="floating"
+      className={cn("text-grey-900", className)}
+      {...props}
     >
-      <ShadcnSidebar
-        collapsible="none"
+      <ShadcnSidebarHeader
         className={cn(
-          "overflow-hidden rounded-xl bg-white text-grey-900",
-          isCollapsed ? "w-[84px]" : "w-[250px]",
-          className,
+          "flex-row items-center justify-between px-4 pt-6",
+          isCollapsed && "justify-center px-2",
         )}
-        {...props}
       >
-        <ShadcnSidebarContent
-          className={cn(
-            "gap-2 overflow-hidden bg-white py-6",
-            isCollapsed ? "items-center px-4" : "px-4",
-          )}
+        {isCollapsed ? null : <p className="jp-label-md text-green-500">{label}</p>}
+        <button
+          type="button"
+          aria-label={isCollapsed ? "メニューを開く" : "メニューを閉じる"}
+          onClick={toggleSidebar}
+          className="flex size-8 shrink-0 items-center justify-center rounded-lg text-grey-500 focus-visible:ring-3 focus-visible:ring-green-100 focus-visible:outline-none"
         >
-          {isCollapsed ? (
-            <button
-              type="button"
-              aria-label="メニューを開く"
-              onClick={() => setIsCollapsed(false)}
-              className="text-grey-500 focus-visible:ring-3 focus-visible:ring-green-100 focus-visible:outline-none"
-            >
-              <MenuIcon className="size-6" aria-hidden="true" strokeWidth={2} />
-            </button>
-          ) : (
-            <div className="flex w-full items-center justify-between pl-4">
-              <p className="jp-label-md text-green-500">{label}</p>
-              <button
-                type="button"
-                aria-label="メニューを閉じる"
-                onClick={() => setIsCollapsed(true)}
-                className="text-grey-500 focus-visible:ring-3 focus-visible:ring-green-100 focus-visible:outline-none"
-              >
-                <MenuIcon className="size-6" aria-hidden="true" strokeWidth={2} />
-              </button>
-            </div>
-          )}
-          <ShadcnSidebarGroup className="p-0">
-            <ShadcnSidebarGroupContent>
-              <ShadcnSidebarMenu>
-                {groups.map((group, groupIndex) => (
-                  <GroupFragment key={group.items.map((item) => item.id).join("-")}>
-                    {groupIndex > 0 ? <SidebarSeparator /> : null}
-                    {group.items.map((item) => (
-                      <ShadcnSidebarMenuItem key={item.id}>
-                        <SidebarItemButton
-                          variant={isCollapsed ? "icon" : "default"}
-                          icon={item.icon}
-                          label={item.label}
-                          onClick={item.onClick}
-                        />
-                      </ShadcnSidebarMenuItem>
-                    ))}
-                  </GroupFragment>
-                ))}
-              </ShadcnSidebarMenu>
-            </ShadcnSidebarGroupContent>
-          </ShadcnSidebarGroup>
-        </ShadcnSidebarContent>
-      </ShadcnSidebar>
-    </ShadcnSidebarProvider>
+          <MenuIcon className="size-6" aria-hidden="true" strokeWidth={2} />
+        </button>
+      </ShadcnSidebarHeader>
+      <ShadcnSidebarContent
+        className={cn("gap-2 bg-white px-4 py-4", isCollapsed && "items-center px-2")}
+      >
+        <ShadcnSidebarGroup className="p-0">
+          <ShadcnSidebarGroupContent>
+            <ShadcnSidebarMenu>
+              {groups.map((group, groupIndex) => (
+                <GroupFragment key={group.items.map((item) => item.id).join("-")}>
+                  {groupIndex > 0 ? <SidebarSeparator /> : null}
+                  {group.items.map((item) => (
+                    <ShadcnSidebarMenuItem key={item.id}>
+                      <SidebarItemButton
+                        variant={isCollapsed ? "icon" : "default"}
+                        icon={item.icon}
+                        label={item.label}
+                        onClick={item.onClick}
+                      />
+                    </ShadcnSidebarMenuItem>
+                  ))}
+                </GroupFragment>
+              ))}
+            </ShadcnSidebarMenu>
+          </ShadcnSidebarGroupContent>
+        </ShadcnSidebarGroup>
+      </ShadcnSidebarContent>
+    </ShadcnSidebar>
   );
 }
 

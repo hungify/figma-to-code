@@ -20,7 +20,15 @@
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "medium",
-          "note": "Prefer RadioGroup value; checked for static showcase."
+          "note": "Prefer RadioGroup value; checked for static showcase.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:349b30a145dc3a4e54f13471f137adc70bcbbf9af1d408e8ee5b424902ec3354",
+            "reviewedProps": ["forceState"],
+            "dispositions": {
+              "forceState": "Prefer RadioGroup value; checked for static showcase."
+            }
+          }
         },
         {
           "figmaProp": "State",

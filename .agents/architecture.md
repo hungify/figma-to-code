@@ -10,7 +10,7 @@ src/
   features/<feature>/
     screens/<screen>/
       <screen>-screen.tsx              # screen root component
-      testids.ts                       # data-testid map (see figma-implement-design/references/automation.md)
+      testids.ts                       # data-testid map (see figma-implement-screen load-on-demand refs)
       components/<name>.tsx            # used by THIS screen only
       hooks/use-<x>.ts                 # used by THIS screen only
       utils.ts                         # used by THIS screen only
@@ -73,7 +73,7 @@ src/
 
 - **Follow existing code first.** Before inventing folders or APIs, mirror a sibling under `src/features/*/screens/*/` (`#/` imports, tokens, layout ownership, how UI vs logic is split). Architecture fills gaps only when no precedent exists.
 - Shared chrome (Header/Footer) for a route group lives **once** in that group's pathless layout route (e.g. `src/routes/_guest/route.tsx` renders `<Header/><main><Outlet/></main><Footer/>`). Individual screens render only their own content — never re-import `Header`/`Footer` per screen.
-- **Clean screen composition:** keep `<screen>-screen.tsx` thin; extract UI blocks to `components/` and local state/handlers/mutations to `hooks/` when the screen would otherwise monolith. Form + `use-*` hook (e.g. login) is **one** clean-code pattern — follow siblings for other shapes. Details: `.agents/skills/figma-implement-design/references/structure.md`.
+- **Clean screen composition:** keep `<screen>-screen.tsx` thin; extract UI blocks to `components/` and local state/handlers/mutations to `hooks/` when the screen would otherwise monolith. Form + `use-*` hook (e.g. login) is **one** clean-code pattern — follow siblings for other shapes. Details: `.agents/skills/figma-implement-screen/SKILL.md` → structure reference.
 - Data layer (`src/lib/<domain>/`) owns queries / server functions / API clients. Screen hooks may call those clients (e.g. `authClient`) but must not redefine the data layer.
 - Promote screen-scoped file → feature-scoped the moment a **second** screen needs it (don't pre-shared speculatively).
 - Promote feature-scoped file → `src/components|hooks|lib` only when a **second feature** needs it.
@@ -83,5 +83,6 @@ src/
 
 ## Related
 
-- Figma implement output paths: `.agents/skills/figma-implement-design/SKILL.md` Step 5
-- Testids: `.agents/skills/figma-implement-design/references/automation.md`
+- Figma screen output: `.agents/skills/figma-implement-screen/SKILL.md`
+- Figma component output: `.agents/skills/figma-implement-component/SKILL.md`
+- Testids: screen skill → automation reference

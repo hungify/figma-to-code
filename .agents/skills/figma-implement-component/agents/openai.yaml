@@ -1,0 +1,15 @@
+interface:
+  display_name: "Figma Implement Component"
+  short_description: "Implement Figma design-system components"
+  default_prompt: "Use $figma-implement-component to implement this Figma design-system component with prop mapping and reviewable fidelity evidence. Require developer code, visual diff, and manual UI review."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "figma"
+      description: "Figma MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.figma.com/mcp"
+    - type: "mcp"
+      value: "figma-fidelity"
+      description: "Local Figma gold-to-app fidelity gate"

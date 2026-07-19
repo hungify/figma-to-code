@@ -20,49 +20,105 @@
           "figmaType": "BOOLEAN",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Render FieldRequired inside FieldLabel when true."
+          "note": "Render FieldRequired inside FieldLabel when true.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:e41d59a0597febb6269f0af0f88b27986944a253756e27fe310ff5c7f2071754",
+            "reviewedProps": ["orientation"],
+            "dispositions": {
+              "orientation": "Render FieldRequired inside FieldLabel when true."
+            }
+          }
         },
         {
           "figmaProp": "Show message#103:20",
           "figmaType": "BOOLEAN",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Render FieldDescription or FieldError as sibling."
+          "note": "Render FieldDescription or FieldError as sibling.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:e41d59a0597febb6269f0af0f88b27986944a253756e27fe310ff5c7f2071754",
+            "reviewedProps": ["orientation"],
+            "dispositions": {
+              "orientation": "Render FieldDescription or FieldError as sibling."
+            }
+          }
         },
         {
           "figmaProp": "Type",
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "medium",
-          "note": "hint top/bottom = FieldDescription order vs control. Prefer TextField/SelectField/TextareaField hintPosition."
+          "note": "hint top/bottom = FieldDescription order vs control. Prefer TextField/SelectField/TextareaField hintPosition.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:e41d59a0597febb6269f0af0f88b27986944a253756e27fe310ff5c7f2071754",
+            "reviewedProps": ["orientation"],
+            "dispositions": {
+              "orientation": "hint top/bottom = FieldDescription order vs control. Prefer TextField/SelectField/TextareaField hintPosition."
+            }
+          }
         },
         {
           "figmaProp": "Show prepend#103:8",
           "figmaType": "BOOLEAN",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Adornment slot; Field itself has no prepend prop."
+          "note": "Adornment slot; Field itself has no prepend prop.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:e41d59a0597febb6269f0af0f88b27986944a253756e27fe310ff5c7f2071754",
+            "reviewedProps": ["orientation"],
+            "dispositions": {
+              "orientation": "Adornment slot; Field itself has no prepend prop."
+            }
+          }
         },
         {
           "figmaProp": "Show append#103:12",
           "figmaType": "BOOLEAN",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Adornment slot."
+          "note": "Adornment slot.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:e41d59a0597febb6269f0af0f88b27986944a253756e27fe310ff5c7f2071754",
+            "reviewedProps": ["orientation"],
+            "dispositions": {
+              "orientation": "Adornment slot."
+            }
+          }
         },
         {
           "figmaProp": "Instance prepend#103:0",
           "figmaType": "INSTANCE_SWAP",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Prepend instance swap."
+          "note": "Prepend instance swap.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:e41d59a0597febb6269f0af0f88b27986944a253756e27fe310ff5c7f2071754",
+            "reviewedProps": ["orientation"],
+            "dispositions": {
+              "orientation": "Prepend instance swap."
+            }
+          }
         },
         {
           "figmaProp": "Instance append#103:4",
           "figmaType": "INSTANCE_SWAP",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Append instance swap."
+          "note": "Append instance swap.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:e41d59a0597febb6269f0af0f88b27986944a253756e27fe310ff5c7f2071754",
+            "reviewedProps": ["orientation"],
+            "dispositions": {
+              "orientation": "Append instance swap."
+            }
+          }
         }
       ]
     }

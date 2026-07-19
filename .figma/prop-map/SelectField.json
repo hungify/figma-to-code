@@ -20,7 +20,37 @@
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "medium",
-          "note": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop."
+          "note": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:49bd80dd02b94108c67583ca32b0742fa51883efecc472aeaecc3de9b2d7079e",
+            "reviewedProps": [
+              "aria-invalid",
+              "checkboxItems",
+              "className",
+              "controlClassName",
+              "forceState",
+              "hint",
+              "hintPosition",
+              "label",
+              "options",
+              "placeholder",
+              "required"
+            ],
+            "dispositions": {
+              "aria-invalid": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop.",
+              "checkboxItems": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop.",
+              "className": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop.",
+              "controlClassName": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop.",
+              "forceState": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop.",
+              "hint": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop.",
+              "hintPosition": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop.",
+              "label": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop.",
+              "options": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop.",
+              "placeholder": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop.",
+              "required": "Figma showcase open/closed select field (Default vs Variant2). Runtime open = Select popup state, not a SelectField prop."
+            }
+          }
         }
       ]
     }

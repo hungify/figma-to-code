@@ -136,8 +136,8 @@ importers:
         specifier: 7.1.1
         version: 7.1.1(eslint@10.6.0(jiti@2.7.0))
       figma-fidelity:
-        specifier: github:hungify/figma-fidelity
-        version: https://codeload.github.com/hungify/figma-fidelity/tar.gz/d79546a1c7e3546c01cff222f729396873a20659
+        specifier: github:hungify/figma-fidelity#2eba5c3a0060f60f081683937b6cea1d7b88e674
+        version: https://codeload.github.com/hungify/figma-fidelity/tar.gz/2eba5c3a0060f60f081683937b6cea1d7b88e674
       glob:
         specifier: ^13.0.6
         version: 13.0.6
@@ -2979,9 +2979,9 @@ packages:
   fetchdts@0.1.7:
     resolution: {integrity: sha512-YoZjBdafyLIop9lSxXVI33oLD5kN31q4Td+CasofLLYeLXRFeOsuOw0Uo+XNRi9PZlbfdlN2GmRtm4tCEQ9/KA==}
 
-  figma-fidelity@https://codeload.github.com/hungify/figma-fidelity/tar.gz/d79546a1c7e3546c01cff222f729396873a20659:
-    resolution: {tarball: https://codeload.github.com/hungify/figma-fidelity/tar.gz/d79546a1c7e3546c01cff222f729396873a20659}
-    version: 0.1.0
+  figma-fidelity@https://codeload.github.com/hungify/figma-fidelity/tar.gz/2eba5c3a0060f60f081683937b6cea1d7b88e674:
+    resolution: {tarball: https://codeload.github.com/hungify/figma-fidelity/tar.gz/2eba5c3a0060f60f081683937b6cea1d7b88e674}
+    version: 0.2.0
     hasBin: true
 
   figures@6.1.0:
@@ -6935,7 +6935,7 @@ snapshots:
 
   fetchdts@0.1.7: {}
 
-  figma-fidelity@https://codeload.github.com/hungify/figma-fidelity/tar.gz/d79546a1c7e3546c01cff222f729396873a20659:
+  figma-fidelity@https://codeload.github.com/hungify/figma-fidelity/tar.gz/2eba5c3a0060f60f081683937b6cea1d7b88e674:
     dependencies:
       '@modelcontextprotocol/sdk': 1.29.0(zod@4.4.3)
       '@playwright/test': 1.61.1

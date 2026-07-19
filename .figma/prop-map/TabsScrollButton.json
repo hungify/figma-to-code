@@ -38,14 +38,30 @@
           "figmaType": "VARIANT",
           "mappingKind": "unmapped",
           "confidence": "high",
-          "note": "TabsScrollButton has no selected state; State belongs to text tabs."
+          "note": "TabsScrollButton has no selected state; State belongs to text tabs.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:80c66654b001b5f895891587045e41425671025d2397c27ed5f93a1e29a5cc6e",
+            "reviewedProps": ["direction"],
+            "dispositions": {
+              "direction": "TabsScrollButton has no selected state; State belongs to text tabs."
+            }
+          }
         },
         {
           "figmaProp": "Icon",
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Chevron icon is selected internally from direction and always rendered."
+          "note": "Chevron icon is selected internally from direction and always rendered.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:80c66654b001b5f895891587045e41425671025d2397c27ed5f93a1e29a5cc6e",
+            "reviewedProps": ["direction"],
+            "dispositions": {
+              "direction": "Chevron icon is selected internally from direction and always rendered."
+            }
+          }
         }
       ]
     }

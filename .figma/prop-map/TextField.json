@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "syncedAt": "2026-07-18T13:24:57Z",
+  "syncedAt": "2026-07-19T20:00:27Z",
   "source": {
     "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
     "definitionHash": "sha256:1dc88c8abb8474b539c73bf54c903b73b74ae4b8471d9c0c1551884d79201151"
@@ -21,7 +21,7 @@
           "mappingKind": "direct",
           "confidence": "high",
           "reactProp": "required",
-          "note": "True → required + FieldRequired (必須). Same pattern on SelectField / TextareaField.",
+          "note": "True maps to native required and FieldRequired.",
           "evidence": [
             {
               "kind": "code-api",
@@ -34,35 +34,35 @@
           "figmaType": "INSTANCE_SWAP",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Leading icon/control slot — children or Input adornment, not a TextField prop name."
+          "note": "Leading icon or control slot is composed beside TextField."
         },
         {
           "figmaProp": "Instance append#103:4",
           "figmaType": "INSTANCE_SWAP",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Trailing icon/control slot."
+          "note": "Trailing icon or control slot is composed beside TextField."
         },
         {
           "figmaProp": "Show prepend#103:8",
           "figmaType": "BOOLEAN",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Toggle prepend slot visibility."
+          "note": "Controls visibility of composed leading slot."
         },
         {
           "figmaProp": "Show append#103:12",
           "figmaType": "BOOLEAN",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Toggle append slot visibility."
+          "note": "Controls visibility of composed trailing slot."
         },
         {
           "figmaProp": "Show message#103:20",
           "figmaType": "BOOLEAN",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "True → pass hint (FieldDescription) or error (FieldError when invalid)."
+          "note": "Message is composed through TextField hint or error presentation."
         },
         {
           "figmaProp": "Type",
@@ -74,7 +74,7 @@
             "hint bottom": "bottom",
             "hint top": "top"
           },
-          "note": "Also used by SelectField / TextareaField hintPosition.",
+          "note": "Maps Figma hint placement to TextField hintPosition.",
           "evidence": [
             {
               "kind": "code-api",

@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { Sidebar, SidebarDrawer, SidebarItem } from "#/components/layout/sidebar";
+import { SidebarProvider } from "#/components/ui/sidebar";
 
 export function SidebarShowcase() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -22,9 +23,19 @@ export function SidebarShowcase() {
 
         <section className="grid gap-4">
           <h2 className="jp-label-lg text-white">Sidebar</h2>
-          <div className="flex items-start">
-            <Sidebar />
-          </div>
+          <SidebarProvider
+            className="min-h-160 overflow-hidden rounded-2xl bg-grey-50"
+            style={
+              {
+                "--sidebar-width": "250px",
+                "--sidebar-width-icon": "3rem",
+              } as React.CSSProperties
+            }
+          >
+            <div className="relative flex min-h-160 w-full">
+              <Sidebar />
+            </div>
+          </SidebarProvider>
         </section>
 
         <section className="grid gap-4">

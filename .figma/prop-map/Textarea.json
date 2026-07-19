@@ -20,7 +20,15 @@
           "figmaType": "VARIANT",
           "mappingKind": "unmapped",
           "confidence": "low",
-          "note": "Figma Type only Default."
+          "note": "Figma Type only Default.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:a77964a570ba5574f88cf5c5f04e36f816806bc0929747dfb5de65281ed1fd2d",
+            "reviewedProps": ["forceState"],
+            "dispositions": {
+              "forceState": "Figma Type only Default."
+            }
+          }
         },
         {
           "figmaProp": "Status",

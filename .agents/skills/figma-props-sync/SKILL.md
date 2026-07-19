@@ -1,75 +1,64 @@
 ---
 name: figma-props-sync
-description: Use when building or updating `.figma/prop-map/*.json` from a Figma design-system section/component-set (not a screen), or when user says "build prop map", "sync design system props", "map figma props", or design-system variants/properties changed. Also when figma-implement-design stops because a prop-map file is missing.
+description: Builds or updates `.figma/prop-map/*.json` from Figma design-system component definitions and current React component APIs. Human-in-loop workflow; developer review is required before accepting generated mappings.
 ---
 
-# figma-props-sync
+# Sync Figma UI Props
 
-Build validated `.figma/prop-map/<CodeComponent>.json` files for `figma-implement-design`. Never hand-edit committed prop maps; regenerate through this pipeline.
+Generate validated Figma-property → React-API mappings. Record differences; never invent feature logic or rename code APIs merely to mirror Figma.
+
+## Human-in-loop contract
+
+This skill does not autonomously approve prop maps. Agent generates mappings and validation evidence. Developer reviews exceptional mappings and API changes before accepting output. `finalize`/`check` success proves schema and source consistency only, never merge approval.
 
 ## Storage
 
-| Path                                                                                      | Role                                                  |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------- |
-| `.figma/cache/_figma-props-raw.json`, `_code-props-raw.json`, `_figma-props-matched.json` | Cycle artifacts; deleted after `finalize`; gitignored |
-| `.figma/cache/code-props-cache.json`                                                      | Persistent extraction cache                           |
-| `.figma/prop-map/*.json`                                                                  | Final schema v2 files; commit                         |
+| Path                                                                                                | Role                            |
+| --------------------------------------------------------------------------------------------------- | ------------------------------- |
+| `.figma/cache/<task-id>/_figma-props-raw.json`, `_code-props-raw.json`, `_figma-props-matched.json` | Isolated cycle artifacts        |
+| `.figma/cache/<task-id>/code-props-cache.json`                                                      | Isolated extraction cache       |
+| `.figma/prop-map/*.json`                                                                            | Durable schema-v2 mapping files |
 
-## Prerequisites
-
-1. `FIGMA_ACCESS_TOKEN` in `.env`.
-2. A design-system section or `COMPONENT_SET`, not a screen.
-3. Parse the Figma `fileKey` and all target `nodeId` values.
+Derive one filesystem-safe `<task-id>` from `fileKey + sorted nodeIds + run-id` for each sync cycle, for example `k0CrXX6p-415-100512-run-01`. `nodeId` alone is not globally unique, and `run-id` prevents concurrent work on the same source from colliding. Never reuse `.figma/cache` root or another active task's directory. Pass same `--cache-dir` to fetch, extract, and finalize.
 
 ## Commands
 
 ```bash
-pnpm figma-props:fetch -- --file-key <key> --node-ids <id1,id2,...>
-pnpm figma-props:extract -- --ui-dir src/components
-# agent writes validated .figma/cache/_figma-props-matched.json
-pnpm figma-props:finalize
+pnpm figma-props:fetch -- --cache-dir .figma/cache/<task-id> --file-key <key> --node-ids <ids>
+pnpm figma-props:extract -- --cache-dir .figma/cache/<task-id> --ui-dir src/components
+# agent writes .figma/cache/<task-id>/_figma-props-matched.json
+pnpm figma-props:finalize -- --cache-dir .figma/cache/<task-id>
 pnpm figma-props:check
+pnpm figma-props:check -- --components Button,Input
+pnpm figma-props:verify-source -- --components Button,Input
 pnpm figma-props:test
 ```
 
-`--cache-dir <path>` is supported by each command.
+## Workflow
 
-## Phase 1 — Fetch
+1. Fetch component/component-set definitions.
+2. Extract current named React component APIs.
+3. Match every Figma property exactly once inside its owning group:
+   - `direct`: one React prop;
+   - `override`: one Figma value assigns multiple React props;
+   - `composition`: children/slots/icons/parent composition;
+   - `unmapped`: no code representation.
+4. Finalize validates group/property/value coverage, React props, evidence paths, definition hash, and API hash.
+5. Verify source definitions when needed.
 
-Fetch Figma REST nodes and preserve every `COMPONENT`/`COMPONENT_SET` group with its `componentPropertyDefinitions`. Stop on authentication failure. See [references/fixture-example.json](references/fixture-example.json) for the offline raw shape.
+## Review policy
 
-## Phase 2 — Extract code API
+- Direct/override mappings remain strict and machine-validated.
+- Exact normalized React-prop candidates cannot be hidden as composition/unmapped.
+- `composition`/`unmapped` requires concise `note`.
+- Unknown enumerable code domains require explicit `valueMap`.
+- Figma `BOOLEAN` may map directly to extracted React `boolean`.
+- Duplicate property names remain group-local; conflicting translations for one screen target are rejected by screen gate.
 
-The hybrid TypeScript AST + react-docgen extractor walks `.tsx`, indexes every named exported component by `(codeComponent, codeFile)`, and resolves:
+Developer normally reviews only medium/low-confidence, composition, unmapped, overrides, and API changes. High-confidence direct mappings remain available for inspection but need no separate ceremony.
 
-- local aliases, interfaces, intersections, `Pick`/`Omit`, and interface inheritance;
-- component props inherited from installed packages;
-- referenced CVA variants;
-- destructured source props when their type cannot be resolved.
+Screen/component gates scope freshness to components used by current task. Run unscoped `figma-props:check` only for full-library maintenance or CI.
 
-It emits API-only hashes so unrelated implementation edits do not stale prop maps. `pnpm figma-props:check` fails on any non-v2 map or actual API drift.
+## Output
 
-## Phase 2.5 — Match
-
-Read both raw artifacts and write `_figma-props-matched.json` exactly as specified in [references/schema.md](references/schema.md).
-
-Hard rules:
-
-- Keep mappings nested under their owning Figma group; never flatten duplicate property names across groups.
-- Use only `direct`, `override`, `composition`, or `unmapped`.
-- Use structured evidence. External declarations and direct source reads require exact paths and hashes.
-- `composition` is a real implementation decision; do not label it `unmapped`.
-- Every Figma value must be covered exactly. Do not copy redundant `figmaValues` or `codeValues` into the match artifact.
-- Never invent a React prop to mirror a Figma property. The guaranteed code component is authoritative; represent the difference as composition or unmapped.
-
-## Phase 3 — Finalize
-
-`pnpm figma-props:finalize` validates schema, Figma definitions, code API, values, and evidence. It then emits one prop-map file per code component, removes obsolete prop-map files, clears cycle artifacts, and prints confidence/mapping totals.
-
-## Phase 4 — Fix drift
-
-For a missing, invalid, or stale map: fetch, extract, rewrite the matched artifact, and finalize again. Do not hot-patch committed JSON.
-
-## Contract with implement
-
-`figma-implement-design` reads only validated prop maps. Missing, invalid, or stale maps are a hard stop: run this pipeline and finalize before resuming implementation. Code component names and APIs stay authoritative; this skill records Figma-to-code differences rather than renaming code.
+Report created/updated prop maps, confidence summary, exceptional mappings needing developer review, and commands run. Do not claim feature logic implemented.

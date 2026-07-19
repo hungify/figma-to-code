@@ -20,7 +20,13 @@
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Type 3/5/7/9 = number of Menu Item children in the list. Map to N SelectItem children inside SelectContent."
+          "note": "Type 3/5/7/9 = number of Menu Item children in the list. Map to N SelectItem children inside SelectContent.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:3ddd37e5a462e43fc3d2bf404559998596850b388cefb3069f81eaa248a9c84f",
+            "reviewedProps": [],
+            "dispositions": {}
+          }
         }
       ]
     }

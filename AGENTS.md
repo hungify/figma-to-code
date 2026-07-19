@@ -24,7 +24,8 @@ Before substantial work:
 - Skill check: run `pnpm intent list`, or use skills already listed in context.
 - Skill guidance: if one local skill clearly matches the task, run `pnpm intent load <package>#<skill>` and follow the returned `SKILL.md`.
 - Multiple matches: prefer the most specific local skill for the package or concern you are changing; load additional skills only when the task spans multiple packages or concerns.
-- **Local project skills** live under `.agents/skills/` (e.g. `figma-implement-design`, `figma-props-sync`). `pnpm intent` lists package skills only — for local Figma skills, read `.agents/skills/<name>/SKILL.md` directly (or load via Cursor skill attachment).
+- **Local project skills** live under `.agents/skills/`. Generic Figma request → `figma-implement-design`; explicit screen/page → `figma-implement-screen`; explicit component/component-set → `figma-implement-component`; prop-map-only → `figma-props-sync`. `pnpm intent` lists package skills only — read local skill directly (or load via Cursor skill attachment).
+- Claude Code discovery adapters live under `.claude/skills/`; keep them metadata-only and route to canonical `.agents/skills/` content. Never duplicate workflow instructions in adapters.
 <!-- intent-skills:end -->
 
 ## TanStack Docs
@@ -52,10 +53,10 @@ General rules for any component work, Figma-sourced or not.
 
 - Reuse primitives from `src/components/ui/` before creating new UI components.
 - Use `pnpm ui add <component>` for missing shadcn/ui primitives instead of hand-building standard primitives.
-- Do not hand-build raw repeated markup for common primitives already resolved in `component-resolution.json` (`Button`, `Input`, `Textarea`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Field`, `SignInSocialButton`).
+- Do not hand-build raw repeated markup for common primitives resolved through validated prop maps and the active screen contract (`Button`, `Input`, `Textarea`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Field`, `SignInSocialButton`).
 - Put project UI primitives in `src/components/ui/` and export named React components.
 - Put route-level examples/showcases in `src/components/*-showcase.tsx` plus `src/routes/showcase/*` only when building showcase surfaces.
-- For feature implementation from Figma, follow `figma-implement-design`: match existing `src/features/*/screens/*` first; keep screens clean (structure.md — form/hook split is one option, not the only).
+- For feature implementation from Figma, follow `figma-implement-screen`: match existing `src/features/*/screens/*` first; keep screens clean (structure.md — form/hook split is one option, not the only).
 - Do not edit generated `src/routeTree.gen.ts` by hand; let TanStack Router generation update it.
 
 ### APIs
@@ -119,17 +120,16 @@ Note: utility names must stay `jp-*` / `en-*` (not `text-jp-*`) — see comment 
 
 ## Figma Workflow
 
-Figma → code: follow `.agents/skills/figma-implement-design/SKILL.md`.
+Generic Figma → code: route with `.agents/skills/figma-implement-design/SKILL.md`. Explicit screen/page work follows `figma-implement-screen`; explicit reusable component/component-set work follows `figma-implement-component`.
 Prop maps live in `.figma/prop-map/*.json`, owned by `.agents/skills/figma-props-sync/SKILL.md` — **never hand-edit**; fix via match + `finalize`.
 
-0. **Codebase-first + clean code:** mirror existing `src/features/*/screens/*` before inventing; apply clean-code habits (thin screen, extract when needed — form/hook is one pattern). See skill `references/structure.md`.
-1. **Fetch context:** parse `fileKey`/`nodeId`, or use current Figma Desktop selection when explicitly requested → `get_design_context` + `get_screenshot` before code.
-2. **Resolve components:** write validated `component-resolution.json` with source nodes, implementation files, resolved components, assets, screen compositions, and visual contracts → stop if `unresolved` is non-empty.
-3. **Props:** pull from validated `.figma/prop-map/<Component>.json` only. Missing/stale map → run `figma-props-sync` or stop; no guessed-props escape. `Label` has no Figma COMPONENT_SET — use `FieldLabel` / `Label` composition (see `Field` / `TextField` maps).
-4. **Gate before lint:** `pnpm figma-gate:components -- --artifact …`. The artifact owns file coverage and all checks are mandatory; old weakening flags are rejected. Must `PASS`. Pressure test: `pnpm figma-gate:test`.
-5. **Screens (fidelity) — REQUIRED:** Figma gold vs app is checked 1 node → 1 contract (`mobile/` / `desktop/` per intent), via **`figma-fidelity` MCP only**: `fidelity_fetch_gold` → `fidelity_run` → `fidelity_done_gate`. No self-report without the done-gate. CLI fallback: `pnpm exec figma-fidelity` if MCP is down. See `.cursor/rules/figma-fidelity-mcp.mdc` + skill `references/visual.md`. Eval: `pnpm figma-eval`. Testids: `references/automation.md`.
-6. **Behavior and accessibility:** verify responsive constraints, supplied interactive states, keyboard/focus semantics, and report any justified deviation per skill `references/validation.md`.
-7. **App unit tests:** `pnpm test` (Vitest, `src/**`).
+0. **Classify:** run `pnpm figma-classify`; implementation artifact binds current classification hash. Wrong/ambiguous target stops before code.
+1. **Screen:** follow `figma-implement-screen`; inventory, resolve dependencies, baseline, implement feature/route, page/region fidelity, then `pnpm figma-gate:screen -- --artifact …`.
+2. **Component:** follow `figma-implement-component`; code API, prop-map decision, safe target finalize, showcase harness, variant/state coverage, strict crops, then `pnpm figma-gate:component -- --artifact …`.
+3. **Props:** missing/stale map → `figma-props-sync`; no guessed props. `--prune` is disabled; obsolete-map cleanup is a separate reviewed change.
+4. **Unified dispatch:** `pnpm figma-gate:all -- --artifact …` reads `target.kind` and invokes exact screen/component gate. Weakening flags are rejected. Pressure: `pnpm figma-gate:test`.
+5. **Behavior/accessibility:** verify responsive constraints, supplied states, keyboard/focus semantics, and report justified deviations.
+6. **App tests:** `pnpm test` (Vitest, `src/**`).
 
 ## Validation
 

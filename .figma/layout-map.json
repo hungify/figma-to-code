@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "mappings": [
+    {
+      "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+      "componentId": "120:778",
+      "componentName": "Property 1=logged-out",
+      "codeComponent": "Header",
+      "importPath": "#/components/layout/header"
+    },
+    {
+      "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+      "componentId": "120:2774",
+      "componentName": "Property 1=logged-out",
+      "codeComponent": "Header",
+      "importPath": "#/components/layout/header"
+    },
+    {
+      "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+      "componentId": "120:6084",
+      "componentName": "Footer/PC",
+      "codeComponent": "Footer",
+      "importPath": "#/components/layout/footer"
+    },
+    {
+      "fileKey": "k0CrXX6p2CCRPHpzEv3EaW",
+      "componentId": "153:1743",
+      "componentName": "Footer/SP",
+      "codeComponent": "Footer",
+      "importPath": "#/components/layout/footer"
+    }
+  ]
+}

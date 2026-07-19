@@ -20,7 +20,15 @@
           "figmaType": "VARIANT",
           "mappingKind": "unmapped",
           "confidence": "low",
-          "note": "Figma Type only Default; no Input type enum."
+          "note": "Figma Type only Default; no Input type enum.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:05ec7588af6aa56e13ff211ca8009d864d940dd7e1ce9bdfd638a50e5ae4b881",
+            "reviewedProps": ["forceState"],
+            "dispositions": {
+              "forceState": "Figma Type only Default; no Input type enum."
+            }
+          }
         },
         {
           "figmaProp": "Status",

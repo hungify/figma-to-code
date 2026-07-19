@@ -48,21 +48,45 @@
           "figmaType": "INSTANCE_SWAP",
           "mappingKind": "composition",
           "confidence": "medium",
-          "note": "Composition-only metadata. BreadcrumbPage has no direct icon prop; icon-only current item would need custom children."
+          "note": "Composition-only metadata. BreadcrumbPage has no direct icon prop; icon-only current item would need custom children.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:aafe674bf0194225025031a7800e30f59e2cf43da2c8d67259d736a27fc5b708",
+            "reviewedProps": ["dropdown"],
+            "dispositions": {
+              "dropdown": "Composition-only metadata. BreadcrumbPage has no direct icon prop; icon-only current item would need custom children."
+            }
+          }
         },
         {
           "figmaProp": "State",
           "figmaType": "VARIANT",
           "mappingKind": "unmapped",
           "confidence": "medium",
-          "note": "Active should select BreadcrumbPage as the code component. Default/Hover should select BreadcrumbLink; no direct BreadcrumbPage state prop exists."
+          "note": "Active should select BreadcrumbPage as the code component. Default/Hover should select BreadcrumbLink; no direct BreadcrumbPage state prop exists.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:aafe674bf0194225025031a7800e30f59e2cf43da2c8d67259d736a27fc5b708",
+            "reviewedProps": ["dropdown"],
+            "dispositions": {
+              "dropdown": "Active should select BreadcrumbPage as the code component. Default/Hover should select BreadcrumbLink; no direct BreadcrumbPage state prop exists."
+            }
+          }
         },
         {
           "figmaProp": "Content",
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Composition-only metadata. Label uses text children; Icon uses selected icon instance as children."
+          "note": "Composition-only metadata. Label uses text children; Icon uses selected icon instance as children.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:aafe674bf0194225025031a7800e30f59e2cf43da2c8d67259d736a27fc5b708",
+            "reviewedProps": ["dropdown"],
+            "dispositions": {
+              "dropdown": "Composition-only metadata. Label uses text children; Icon uses selected icon instance as children."
+            }
+          }
         }
       ]
     }

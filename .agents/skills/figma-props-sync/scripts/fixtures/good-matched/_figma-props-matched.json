@@ -15,9 +15,17 @@
               "figmaType": "VARIANT",
               "mappingKind": "direct",
               "reactProp": "size",
-              "valueMap": { "Small": "sm", "Large": "lg" },
+              "valueMap": {
+                "Small": "sm",
+                "Large": "lg"
+              },
               "confidence": "high",
-              "evidence": [{ "kind": "code-api", "reactProp": "size" }]
+              "evidence": [
+                {
+                  "kind": "code-api",
+                  "reactProp": "size"
+                }
+              ]
             },
             {
               "figmaProp": "Show prepend#101:10",

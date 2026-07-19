@@ -1,9 +1,9 @@
 interface:
-  display_name: "Figma Implement Design"
-  short_description: "Implement or review Figma UI with verified fidelity"
+  display_name: "Figma Implementation Router"
+  short_description: "Route generic Figma implementation requests"
   icon_small: "./assets/figma-small.svg"
   icon_large: "./assets/figma.png"
-  default_prompt: "Use $figma-implement-design to implement or review this Figma-derived UI through component resolution, prop mapping, responsive and interactive behavior, accessibility checks, AST checks, and visual fidelity verification."
+  default_prompt: "Use $figma-implement-design to classify this Figma target and route it to a human-reviewed screen or component implementation workflow. Never treat gate success as merge approval."
 
 dependencies:
   tools:
@@ -12,6 +12,3 @@ dependencies:
       description: "Figma MCP server"
       transport: "streamable_http"
       url: "https://mcp.figma.com/mcp"
-    - type: "mcp"
-      value: "figma-fidelity"
-      description: "Local Figma gold-to-app fidelity gate"

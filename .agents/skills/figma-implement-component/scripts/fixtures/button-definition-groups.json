@@ -1,0 +1,64 @@
+{
+  "definitionHash": "sha256:dee73de0afbeca423b00d8c8e0bcb57accf3f4ebfff4b46a0082339f2ff61cde",
+  "groups": [
+    {
+      "name": "btn-size",
+      "figmaNodeId": "18:3773",
+      "propertyDefinitions": {
+        "Show prepend#101:10": { "type": "BOOLEAN", "defaultValue": true },
+        "Show append#101:15": { "type": "BOOLEAN", "defaultValue": true },
+        "Instance prepend#101:20": {
+          "type": "INSTANCE_SWAP",
+          "defaultValue": "18:2921",
+          "preferredValues": [
+            { "type": "COMPONENT_SET", "key": "0623ed3b0681fa924bf16107763bc3a12bd87ba5" }
+          ]
+        },
+        "Instance Append#101:25": {
+          "type": "INSTANCE_SWAP",
+          "defaultValue": "18:2823",
+          "preferredValues": [
+            { "type": "COMPONENT_SET", "key": "0623ed3b0681fa924bf16107763bc3a12bd87ba5" }
+          ]
+        },
+        "Size": {
+          "type": "VARIANT",
+          "defaultValue": "Small",
+          "variantOptions": ["Small", "Regular", "Large", "XLarge"]
+        }
+      }
+    },
+    {
+      "name": "btn-style",
+      "figmaNodeId": "28:383",
+      "propertyDefinitions": {
+        "type": {
+          "type": "VARIANT",
+          "defaultValue": "Default",
+          "variantOptions": ["Default", "Outlined"]
+        }
+      }
+    },
+    {
+      "name": "btn",
+      "figmaNodeId": "28:518",
+      "propertyDefinitions": {
+        "Type": {
+          "type": "VARIANT",
+          "defaultValue": "Filled",
+          "variantOptions": ["Filled", "Outlined"]
+        },
+        "Color": {
+          "type": "VARIANT",
+          "defaultValue": "Green",
+          "variantOptions": ["Green", "Lime", "Blue", "Red", "Danger", "Yellow", "Grey"]
+        },
+        "State": {
+          "type": "VARIANT",
+          "defaultValue": "Default",
+          "variantOptions": ["Default", "Hover", "Active", "Focused", "Disable"]
+        }
+      }
+    }
+  ]
+}

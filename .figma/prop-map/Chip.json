@@ -20,28 +20,64 @@
           "figmaType": "BOOLEAN",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "append child."
+          "note": "append child.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:d3e2cf820383043f792c0d2afff6f02f10d95c4228e8aa250f37a9054eb6ecdf",
+            "reviewedProps": ["append", "prepend"],
+            "dispositions": {
+              "append": "append child.",
+              "prepend": "append child."
+            }
+          }
         },
         {
           "figmaProp": "Show prepend#104:1",
           "figmaType": "BOOLEAN",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "prepend child."
+          "note": "prepend child.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:d3e2cf820383043f792c0d2afff6f02f10d95c4228e8aa250f37a9054eb6ecdf",
+            "reviewedProps": ["append", "prepend"],
+            "dispositions": {
+              "append": "prepend child.",
+              "prepend": "prepend child."
+            }
+          }
         },
         {
           "figmaProp": "Instance prepend#104:2",
           "figmaType": "INSTANCE_SWAP",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "prepend icon."
+          "note": "prepend icon.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:d3e2cf820383043f792c0d2afff6f02f10d95c4228e8aa250f37a9054eb6ecdf",
+            "reviewedProps": ["append", "prepend"],
+            "dispositions": {
+              "append": "prepend icon.",
+              "prepend": "prepend icon."
+            }
+          }
         },
         {
           "figmaProp": "Instance append#104:3",
           "figmaType": "INSTANCE_SWAP",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "append icon."
+          "note": "append icon.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:d3e2cf820383043f792c0d2afff6f02f10d95c4228e8aa250f37a9054eb6ecdf",
+            "reviewedProps": ["append", "prepend"],
+            "dispositions": {
+              "append": "append icon.",
+              "prepend": "append icon."
+            }
+          }
         }
       ]
     }

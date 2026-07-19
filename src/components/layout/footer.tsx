@@ -54,7 +54,7 @@ function FooterNavLink({ href, label }: FooterLink) {
 export function Footer({ className, links = defaultFooterLinks, ...props }: FooterProps) {
   return (
     <footer className={cn("w-full", className)} {...props}>
-      <div className="border-t border-green-100 bg-green-50 px-5 py-9">
+      <div className="h-82 border-t border-green-100 bg-green-50 px-5 py-9 md:h-30">
         <div className="flex w-full flex-col items-center gap-6 md:flex-row md:items-center md:justify-between">
           <nav
             aria-label="フッターナビゲーション"

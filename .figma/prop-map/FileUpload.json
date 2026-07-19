@@ -20,14 +20,106 @@
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "medium",
-          "note": "Compose FileUpload dropzone vs list; map via showcase patterns."
+          "note": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:2581c6753250f1bd4fa5919d23d4c55022c77410a0cabdbc00ee8a390fc04840",
+            "reviewedProps": [
+              "accept",
+              "defaultValue",
+              "dir",
+              "disabled",
+              "invalid",
+              "label",
+              "maxFiles",
+              "maxSize",
+              "multiple",
+              "name",
+              "onAccept",
+              "onFileAccept",
+              "onFileReject",
+              "onFileValidate",
+              "onUpload",
+              "onValueChange",
+              "render",
+              "required",
+              "value"
+            ],
+            "dispositions": {
+              "accept": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "defaultValue": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "dir": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "disabled": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "invalid": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "label": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "maxFiles": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "maxSize": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "multiple": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "name": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "onAccept": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "onFileAccept": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "onFileReject": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "onFileValidate": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "onUpload": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "onValueChange": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "render": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "required": "Compose FileUpload dropzone vs list; map via showcase patterns.",
+              "value": "Compose FileUpload dropzone vs list; map via showcase patterns."
+            }
+          }
         },
         {
           "figmaProp": "state",
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "medium",
-          "note": "Idle/dragging/error driven by FileUpload state hooks."
+          "note": "Idle/dragging/error driven by FileUpload state hooks.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:2581c6753250f1bd4fa5919d23d4c55022c77410a0cabdbc00ee8a390fc04840",
+            "reviewedProps": [
+              "accept",
+              "defaultValue",
+              "dir",
+              "disabled",
+              "invalid",
+              "label",
+              "maxFiles",
+              "maxSize",
+              "multiple",
+              "name",
+              "onAccept",
+              "onFileAccept",
+              "onFileReject",
+              "onFileValidate",
+              "onUpload",
+              "onValueChange",
+              "render",
+              "required",
+              "value"
+            ],
+            "dispositions": {
+              "accept": "Idle/dragging/error driven by FileUpload state hooks.",
+              "defaultValue": "Idle/dragging/error driven by FileUpload state hooks.",
+              "dir": "Idle/dragging/error driven by FileUpload state hooks.",
+              "disabled": "Idle/dragging/error driven by FileUpload state hooks.",
+              "invalid": "Idle/dragging/error driven by FileUpload state hooks.",
+              "label": "Idle/dragging/error driven by FileUpload state hooks.",
+              "maxFiles": "Idle/dragging/error driven by FileUpload state hooks.",
+              "maxSize": "Idle/dragging/error driven by FileUpload state hooks.",
+              "multiple": "Idle/dragging/error driven by FileUpload state hooks.",
+              "name": "Idle/dragging/error driven by FileUpload state hooks.",
+              "onAccept": "Idle/dragging/error driven by FileUpload state hooks.",
+              "onFileAccept": "Idle/dragging/error driven by FileUpload state hooks.",
+              "onFileReject": "Idle/dragging/error driven by FileUpload state hooks.",
+              "onFileValidate": "Idle/dragging/error driven by FileUpload state hooks.",
+              "onUpload": "Idle/dragging/error driven by FileUpload state hooks.",
+              "onValueChange": "Idle/dragging/error driven by FileUpload state hooks.",
+              "render": "Idle/dragging/error driven by FileUpload state hooks.",
+              "required": "Idle/dragging/error driven by FileUpload state hooks.",
+              "value": "Idle/dragging/error driven by FileUpload state hooks."
+            }
+          }
         }
       ]
     }

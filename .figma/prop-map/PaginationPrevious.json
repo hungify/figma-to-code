@@ -20,14 +20,30 @@
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "medium",
-          "note": "text vs icon — children / className."
+          "note": "text vs icon — children / className.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:74197fa071554b70021ea80fac86ffaca637e364e9971029491bf4d9b08f601f",
+            "reviewedProps": ["variant"],
+            "dispositions": {
+              "variant": "text vs icon — children / className."
+            }
+          }
         },
         {
           "figmaProp": "type",
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Previous → PaginationPrevious; Next → PaginationNext."
+          "note": "Previous → PaginationPrevious; Next → PaginationNext.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:74197fa071554b70021ea80fac86ffaca637e364e9971029491bf4d9b08f601f",
+            "reviewedProps": ["variant"],
+            "dispositions": {
+              "variant": "Previous → PaginationPrevious; Next → PaginationNext."
+            }
+          }
         },
         {
           "figmaProp": "State",

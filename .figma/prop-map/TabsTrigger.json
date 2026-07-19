@@ -20,7 +20,15 @@
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Type=Text renders TabsTrigger; Type=< or > renders TabsScrollButton."
+          "note": "Type=Text renders TabsTrigger; Type=< or > renders TabsScrollButton.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:addaa369d1b868a6e993e78ad81bef604bbb9a2af340e47a712272d15e78b476",
+            "reviewedProps": ["forceState"],
+            "dispositions": {
+              "forceState": "Type=Text renders TabsTrigger; Type=< or > renders TabsScrollButton."
+            }
+          }
         },
         {
           "figmaProp": "State",
@@ -46,7 +54,15 @@
           "figmaType": "VARIANT",
           "mappingKind": "composition",
           "confidence": "high",
-          "note": "Icon=True renders a leading lucide icon child; Icon=False omits it."
+          "note": "Icon=True renders a leading lucide icon child; Icon=False omits it.",
+          "negativeEvidence": {
+            "kind": "code-api-exclusion",
+            "apiHash": "sha256:addaa369d1b868a6e993e78ad81bef604bbb9a2af340e47a712272d15e78b476",
+            "reviewedProps": ["forceState"],
+            "dispositions": {
+              "forceState": "Icon=True renders a leading lucide icon child; Icon=False omits it."
+            }
+          }
         }
       ]
     }

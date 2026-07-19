@@ -2,5 +2,5 @@
 url = "https://mcp.figma.com/mcp"
 
 [mcp_servers.figma-fidelity]
-command = "/Users/hungify/personal/figma-fidelity/bin/figma-fidelity.js"
+command = "/Users/hungify/personal/figma-to-code-new/node_modules/figma-fidelity/bin/figma-fidelity.js"
 args = ["mcp"]
